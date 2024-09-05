@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        #chatBox {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid #e1e4e8;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin: 20px;
+        }
+        #messageForm {
+            display: flex;
+            padding: 15px;
+            background-color: #fff;
+            border-top: 1px solid #e1e4e8;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+        button {
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-left: 10px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:active {
+            transform: translateY(1px);
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+        .message.user {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        .message.bot {
+            background-color: #e5e5ea;
+            align-self: flex-start;
+        }
+        .timestamp {
+            font-size: 0.8em;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 600px) {
+            #chatBox {
+                margin: 10px;
+            }
+            input[type="text"], button {
+                font-size: 14px;
+            }
+            button {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="chatBox"></div>
+<form id="messageForm">
+    <input type="text" id="messageInput" placeholder="Type a message...">
+    <button type="submit">Send</button>
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+<script>
+    const chatBox = document.getElementById('chatBox');
+    const messageForm = document.getElementById('messageForm');
+    const messageInput = document.getElementById('messageInput');
+    const socket = new SockJS('/chat');
+    const stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function (frame) {
+        stompClient.subscribe('/topic/messages', function (messageOutput) {
+            const message = JSON.parse(messageOutput.body);
+            const messageElement = document.createElement('div');
+            messageElement.className = `message ${message.sender.toLowerCase()}`;
+            messageElement.innerHTML = `
+                    <strong>${message.sender}:</strong> ${message.content}
+                    <div class="timestamp">${message.timestamp}</div>
+                `;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+    });
+
+    messageForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const message = messageInput.value;
+        if (message.trim()) {
+            stompClient.send("/app/send", {}, JSON.stringify({ 'sender': 'User', 'content': message }));
+            messageInput.value = '';
+        }
+    });
+</script>
+</body>
+</html>
