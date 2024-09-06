@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat App</title>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #6C757D;
-            --secondary-color: #343A40;
-            --accent-color: #495057;
-            --background-color: #F8F9FA;
-            --text-color: #212529;
-            --light-text-color: #6C757D;
-            --border-color: #CED4DA;
-            --button-color: #ADB5BD;
-            --button-hover-color: #a2c0d8;
-            --focus-border-color: #007BFF; /* Blue border for focus state */
-            --focus-shadow-color: rgba(0, 123, 255, 0.25); /* Light blue shadow */
+            --primary-color: #6366F1;
+            --secondary-color: #4F46E5;
+            --accent-color: #818CF8;
+            --background-color: #F3F4F6;
+            --text-color: #1F2937;
+            --light-text-color: #6B7280;
+            --border-color: #E5E7EB;
+            --button-color: #6366F1;
+            --button-hover-color: #4F46E5;
+            --focus-border-color: #818CF8;
+            --focus-shadow-color: rgba(99, 102, 241, 0.25);
         }
 
         * {
@@ -27,7 +27,7 @@
         }
 
         body {
-            font-family: 'Raleway', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
             display: flex;
@@ -39,23 +39,21 @@
 
         .container {
             width: 100%;
-            max-width: 1400px;
+            max-width: 1200px;
             background-color: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            padding: 40px;
             display: grid;
             grid-template-columns: 1fr 2fr;
-            gap: 40px;
+            gap: 0;
         }
 
         #roomSelector {
             background-color: var(--primary-color);
             color: white;
-            padding: 60px;
+            padding: 40px;
             text-align: center;
-            border-radius: 20px;
             grid-column: 1 / span 2;
             display: flex;
             flex-direction: column;
@@ -64,150 +62,129 @@
         }
 
         #roomSelector input {
-            padding: 20px;
-            border: 1px solid var(--border-color);
+            padding: 16px;
+            border: none;
             border-radius: 12px;
             margin-bottom: 20px;
-            font-size: 18px;
+            font-size: 16px;
             width: 100%;
-            max-width: 800px;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            max-width: 400px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        #roomSelector input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         #roomSelector input:focus {
             outline: none;
-            border-color: var(--focus-border-color); /* Blue border on focus */
-            box-shadow: 0 0 5px 2px var(--focus-shadow-color); /* Shadow on focus */
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 3px var(--focus-shadow-color);
         }
 
         #roomSelector button {
-            padding: 20px 40px;
-            background-color: var(--button-color);
-            color: var(--text-color);
+            padding: 16px 32px;
+            background-color: white;
+            color: var(--primary-color);
             border: none;
             border-radius: 12px;
-            font-size: 18px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             width: 100%;
-            max-width: 250px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #roomSelector button:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                    120deg,
-                    transparent,
-                    rgba(255, 255, 255, 0.3),
-                    transparent
-            );
-            transition: all 0.6s;
+            max-width: 200px;
         }
 
         #roomSelector button:hover {
-            background-color: var(--button-hover-color);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        #roomSelector button:hover:before {
-            left: 100%;
-        }
-
-        #roomSelector button:active {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background-color: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         #roomList {
-            background-color: var(--background-color);
+            background-color: white;
             padding: 40px;
-            border-radius: 20px;
-            height: 400px;
+            border-right: 1px solid var(--border-color);
+            height: 600px;
             overflow-y: auto;
         }
 
         #roomList h3 {
-            color: var(--secondary-color);
+            color: var(--primary-color);
             margin-bottom: 20px;
-            font-size: 24px;
+            font-size: 20px;
+            font-weight: 600;
         }
 
         .room {
-            margin: 15px 0;
-            padding: 20px;
-            background-color: white;
+            margin: 12px 0;
+            padding: 16px;
+            background-color: var(--background-color);
             border-radius: 12px;
             cursor: pointer;
-            border: 2px solid var(--border-color);
             transition: all 0.3s ease;
-            text-align: center;
-            font-size: 18px;
+            font-size: 16px;
             color: var(--text-color);
         }
 
         .room:hover {
-            border-color: var(--primary-color);
-            transform: scale(1.02);
+            background-color: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         #chatBox {
-            background-color: #fff;
-            border-radius: 12px;
+            background-color: white;
             padding: 40px;
             height: 500px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             overflow-y: auto;
         }
 
         #messageForm {
             display: flex;
-            padding: 30px;
-            background-color: #fff;
+            padding: 20px;
+            background-color: white;
             border-top: 1px solid var(--border-color);
             justify-content: space-between;
         }
 
         #messageForm input {
-            padding: 20px;
+            padding: 16px;
             border-radius: 12px;
             border: 2px solid var(--border-color);
             width: 85%;
             margin-right: 10px;
             font-size: 16px;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         #messageForm input:focus {
             outline: none;
             border-color: var(--focus-border-color);
-            box-shadow: 0 0 5px 2px var(--focus-shadow-color);
+            box-shadow: 0 0 0 3px var(--focus-shadow-color);
         }
 
         #messageForm button {
-            padding: 20px 30px;
+            padding: 16px 24px;
             background-color: var(--button-color);
-            color: var(--text-color);
+            color: white;
             border: none;
             border-radius: 12px;
-            font-size: 18px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         #messageForm button:hover {
             background-color: var(--button-hover-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .logout-button {
@@ -217,71 +194,43 @@
         }
 
         .logout-button button {
-            padding: 10px 20px;
+            padding: 12px 24px;
             background-color: var(--button-color);
+            color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .logout-button button:hover {
             background-color: var(--button-hover-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         @media (max-width: 800px) {
             .container {
                 display: flex;
                 flex-direction: column;
-                padding: 20px;
+                max-height: 100vh;
             }
 
             #roomSelector {
                 padding: 30px;
             }
 
-            #roomSelector input {
-                padding: 15px;
-                font-size: 16px;
-                max-width: 100%;
-            }
-
-            #roomSelector button {
-                padding: 15px 30px;
-                font-size: 16px;
-                max-width: 100%;
-            }
-
             #roomList {
-                padding: 20px;
-                height: 300px;
+                height: auto;
+                max-height: 300px;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
             }
 
             #chatBox {
-                padding: 20px;
-                height: 400px;
-            }
-
-            #messageForm {
-                padding: 20px;
-            }
-
-            #messageForm input {
-                padding: 15px;
-                font-size: 14px;
-                width: 100%;
-            }
-
-            #messageForm button {
-                padding: 15px 20px;
-                font-size: 16px;
-                width: 100%;
-            }
-
-            .logout-button button {
-                padding: 10px 15px;
-                font-size: 14px;
+                height: calc(100vh - 400px);
             }
         }
     </style>
@@ -294,7 +243,7 @@
     </div>
 
     <div id="roomList">
-        <h3>Available Rooms:</h3>
+        <h3>Available Rooms</h3>
         <div id="rooms"></div>
     </div>
 
