@@ -76,3 +76,17 @@ messageForm.addEventListener('submit', function (event) {
         messageInput.value = '';
     }
 });
+
+
+function openLogoutModal() {
+    document.getElementById('logoutModal').style.display = 'flex';
+}
+
+function closeLogoutModal() {
+    document.getElementById('logoutModal').style.display = 'none';
+}
+
+function confirmLogout() {
+    window.location.href = '/logout';
+}
+
