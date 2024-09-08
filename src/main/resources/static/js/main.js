@@ -1,13 +1,15 @@
 let stompClient = null;
 let currentRoom = null;
-let currentSubscription = null;  // Track the active subscription
+let currentSubscription = null;
+const MAX_ROOM_NAME_LENGTH = 20;
 
 const chatBox = document.getElementById('chatBox');
 const messageForm = document.getElementById('messageForm');
 const messageInput = document.getElementById('messageInput');
 const roomInput = document.getElementById('roomInput');
 const roomList = document.getElementById('rooms');
-const username = /*[[${username}]]*/ '';  // Dynamically passed username
+const currentRoomDisplay = document.getElementById('currentRoomDisplay'); // To display the current room name
+const username = /*[[${username}]]*/ '';
 
 const socket = new SockJS('/chat');
 stompClient = Stomp.over(socket);
@@ -43,6 +45,12 @@ stompClient.connect({}, function (frame) {
 
 function createOrJoinRoom() {
     const room = roomInput.value.trim();
+
+    if (room.length > MAX_ROOM_NAME_LENGTH) {
+        alert(`Room name cannot exceed ${MAX_ROOM_NAME_LENGTH} characters.`);
+        return;
+    }
+
     if (room) {
         joinRoom(room);
     }
@@ -66,12 +74,14 @@ function joinRoom(room) {
 
     stompClient.send("/app/joinRoom", {}, room);
 
+    currentRoomDisplay.style.display = 'block';
+    currentRoomDisplay.textContent = `Current Room: ${room}`;
+
     chatBox.style.display = 'block';
     messageForm.style.display = 'flex';
     chatBox.innerHTML = '';
 }
 
-// Handle sending messages
 messageForm.addEventListener('submit', function (event) {
     event.preventDefault();
     const message = messageInput.value.trim();
@@ -100,4 +110,3 @@ function confirmLogout() {
     }
     window.location.href = '/logout';
 }
-

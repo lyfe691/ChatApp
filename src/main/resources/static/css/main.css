@@ -1,0 +1,312 @@
+:root {
+    --primary-color: #6366F1;
+    --secondary-color: #4F46E5;
+    --accent-color: #818CF8;
+    --background-color: #F3F4F6;
+    --text-color: #1F2937;
+    --light-text-color: #6B7280;
+    --border-color: #E5E7EB;
+    --button-color: #6366F1;
+    --button-hover-color: #4F46E5;
+    --focus-border-color: #818CF8;
+    --focus-shadow-color: rgba(99, 102, 241, 0.25);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    max-width: 1400px;
+    background-color: white;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-bar {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#roomSelector {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    max-width: 800px;
+    margin-right: 20px;
+}
+
+#roomSelector input {
+    padding: 12px 16px;
+    border: none;
+    border-radius: 12px;
+    margin-right: 10px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 500px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+#roomSelector input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#roomSelector input:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 0 3px var(--focus-shadow-color);
+}
+
+#roomSelector button {
+    padding: 12px 24px;
+    background-color: white;
+    color: var(--primary-color);
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+#roomSelector button:hover {
+    background-color: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.logout-button {
+    margin-left: 10px;
+}
+
+.logout-button button {
+    padding: 12px 24px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logout-button button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.content-wrapper {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+#roomList {
+    background-color: white;
+    padding: 20px;
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+    flex: 0 0 30%;
+    min-width: 250px;
+}
+
+#roomList h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.room {
+    margin: 10px 0;
+    padding: 15px;
+    background-color: var(--background-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+.room:hover {
+    background-color: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.chat-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+#currentRoomDisplay {
+    padding: 15px;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    display: none;
+}
+
+#chatBox {
+    background-color: white;
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+#messageForm {
+    display: flex;
+    padding: 15px;
+    background-color: white;
+    border-top: 1px solid var(--border-color);
+    justify-content: space-between;
+}
+
+#messageForm input {
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+    width: 85%;
+    margin-right: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+#messageForm input:focus {
+    outline: none;
+    border-color: var(--focus-border-color);
+    box-shadow: 0 0 0 3px var(--focus-shadow-color);
+}
+
+#messageForm button {
+    padding: 12px 24px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#messageForm button:hover {
+    background-color: var(--button-hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.modal-buttons {
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #6366F1;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.modal-buttons button:hover {
+    background-color: #4F46E5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 1200px) {
+    #roomSelector {
+        flex-basis: 100%;
+        margin-bottom: 15px;
+        max-width: none;
+    }
+
+    .logout-button {
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 800px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    #roomList {
+        flex: 0 0 auto;
+        max-height: 30%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .chat-wrapper {
+        flex: 1;
+    }
+
+    #roomSelector input, #roomSelector button,
+    .logout-button button, #messageForm input,
+    #messageForm button {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+}
