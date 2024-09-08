@@ -1,11 +1,13 @@
 let stompClient = null;
 let currentRoom = null;
+let currentSubscription = null;  // Track the active subscription
 
 const chatBox = document.getElementById('chatBox');
 const messageForm = document.getElementById('messageForm');
 const messageInput = document.getElementById('messageInput');
 const roomInput = document.getElementById('roomInput');
 const roomList = document.getElementById('rooms');
+const username = /*[[${username}]]*/ '';  // Dynamically passed username
 
 const socket = new SockJS('/chat');
 stompClient = Stomp.over(socket);
@@ -47,9 +49,13 @@ function createOrJoinRoom() {
 }
 
 function joinRoom(room) {
+    if (currentSubscription !== null) {
+        currentSubscription.unsubscribe();
+    }
+
     currentRoom = room;
 
-    stompClient.subscribe('/topic/' + room, function (messageOutput) {
+    currentSubscription = stompClient.subscribe('/topic/' + room, function (messageOutput) {
         const message = JSON.parse(messageOutput.body);
         const messageElement = document.createElement('div');
         messageElement.className = 'message';
@@ -59,24 +65,25 @@ function joinRoom(room) {
     });
 
     stompClient.send("/app/joinRoom", {}, room);
+
     chatBox.style.display = 'block';
     messageForm.style.display = 'flex';
     chatBox.innerHTML = '';
 }
 
+// Handle sending messages
 messageForm.addEventListener('submit', function (event) {
     event.preventDefault();
     const message = messageInput.value.trim();
     if (message && currentRoom) {
         stompClient.send("/app/sendMessage", {}, JSON.stringify({
-            'sender': 'User',
+            'sender': username,
             'content': message,
             'timestamp': new Date().toISOString()
         }));
         messageInput.value = '';
     }
 });
-
 
 function openLogoutModal() {
     document.getElementById('logoutModal').style.display = 'flex';
@@ -87,6 +94,10 @@ function closeLogoutModal() {
 }
 
 function confirmLogout() {
+    if (stompClient !== null) {
+        stompClient.disconnect();
+        console.log('Disconnected from WebSocket');
+    }
     window.location.href = '/logout';
 }
 
