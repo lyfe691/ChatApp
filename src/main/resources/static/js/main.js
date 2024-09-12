@@ -65,11 +65,7 @@ function joinRoom(room) {
 
     currentSubscription = stompClient.subscribe('/topic/' + room, function (messageOutput) {
         const message = JSON.parse(messageOutput.body);
-        const messageElement = document.createElement('div');
-        messageElement.className = 'message';
-        messageElement.innerHTML = `<strong>${message.sender}:</strong> ${message.content}`;
-        chatBox.appendChild(messageElement);
-        chatBox.scrollTop = chatBox.scrollHeight;
+        displayMessage(message);
     });
 
     stompClient.send("/app/joinRoom", {}, room);
@@ -79,7 +75,23 @@ function joinRoom(room) {
 
     chatBox.style.display = 'block';
     messageForm.style.display = 'flex';
-    chatBox.innerHTML = '';
+    chatBox.innerHTML = ''; // Clear chat box
+
+    fetch(`/chat/history/${room}`)
+        .then(response => response.json())
+        .then(messages => {
+            messages.forEach(message => {
+                displayMessage(message);
+            });
+        });
+}
+
+function displayMessage(message) {
+    const messageElement = document.createElement('div');
+    messageElement.className = 'message';
+    messageElement.innerHTML = `<strong>${message.sender}:</strong> ${message.content}`;
+    chatBox.appendChild(messageElement);
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
 
 messageForm.addEventListener('submit', function (event) {
@@ -89,7 +101,8 @@ messageForm.addEventListener('submit', function (event) {
         stompClient.send("/app/sendMessage", {}, JSON.stringify({
             'sender': username,
             'content': message,
-            'timestamp': new Date().toISOString()
+            'timestamp': new Date().toISOString(),
+            'room': currentRoom
         }));
         messageInput.value = '';
     }

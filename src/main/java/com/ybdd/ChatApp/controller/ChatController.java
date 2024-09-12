@@ -8,11 +8,13 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -30,12 +32,19 @@ public class ChatController {
         this.messagingTemplate = messagingTemplate;
     }
 
+    @GetMapping("/chat/history/{room}")
+    @ResponseBody
+    public List<Message> getChatHistory(@PathVariable String room) {
+        return messageRepository.findByRoom(room);
+    }
+
     @MessageMapping("/sendMessage")
     public void sendMessage(Message message, SimpMessageHeaderAccessor headerAccessor) {
         String chatRoom = (String) headerAccessor.getSessionAttributes().get("chatRoom");
         String username = headerAccessor.getUser().getName();
 
         message.setSender(username);
+        message.setRoom(chatRoom);
         message = messageRepository.save(message);
 
         Optional<User> optionalUser = userRepository.findByUsername(username);

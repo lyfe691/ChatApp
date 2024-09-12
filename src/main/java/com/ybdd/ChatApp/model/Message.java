@@ -10,12 +10,16 @@ public class Message {
     private String id;
     private String content;
     private String sender;
+    private String room;
+
+    // Constructors, getters & setters
 
     public Message() {}
 
-    public Message(String content, String sender) {
+    public Message(String content, String sender, String room) {
         this.content = content;
         this.sender = sender;
+        this.room = room;
     }
 
     public String getId() {
@@ -40,5 +44,13 @@ public class Message {
 
     public void setSender(String sender) {
         this.sender = sender;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
     }
 }
