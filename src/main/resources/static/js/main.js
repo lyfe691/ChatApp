@@ -123,3 +123,69 @@ function confirmLogout() {
     }
     window.location.href = '/logout';
 }
+
+function displayMessage(message) {
+    const messageElement = document.createElement('div');
+    messageElement.className = 'message received';
+
+    const usernameElement = document.createElement('strong');
+    usernameElement.className = 'message-username';
+    usernameElement.innerText = message.sender + ': ';
+
+    const contentElement = document.createElement('div');
+    contentElement.className = 'message-content';
+
+    const maxLength = 100;
+    const messageContent = message.content;
+
+    if (messageContent.length > maxLength) {
+        const truncatedText = messageContent.substring(0, maxLength);
+        const fullText = messageContent;
+
+        const truncatedElement = document.createElement('span');
+        truncatedElement.className = 'truncated-message';
+        truncatedElement.innerText = truncatedText + '...';
+
+        const fullMessageElement = document.createElement('span');
+        fullMessageElement.className = 'full-message';
+        fullMessageElement.innerText = fullText;
+        fullMessageElement.style.display = 'none';
+
+        const showMoreElement = document.createElement('span');
+        showMoreElement.className = 'show-more';
+        showMoreElement.innerText = 'Show more';
+
+        const showLessElement = document.createElement('span');
+        showLessElement.className = 'show-less';
+        showLessElement.innerText = ' Show less';
+        showLessElement.style.display = 'none';
+
+        showMoreElement.onclick = function () {
+            truncatedElement.style.display = 'none';
+            showMoreElement.style.display = 'none';
+            fullMessageElement.style.display = 'inline';
+            showLessElement.style.display = 'inline';
+        };
+
+        showLessElement.onclick = function () {
+            truncatedElement.style.display = 'inline';
+            showMoreElement.style.display = 'inline';
+            fullMessageElement.style.display = 'none';
+            showLessElement.style.display = 'none';
+        };
+
+        contentElement.appendChild(truncatedElement);
+        contentElement.appendChild(fullMessageElement);
+        contentElement.appendChild(showMoreElement);
+        contentElement.appendChild(showLessElement);
+    } else {
+        contentElement.innerText = messageContent;
+    }
+
+
+    messageElement.appendChild(usernameElement);
+    messageElement.appendChild(contentElement);
+
+    chatBox.appendChild(messageElement);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
