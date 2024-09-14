@@ -9,34 +9,53 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService implements org.springframework.security.core.userdetails.UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    @Lazy
-    private PasswordEncoder passwordEncoder;
+    public UserService(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+        Optional<User> user = userRepository.findByUsername(usernameOrEmail)
+                .or(() -> userRepository.findByEmail(usernameOrEmail));
+
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException("User not found with username or email: " + usernameOrEmail);
+        }
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.get().getUsername())
+                .password(user.get().getPassword())
+                .roles("USER")
+                .build();
+    }
+
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+    public String encodePassword(String password) {
+        return passwordEncoder.encode(password);
+    }
 
     public User registerNewUser(String username, String email, String password) {
         if (userRepository.findByUsername(username).isPresent() || userRepository.findByEmail(email).isPresent()) {
             throw new RuntimeException("Username or email already exists.");
         }
-        User newUser = new User(username, email, passwordEncoder.encode(password));
+        User newUser = new User(username, email, encodePassword(password));
         return userRepository.save(newUser);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String input) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(input)
-                .or(() -> userRepository.findByEmail(input))
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        return org.springframework.security.core.userdetails.User
-                .withUsername(user.getUsername())
-                .password(user.getPassword())
-                .roles("USER")
-                .build();
     }
 }

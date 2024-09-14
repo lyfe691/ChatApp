@@ -33,7 +33,7 @@ public class WebSecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/register", "/login", "/css/**", "/js/**").permitAll()  // allow unauthenticated access to landing, login, register
+                        .requestMatchers("/", "/register","/forgot-password","/reset-password", "/login", "/css/**", "/js/**").permitAll()  // allow unauthenticated access to this pages.
                         .anyRequest().authenticated()  // All other pages require authentication
                 )
                 .formLogin(form -> form
@@ -48,7 +48,7 @@ public class WebSecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();  // BCrypt for password hashing
+        return new BCryptPasswordEncoder();  // BCrypt for password hashing (crucial)
     }
 
     @Bean
