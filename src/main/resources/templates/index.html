@@ -56,11 +56,99 @@
 
 <!-- Help Modal structure -->
 <div id="helpModal" class="modal">
-    <div class="modal-content">
-        <h3>Help</h3>
-        <p>This section provides guidance and assistance for using the chat app. Here, you'll find instructions and support.</p>
-        <div class="modal-buttons">
-            <button onclick="closeHelpModal()">Close</button>
+    <div class="modal-content help-modal">
+        <div class="help-header">
+            <h2>Help & Support</h2>
+            <button class="close-btn" onclick="closeHelpModal()"><i data-feather="x"></i></button>
+        </div>
+        <div class="help-body">
+            <nav class="help-nav">
+                <select class="mobile-nav-select">
+                    <option value="getting-started">Getting Started</option>
+                    <option value="faq">FAQ</option>
+                    <option value="troubleshooting">Troubleshooting</option>
+                </select>
+                <button class="nav-btn active" data-target="getting-started">Getting Started</button>
+                <button class="nav-btn" data-target="faq">FAQ</button>
+                <button class="nav-btn" data-target="troubleshooting">Troubleshooting</button>
+            </nav>
+            <div class="help-content">
+                <div id="getting-started" class="help-section active">
+                    <h3><i data-feather="play-circle"></i> Getting Started</h3>
+                    <div class="step-by-step">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <p>Enter a room name and click "Join/Create Room" to start chatting.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <p>Type your message in the box at the bottom and press "Send" or hit Enter.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <p>Use the icons in the top-right corner for settings, help, and logout.</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="faq" class="help-section">
+                    <h3><i data-feather="help-circle"></i> FAQ</h3>
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <button class="accordion-header">
+                                How do I create a room?
+                                <i data-feather="chevron-down"></i>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Enter the room name in the top bar and click "Join/Create Room".</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-header">
+                                How do I change my settings?
+                                <i data-feather="chevron-down"></i>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Click on the settings icon (⚙️).</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-header">
+                                How do I log out?
+                                <i data-feather="chevron-down"></i>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Click on the logout icon (🚪) and confirm in the modal.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="troubleshooting" class="help-section">
+                    <h3><i data-feather="alert-triangle"></i> Troubleshooting</h3>
+                    <strong> If you're experiencing issues, try these steps:</strong>
+                    <br>
+                    <div class="troubleshooting-steps">
+                        <div class="troubleshooting-step">
+                            <i data-feather="refresh-cw"></i>
+                            <p>Refresh the page</p>
+                        </div>
+                        <div class="troubleshooting-step">
+                            <i data-feather="wifi"></i>
+                            <p>Check your internet connection</p>
+                        </div>
+                        <div class="troubleshooting-step">
+                            <i data-feather="trash-2"></i>
+                            <p>Clear your browser cache</p>
+                        </div>
+                        <div class="troubleshooting-step">
+                            <i data-feather="mail"></i>
+                            <p>If problems persist, <a href="https://yanissebastianzuercher.ch/#contact">contact support</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="help-footer">
+            <button class="primary-btn" onclick="closeHelpModal()">Got it, thanks!</button>
         </div>
     </div>
 </div>
@@ -77,8 +165,40 @@
 </div>
 
 <script>
-    feather.replace();
+    // Help Modal JS
+    document.addEventListener('DOMContentLoaded', function() {
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.help-section');
+        const mobileNavSelect = document.querySelector('.mobile-nav-select');
 
+        function setActiveSection(target) {
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            sections.forEach(section => section.classList.remove('active'));
+            document.querySelector(`.nav-btn[data-target="${target}"]`).classList.add('active');
+            document.getElementById(target).classList.add('active');
+        }
+
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const target = this.dataset.target;
+                setActiveSection(target);
+            });
+        });
+
+        mobileNavSelect.addEventListener('change', function() {
+            setActiveSection(this.value);
+        });
+
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                this.parentElement.classList.toggle('active');
+            });
+        });
+
+        feather.replace();
+    });
     function openLogoutModal() {
         document.getElementById('logoutModal').style.display = 'flex';
     }
@@ -110,6 +230,8 @@
         }
         window.location.href = '/logout';
     }
+
+    feather.replace();
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
