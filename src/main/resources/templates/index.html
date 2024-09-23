@@ -8,6 +8,7 @@
     <link rel="icon" href="/assets/icon.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
 <div class="container">
@@ -16,8 +17,10 @@
             <input type="text" id="roomInput" placeholder="Enter or create a room">
             <button onclick="createOrJoinRoom()">Join/Create Room</button>
         </div>
-        <div class="logout-button">
-            <button onclick="openLogoutModal()">Logout</button>
+        <div class="icon-buttons">
+            <button onclick="openHelpModal()"><i data-feather="help-circle"></i></button>
+            <button onclick="openSettingsModal()"><i data-feather="settings"></i></button>
+            <button onclick="openLogoutModal()"><i data-feather="log-out"></i></button>
         </div>
     </div>
 
@@ -40,7 +43,7 @@
     </div>
 </div>
 
-<!-- Modal structure -->
+<!-- Logout Modal structure -->
 <div id="logoutModal" class="modal">
     <div class="modal-content">
         <p>Are you sure you want to log out?</p>
@@ -50,6 +53,64 @@
         </div>
     </div>
 </div>
+
+<!-- Help Modal structure -->
+<div id="helpModal" class="modal">
+    <div class="modal-content">
+        <h3>Help</h3>
+        <p>This section provides guidance and assistance for using the chat app. Here, you'll find instructions and support.</p>
+        <div class="modal-buttons">
+            <button onclick="closeHelpModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Settings Modal structure -->
+<div id="settingsModal" class="modal">
+    <div class="modal-content">
+        <h3>Settings</h3>
+        <p>Here you can adjust your account settings, notification preferences, and other configuration options for the chat app.</p>
+        <div class="modal-buttons">
+            <button onclick="closeSettingsModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    feather.replace();
+
+    function openLogoutModal() {
+        document.getElementById('logoutModal').style.display = 'flex';
+    }
+
+    function closeLogoutModal() {
+        document.getElementById('logoutModal').style.display = 'none';
+    }
+
+    function openHelpModal() {
+        document.getElementById('helpModal').style.display = 'flex';
+    }
+
+    function closeHelpModal() {
+        document.getElementById('helpModal').style.display = 'none';
+    }
+
+    function openSettingsModal() {
+        document.getElementById('settingsModal').style.display = 'flex';
+    }
+
+    function closeSettingsModal() {
+        document.getElementById('settingsModal').style.display = 'none';
+    }
+
+    function confirmLogout() {
+        if (stompClient !== null) {
+            stompClient.disconnect();
+            console.log('Disconnected from WebSocket');
+        }
+        window.location.href = '/logout';
+    }
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>

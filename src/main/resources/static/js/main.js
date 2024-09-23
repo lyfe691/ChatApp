@@ -86,14 +86,6 @@ function joinRoom(room) {
         });
 }
 
-function displayMessage(message) {
-    const messageElement = document.createElement('div');
-    messageElement.className = 'message';
-    messageElement.innerHTML = `<strong>${message.sender}:</strong> ${message.content}`;
-    chatBox.appendChild(messageElement);
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
-
 messageForm.addEventListener('submit', function (event) {
     event.preventDefault();
     const message = messageInput.value.trim();
@@ -107,22 +99,6 @@ messageForm.addEventListener('submit', function (event) {
         messageInput.value = '';
     }
 });
-
-function openLogoutModal() {
-    document.getElementById('logoutModal').style.display = 'flex';
-}
-
-function closeLogoutModal() {
-    document.getElementById('logoutModal').style.display = 'none';
-}
-
-function confirmLogout() {
-    if (stompClient !== null) {
-        stompClient.disconnect();
-        console.log('Disconnected from WebSocket');
-    }
-    window.location.href = '/logout';
-}
 
 function displayMessage(message) {
     const messageElement = document.createElement('div');

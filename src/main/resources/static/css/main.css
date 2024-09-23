@@ -340,6 +340,30 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.icon-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.icon-buttons button {
+    margin-left: 10px;
+    padding: 12px 24px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.icon-buttons button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
 @media (max-width: 1200px) {
     #roomSelector {
         flex-basis: 100%;
@@ -373,5 +397,10 @@ body {
     #messageForm button {
         font-size: 14px;
         padding: 10px 16px;
+    }
+
+    .icon-buttons button {
+        padding: 8px 16px;
+        font-size: 14px;
     }
 }
