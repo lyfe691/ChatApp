@@ -1,3 +1,4 @@
+// WebSocket related code
 let stompClient = null;
 let currentRoom = null;
 let currentSubscription = null;
@@ -14,10 +15,10 @@ const username = /*[[${username}]]*/ '';
 const socket = new SockJS('/chat');
 stompClient = Stomp.over(socket);
 
-stompClient.connect({}, function (frame) {
+stompClient.connect({}, function(frame) {
     console.log('Connected: ' + frame);
 
-    stompClient.subscribe('/topic/rooms', function (roomsMessage) {
+    stompClient.subscribe('/topic/rooms', function(roomsMessage) {
         const rooms = JSON.parse(roomsMessage.body);
         roomList.innerHTML = '';
         rooms.forEach(room => {
@@ -38,7 +39,7 @@ stompClient.connect({}, function (frame) {
             roomList.appendChild(roomElement);
         });
     });
-}, function (error) {
+}, function(error) {
     console.error('Connection failed: ' + error);
     alert('WebSocket connection failed. Please refresh the page.');
 });
@@ -63,7 +64,7 @@ function joinRoom(room) {
 
     currentRoom = room;
 
-    currentSubscription = stompClient.subscribe('/topic/' + room, function (messageOutput) {
+    currentSubscription = stompClient.subscribe('/topic/' + room, function(messageOutput) {
         const message = JSON.parse(messageOutput.body);
         displayMessage(message);
     });
@@ -86,7 +87,7 @@ function joinRoom(room) {
         });
 }
 
-messageForm.addEventListener('submit', function (event) {
+messageForm.addEventListener('submit', function(event) {
     event.preventDefault();
     const message = messageInput.value.trim();
     if (message && currentRoom) {
@@ -136,14 +137,14 @@ function displayMessage(message) {
         showLessElement.innerText = ' Show less';
         showLessElement.style.display = 'none';
 
-        showMoreElement.onclick = function () {
+        showMoreElement.onclick = function() {
             truncatedElement.style.display = 'none';
             showMoreElement.style.display = 'none';
             fullMessageElement.style.display = 'inline';
             showLessElement.style.display = 'inline';
         };
 
-        showLessElement.onclick = function () {
+        showLessElement.onclick = function() {
             truncatedElement.style.display = 'inline';
             showMoreElement.style.display = 'inline';
             fullMessageElement.style.display = 'none';
@@ -157,7 +158,6 @@ function displayMessage(message) {
     } else {
         contentElement.innerText = messageContent;
     }
-
 
     messageElement.appendChild(usernameElement);
     messageElement.appendChild(contentElement);

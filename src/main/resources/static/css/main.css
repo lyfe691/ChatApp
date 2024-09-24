@@ -1,3 +1,4 @@
+/*------------- Root Variables --------------*/
 :root {
     --primary-color: #6366F1;
     --secondary-color: #4F46E5;
@@ -12,6 +13,21 @@
     --focus-shadow-color: rgba(99, 102, 241, 0.25);
 }
 
+[data-theme='dark'] {
+    --primary-color: #818CF8;
+    --secondary-color: #4F46E5;
+    --accent-color: #6366F1;
+    --background-color: #1F2937;
+    --text-color: #F3F4F6;
+    --light-text-color: #9CA3AF;
+    --border-color: #374151;
+    --button-color: #818CF8;
+    --button-hover-color: #4F46E5;
+    --focus-border-color: #4F46E5;
+    --focus-shadow-color: rgba(99, 102, 241, 0.25);
+}
+
+/*------------- Global Styles --------------*/
 * {
     box-sizing: border-box;
     margin: 0;
@@ -33,6 +49,7 @@ body {
     padding: 20px;
 }
 
+/*------------- Container --------------*/
 .container {
     width: 100%;
     height: 100%;
@@ -45,6 +62,11 @@ body {
     flex-direction: column;
 }
 
+[data-theme='dark'] .container {
+    background-color: var(--background-color);
+}
+
+/*------------- Top Bar --------------*/
 .top-bar {
     background-color: var(--primary-color);
     color: white;
@@ -106,6 +128,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/*------------- Logout Button --------------*/
 .logout-button {
     margin-left: 10px;
 }
@@ -128,6 +151,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/*------------- Content Wrapper --------------*/
 .content-wrapper {
     display: flex;
     flex: 1;
@@ -141,6 +165,11 @@ body {
     overflow-y: auto;
     flex: 0 0 30%;
     min-width: 250px;
+}
+
+[data-theme='dark'] #roomList {
+    background-color: #374151;
+    border-right-color: var(--border-color);
 }
 
 #roomList h3 {
@@ -168,6 +197,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/*------------- Chat Wrapper --------------*/
 .chat-wrapper {
     display: flex;
     flex-direction: column;
@@ -198,6 +228,11 @@ body {
     flex-direction: column;
 }
 
+[data-theme='dark'] #chatBox {
+    background-color: var(--background-color);
+}
+
+/*------------- Message Form --------------*/
 #messageForm {
     display: flex;
     padding: 15px;
@@ -209,6 +244,10 @@ body {
     width: 100%;
     box-sizing: border-box;
     z-index: 1;
+}
+
+[data-theme='dark'] #messageForm {
+    background-color: var(--background-color);
 }
 
 #messageForm input {
@@ -245,6 +284,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/*------------- Modal Common Styles --------------*/
 .modal {
     display: none;
     position: fixed;
@@ -273,7 +313,7 @@ body {
 .modal-buttons button {
     padding: 10px 20px;
     margin: 0 10px;
-    background-color: #6366F1;
+    background-color: var(--button-color);
     color: white;
     border: none;
     border-radius: 8px;
@@ -283,11 +323,17 @@ body {
 }
 
 .modal-buttons button:hover {
-    background-color: #4F46E5;
+    background-color: var(--button-hover-color);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+[data-theme='dark'] .modal-content {
+    background-color: var(--background-color);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+}
+
+/*------------- Message Styles --------------*/
 .message {
     background-color: var(--primary-color);
     color: white;
@@ -315,6 +361,11 @@ body {
     border-bottom-left-radius: 4px;
 }
 
+[data-theme='dark'] .message {
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+/*------------- Show More/Less --------------*/
 .show-more, .show-less {
     color: rgba(255, 255, 255, 0.9);
     cursor: pointer;
@@ -340,6 +391,7 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/*------------- Icon Buttons --------------*/
 .icon-buttons {
     display: flex;
     align-items: center;
@@ -364,6 +416,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/*------------- Responsive Layout --------------*/
 @media (max-width: 1200px) {
     #roomSelector {
         flex-basis: 100%;
@@ -405,7 +458,7 @@ body {
     }
 }
 
-/* Help Modal Styles */
+/*------------- Help Modal --------------*/
 .help-modal {
     max-width: 800px;
     width: 90%;
@@ -495,6 +548,7 @@ body {
     flex-grow: 1;
     padding: 30px;
 }
+
 .help-section {
     display: none;
 }
@@ -509,10 +563,6 @@ body {
     font-size: 24px;
     color: var(--primary-color);
     margin-bottom: 20px;
-}
-
-.help-section h3 i {
-    margin-right: 10px;
 }
 
 .step-by-step {
@@ -548,7 +598,6 @@ body {
     margin-bottom: 10px;
     overflow: hidden;
 }
-
 .accordion-header {
     width: 100%;
     padding: 15px 20px;
@@ -561,19 +610,70 @@ body {
     align-items: center;
     font-weight: 600;
 }
-
 .accordion-content {
     padding: 0 20px;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease, padding 0.3s ease;
 }
-
 .accordion-item.active .accordion-content {
     padding: 15px 20px;
     max-height: 1000px;
 }
+/* Dark mode for help modal */
+[data-theme='dark'] .help-modal {
+    background-color: var(--background-color);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
 
+[data-theme='dark'] .help-header {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+[data-theme='dark'] .help-body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+[data-theme='dark'] .help-nav {
+    background-color: #4B5563;
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme='dark'] .mobile-nav-select {
+    background-color: var(--background-color);
+    color: var(--light-text-color);
+    border-color: var(--border-color);
+}
+
+[data-theme='dark'] .nav-btn {
+    color: var(--text-color);
+}
+
+[data-theme='dark'] .nav-btn:hover, [data-theme='dark'] .nav-btn.active {
+    background-color: #4F46E5;
+    color: white;
+}
+
+[data-theme='dark'] .help-content {
+    background-color: #374151;
+}
+
+[data-theme='dark'] .step {
+    background-color: #4B5563;
+}
+
+[data-theme='dark'] .accordion-header {
+    background-color: #4B5563;
+    color: white;
+}
+
+[data-theme='dark'] .accordion-item.active .accordion-content {
+    background-color: #374151;
+}
+
+/*------------- Troubleshooting Steps --------------*/
 .troubleshooting-steps {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -593,10 +693,19 @@ body {
     margin-bottom: 10px;
 }
 
+[data-theme='dark'] .troubleshooting-step {
+    background-color: #4B5563;
+    color: var(--text-color);
+}
+
 .help-footer {
     background-color: #f5f7fa;
     padding: 20px 30px;
     text-align: right;
+}
+
+[data-theme='dark'] .help-footer {
+    background-color: #4B5563;
 }
 
 .primary-btn {
@@ -616,43 +725,278 @@ body {
     transform: translateY(-2px);
 }
 
+/*------------- Settings Modal --------------*/
+.settings-modal {
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.settings-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.settings-header h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.settings-body {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+}
+
+.settings-nav {
+    background-color: #f5f7fa;
+    padding: 20px;
+    border-right: 1px solid #e0e0e0;
+    min-width: 150px;
+}
+
+.settings-nav-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.settings-nav-btn:hover, .settings-nav-btn.active {
+    background-color: #e0e0e0;
+    color: var(--primary-color);
+}
+
+.settings-content {
+    flex-grow: 1;
+    padding: 30px;
+}
+
+.settings-section {
+    display: none;
+}
+
+.settings-section.active {
+    display: block;
+}
+
+.settings-section h3 {
+    font-size: 20px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.theme-options {
+    display: flex;
+    gap: 10px;
+}
+
+.theme-option {
+    flex: 1;
+    padding: 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-option:hover, .theme-option.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.theme-option i {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Dark mode for settings modal */
+[data-theme='dark'] .settings-modal {
+    background-color: #1F2937;
+}
+
+[data-theme='dark'] .settings-header {
+    background-color: var(--accent-color);
+}
+
+[data-theme='dark'] .settings-nav {
+    background-color: #374151;
+    border-right-color: var(--border-color);
+}
+
+[data-theme='dark'] .settings-nav-btn {
+    color: var(--text-color);
+}
+
+[data-theme='dark'] .settings-nav-btn:hover, [data-theme='dark'] .settings-nav-btn.active {
+    background-color: #4F46E5;
+    color: white;
+}
+
+[data-theme='dark'] .settings-content {
+    background-color: #1F2937;
+    color: var(--text-color);
+}
+
+[data-theme='dark'] .theme-option {
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+[data-theme='dark'] .theme-option:hover, [data-theme='dark'] .theme-option.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/*------------- Change Email & Password --------------*/
+.change-email-section,
+.change-password-section {
+    margin-bottom: 30px;
+}
+
+.change-email-section h3,
+.change-password-section h3 {
+    font-size: 20px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--focus-border-color);
+    box-shadow: 0 0 0 3px var(--focus-shadow-color);
+}
+
+.form-group button {
+    padding: 12px 24px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.form-group button:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/*------------- Save Changes Button in Theme --------------*/
+.theme-options + .form-group {
+    margin-top: 20px; /* Adds space between theme options and the button */
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.primary-btn:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+/*------------- Dark Mode for Change Email & Password --------------*/
+[data-theme='dark'] .form-group label {
+    color: var(--text-color);
+}
+
+[data-theme='dark'] .form-group input {
+    background-color: #374151;
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+[data-theme='dark'] .form-group input:focus {
+    border-color: var(--focus-border-color);
+    box-shadow: 0 0 0 3px var(--focus-shadow-color);
+}
+
+[data-theme='dark'] .form-group button {
+    background-color: var(--accent-color);
+}
+
+[data-theme='dark'] .form-group button:hover {
+    background-color: var(--secondary-color);
+}
+
+/*------------- Media Queries for Settings Modal --------------*/
 @media (max-width: 768px) {
-    .help-modal {
+    .settings-modal {
         width: 100%;
         height: 100%;
         max-height: none;
         border-radius: 0;
     }
 
-    .help-header h2 {
+    .settings-header h2 {
         font-size: 24px;
     }
 
-    .help-nav {
-        padding: 10px;
+    .settings-body {
+        flex-direction: column;
     }
 
-    .mobile-nav-select {
-        display: block;
+    .settings-nav {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
     }
 
-    .nav-btn {
-        display: none;
-    }
-
-    .help-content {
+    .settings-content {
         padding: 20px;
     }
 
-    .help-section h3 {
-        font-size: 20px;
-    }
-
-    .step, .accordion-header, .troubleshooting-step {
-        padding: 15px;
-    }
-
-    .troubleshooting-steps {
-        grid-template-columns: 1fr;
+    .theme-options {
+        flex-direction: column;
     }
 }
