@@ -7,11 +7,10 @@ import com.ybdd.ChatApp.repository.UserRepository;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -31,6 +30,27 @@ public class ChatController {
         this.messageRepository = messageRepository;
         this.messagingTemplate = messagingTemplate;
     }
+
+    @PostMapping("/create-room")
+    @ResponseBody
+    public String createRoom(@RequestParam String roomName, Authentication authentication) {
+        String username = authentication.getName();
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Check if the user has already created a room
+        if (user.getCreatedRoom() != null) {
+            return "You can only create one room.";
+        }
+
+        // Create the room and set it in the user
+        chatRooms.add(roomName);
+        user.setCreatedRoom(roomName);
+        userRepository.save(user);
+
+        // Return a success message
+        return "Room created successfully!";
+    }
+
 
     @GetMapping("/chat/history/{room}")
     @ResponseBody

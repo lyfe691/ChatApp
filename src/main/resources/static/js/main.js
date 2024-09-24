@@ -165,3 +165,68 @@ function displayMessage(message) {
     chatBox.appendChild(messageElement);
     chatBox.scrollTop = chatBox.scrollHeight;
 }
+
+function createOrJoinRoom() {
+    const room = roomInput.value.trim();
+
+    if (room.length > MAX_ROOM_NAME_LENGTH) {
+        showErrorPopup(`Room name cannot exceed ${MAX_ROOM_NAME_LENGTH} characters.`);
+        return;
+    }
+
+    if (room) {
+        fetch('/create-room', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                roomName: room
+            }),
+        })
+            .then(response => response.text())
+            .then(result => {
+                if (result === 'Room created successfully!') {
+                    joinRoom(room);  // Join the newly created room
+                    showSuccessPopup(result);
+                } else {
+                    showErrorPopup(result);  // Show error if room creation failed
+                }
+            })
+            .catch(error => {
+                console.error('Error creating room:', error);
+                showErrorPopup('Error creating room. Please try again.');
+            });
+    }
+}
+// Function to show error popup
+function showErrorPopup(message) {
+    const errorPopup = document.getElementById('errorPopup');
+    const errorMessage = errorPopup.querySelector('.popup-message');
+    errorMessage.textContent = message;
+    errorPopup.style.display = 'block';
+    errorPopup.style.opacity = '1'; // Fade in
+
+    setTimeout(() => {
+        errorPopup.style.opacity = '0'; // Fade out
+        setTimeout(() => {
+            errorPopup.style.display = 'none'; // Hide after fade-out
+        }, 400); // Wait for fade-out animation to finish
+    }, 3000); // Show for 3 seconds
+}
+
+// Function to show success popup
+function showSuccessPopup(message) {
+    const successPopup = document.getElementById('successPopup');
+    const successMessage = successPopup.querySelector('.popup-message');
+    successMessage.textContent = message;
+    successPopup.style.display = 'block';
+    successPopup.style.opacity = '1'; // Fade in
+
+    setTimeout(() => {
+        successPopup.style.opacity = '0'; // Fade out
+        setTimeout(() => {
+            successPopup.style.display = 'none'; // Hide after fade-out
+        }, 400); // Wait for fade-out animation to finish
+    }, 3000); // Show for 3 seconds
+}

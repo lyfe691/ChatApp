@@ -16,6 +16,7 @@ public class User {
     private String email;
     private String password;
     private String themePreference = "system";
+    private String createdRoom; // New field to track the room created by the user
 
     @DBRef
     private List<Message> messages = new ArrayList<>();
@@ -75,5 +76,13 @@ public class User {
 
     public void setThemePreference(String themePreference) {
         this.themePreference = themePreference;
+    }
+
+    public String getCreatedRoom() {
+        return createdRoom;
+    }
+
+    public void setCreatedRoom(String createdRoom) {
+        this.createdRoom = createdRoom;
     }
 }
