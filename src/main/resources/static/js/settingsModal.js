@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const settingsNavButtons = document.querySelectorAll('.settings-nav-btn');
     const settingsSections = document.querySelectorAll('.settings-section');
     const themeOptions = document.querySelectorAll('.theme-option');
-    const saveChangesButton = document.querySelector('#theme .primary-btn'); // Save Changes button for theme
+    const saveThemeChangesButton = document.querySelector('#theme .primary-btn');
     const changeEmailForm = document.getElementById('changeEmailForm');
     const changePasswordForm = document.getElementById('changePasswordForm');
     const errorPopup = document.getElementById('errorPopup');
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Event listener for Save Changes button
-    saveChangesButton.addEventListener('click', saveThemeChanges);
+    saveThemeChangesButton.addEventListener('click', saveThemeChanges);
 
     // When the settings modal is closed, revert unsaved theme changes
     window.closeSettingsModal = function() {
