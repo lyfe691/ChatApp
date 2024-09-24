@@ -6,9 +6,13 @@ import com.ybdd.ChatApp.service.UserService;
 import com.ybdd.ChatApp.repository.PasswordResetTokenRepository;
 import com.ybdd.ChatApp.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
@@ -123,4 +127,100 @@ public class AuthController {
         model.addAttribute("error", "Something went wrong.");
         return "reset-password";
     }
+
+    // Theme preferences
+    @PostMapping("/theme")
+    @ResponseBody
+    public String updateThemePreference(Authentication authentication, @RequestParam String theme) {
+        String username = authentication.getName();
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setThemePreference(theme);
+        userService.saveUser(user);
+        return "Theme preference updated successfully!";
+    }
+
+    @GetMapping("/theme")
+    @ResponseBody
+    public String getThemePreference(Authentication authentication) {
+        String username = authentication.getName();
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return user.getThemePreference();
+    }
+
+    @PostMapping("/change-email")
+    @ResponseBody
+    public ResponseEntity<String> changeEmail(Authentication authentication,
+                                              @RequestParam String currentEmail,
+                                              @RequestParam String newEmail,
+                                              @RequestParam String confirmNewEmail,
+                                              @RequestParam String password) {
+        Logger logger = LoggerFactory.getLogger(AuthController.class);
+
+        String username = authentication.getName();
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Check if current email matches
+        if (!user.getEmail().equals(currentEmail)) {
+            logger.error("Email mismatch: Provided email {} does not match user email {}", currentEmail, user.getEmail());
+            return ResponseEntity.badRequest().body("Current email does not match.");
+        }
+
+        // Check if new email and confirmation match
+        if (!newEmail.equals(confirmNewEmail)) {
+            logger.error("New email mismatch: {} and {} do not match", newEmail, confirmNewEmail);
+            return ResponseEntity.badRequest().body("New email and confirmation do not match.");
+        }
+
+        // Validate password
+        if (!userService.isPasswordValid(user, password)) {
+            logger.error("Password validation failed for user {}", username);
+            return ResponseEntity.badRequest().body("Invalid password.");
+        }
+
+        // Update email
+        user.setEmail(newEmail);
+        userService.saveUser(user);
+        logger.info("Email updated successfully for user {}", username);
+
+        return ResponseEntity.ok("Email updated successfully!");
+    }
+
+    // Change Password
+    @PostMapping("/change-password")
+    @ResponseBody
+    public ResponseEntity<String> changePassword(Authentication authentication,
+                                                 @RequestParam String currentPassword,
+                                                 @RequestParam String newPassword,
+                                                 @RequestParam String confirmNewPassword) {
+        Logger logger = LoggerFactory.getLogger(AuthController.class);
+
+        String username = authentication.getName();
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Validate current password
+        if (!userService.isPasswordValid(user, currentPassword)) {
+            logger.error("Password validation failed for user {}", username);
+            return ResponseEntity.badRequest().body("Current password is incorrect.");
+        }
+
+        // Check if new password and confirmation match
+        if (!newPassword.equals(confirmNewPassword)) {
+            logger.error("New password mismatch: {} and {} do not match", newPassword, confirmNewPassword);
+            return ResponseEntity.badRequest().body("New password and confirmation do not match.");
+        }
+
+        // Update password
+        user.setPassword(userService.encodePassword(newPassword));
+        userService.saveUser(user);
+        logger.info("Password updated successfully for user {}", username);
+
+        return ResponseEntity.ok("Password updated successfully!");
+    }
+
 }

@@ -1000,3 +1000,116 @@ body {
         flex-direction: column;
     }
 }
+
+/* Popup */
+.success-popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #48BB78;
+    color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(72, 187, 120, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-50px);
+    animation: success-popup-show 0.4s ease-in-out forwards, success-popup-hide 0.4s ease-in-out 3s forwards;
+}
+
+.success-popup .popup-icon {
+    font-size: 24px;
+    margin-right: 12px;
+    vertical-align: middle;
+}
+
+.success-popup .popup-message {
+    font-size: 18px;
+    font-weight: 600;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+@keyframes success-popup-show {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes success-popup-hide {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+}
+
+[data-theme='dark'] .success-popup {
+    background-color: #38A169;
+    color: #F3F4F6;
+    box-shadow: 0 8px 16px rgba(56, 161, 105, 0.2);
+}
+/* error popup */
+.error-popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #E53E3E;
+    color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(229, 62, 62, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-50px);
+    animation: error-popup-show 0.4s ease-in-out forwards, error-popup-hide 0.4s ease-in-out 3s forwards;
+}
+
+.error-popup .popup-icon {
+    font-size: 24px;
+    margin-right: 12px;
+    vertical-align: middle;
+}
+
+.error-popup .popup-message {
+    font-size: 18px;
+    font-weight: 600;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+@keyframes error-popup-show {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes error-popup-hide {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+}
+
+[data-theme='dark'] .error-popup {
+    background-color: #C53030;
+    color: #F3F4F6;
+    box-shadow: 0 8px 16px rgba(197, 48, 48, 0.2);
+}

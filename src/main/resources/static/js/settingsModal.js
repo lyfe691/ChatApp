@@ -5,6 +5,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const saveChangesButton = document.querySelector('#theme .primary-btn'); // Save Changes button for theme
     const changeEmailForm = document.getElementById('changeEmailForm');
     const changePasswordForm = document.getElementById('changePasswordForm');
+    const errorPopup = document.getElementById('errorPopup');
+    const successPopup = document.getElementById('successPopup');
+    const errorMessage = errorPopup.querySelector('.popup-message');
+    const successMessage = successPopup.querySelector('.popup-message');
 
     let currentTheme = localStorage.getItem('theme') || 'system'; // Store the current theme
     let tempTheme = currentTheme; // Temporary theme to track user changes
@@ -46,11 +50,29 @@ document.addEventListener('DOMContentLoaded', function() {
         applyTheme(mode);
     };
 
-    // Save the theme changes permanently
-    function saveThemeChanges() {
+    // Save the theme changes permanently (send to server)
+    async function saveThemeChanges() {
         currentTheme = tempTheme; // Make the temporary theme permanent
         localStorage.setItem('theme', currentTheme);
-        alert('Theme changes saved successfully!');
+
+        try {
+            const response = await fetch('/theme', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ theme: currentTheme }),
+            });
+
+            if (response.ok) {
+                showSuccessPopup('Theme changes saved successfully!');
+            } else {
+                showErrorPopup('Failed to save theme changes.');
+            }
+        } catch (error) {
+            console.error('Error saving theme:', error);
+            showErrorPopup('Error saving theme. Please try again.');
+        }
     }
 
     // Revert to the original theme if changes are not saved
@@ -83,40 +105,108 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Change Email Form Submission
-    changeEmailForm.addEventListener('submit', function(e) {
+    changeEmailForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         const currentEmail = document.getElementById('currentEmail').value;
         const newEmail = document.getElementById('newEmail').value;
         const confirmNewEmail = document.getElementById('confirmNewEmail').value;
         const password = document.getElementById('passwordForEmail').value;
 
+        // Check if new email and confirmation match
         if (newEmail !== confirmNewEmail) {
-            alert('New email and confirmation do not match.');
+            showErrorPopup('New email and confirmation do not match.');
             return;
         }
 
-        ///placeholder server request to change email.
-        console.log('Changing email:', { currentEmail, newEmail, password });
-        alert('Email change request submitted. Please check your new email for confirmation.');
+        try {
+            const response = await fetch('/change-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    currentEmail: currentEmail,
+                    newEmail: newEmail,
+                    confirmNewEmail: confirmNewEmail,
+                    password: password,
+                }),
+            });
+
+            const resultText = await response.text();
+
+            if (response.ok) {
+                showSuccessPopup(resultText);
+                changeEmailForm.reset(); // Reset the form on success
+            } else {
+                showErrorPopup(resultText);
+            }
+        } catch (error) {
+            console.error('Error changing email:', error);
+            showErrorPopup('Error changing email. Please try again.');
+        }
     });
 
-    // Change Password Form Submission
-    changePasswordForm.addEventListener('submit', function(e) {
+
+// Change Password Form Submission
+    changePasswordForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         const currentPassword = document.getElementById('currentPassword').value;
         const newPassword = document.getElementById('newPassword').value;
         const confirmNewPassword = document.getElementById('confirmNewPassword').value;
 
+        // Check if new password and confirmation match
         if (newPassword !== confirmNewPassword) {
-            alert('New password and confirmation do not match.');
+            showErrorPopup('New password and confirmation do not match.');
             return;
         }
 
-        // palceholder for server request.
-        console.log('Changing password:', { currentPassword, newPassword });
-        alert('Password changed successfully.');
+        try {
+            const response = await fetch('/change-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    currentPassword: currentPassword,
+                    newPassword: newPassword,
+                    confirmNewPassword: confirmNewPassword,
+                }),
+            });
+
+            const resultText = await response.text();
+
+            if (response.ok) {
+                showSuccessPopup(resultText);
+                changePasswordForm.reset(); // Reset the form on success
+            } else {
+                showErrorPopup(resultText);
+            }
+        } catch (error) {
+            console.error('Error changing password:', error);
+            showErrorPopup('Error changing password. Please try again.');
+        }
     });
+
+
+    // Function to show error popup
+    function showErrorPopup(message) {
+        errorMessage.textContent = message;
+        errorPopup.style.display = 'block';
+        errorPopup.style.opacity = '1';
+        setTimeout(() => {
+            errorPopup.style.opacity = '0';
+            setTimeout(() => errorPopup.style.display = 'none', 400); // Wait for hide animation to finish
+        }, 3000); // Show for 3 seconds
+    }
+
+    // Function to show success popup
+    function showSuccessPopup(message) {
+        successMessage.textContent = message;
+        successPopup.style.display = 'block';
+        successPopup.style.opacity = '1';
+        setTimeout(() => {
+            successPopup.style.opacity = '0';
+            setTimeout(() => successPopup.style.display = 'none', 400); // Wait for hide animation to finish
+        }, 3000); // Show for 3 seconds
+    }
 });
-
-
-

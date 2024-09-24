@@ -15,6 +15,7 @@ public class User {
     private String username;
     private String email;
     private String password;
+    private String themePreference = "system";
 
     @DBRef
     private List<Message> messages = new ArrayList<>();
@@ -66,5 +67,13 @@ public class User {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+    }
+
+    public String getThemePreference() {
+        return themePreference;
+    }
+
+    public void setThemePreference(String themePreference) {
+        this.themePreference = themePreference;
     }
 }

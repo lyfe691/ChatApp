@@ -43,12 +43,20 @@ public class UserService implements org.springframework.security.core.userdetail
         return userRepository.findByEmail(email);
     }
 
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public void saveUser(User user) {
         userRepository.save(user);
     }
 
     public String encodePassword(String password) {
         return passwordEncoder.encode(password);
+    }
+
+    public boolean isPasswordValid(User user, String password) {
+        return passwordEncoder.matches(password, user.getPassword());
     }
 
     public User registerNewUser(String username, String email, String password) {
