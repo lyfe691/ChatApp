@@ -3,6 +3,7 @@ let stompClient = null;
 let currentRoom = null;
 let currentSubscription = null;
 const MAX_ROOM_NAME_LENGTH = 20;
+const MAX_MESSAGE_LENGTH = 1500;
 
 const chatBox = document.getElementById('chatBox');
 const messageForm = document.getElementById('messageForm');
@@ -93,7 +94,20 @@ function joinRoom(room) {
 
     currentSubscription = stompClient.subscribe('/topic/' + room, function(messageOutput) {
         const message = JSON.parse(messageOutput.body);
-        displayMessage(message);
+
+        if (message.message && message.message.includes("has been deleted")) {
+            // Handle room deletion notification
+            showErrorPopup(message.message);
+
+            // Unsubscribe and clear room UI when the room is deleted
+            currentSubscription.unsubscribe();
+            currentRoomDisplay.style.display = 'none';
+            chatBox.style.display = 'none';
+            messageForm.style.display = 'none';
+            currentRoom = null;
+        } else {
+            displayMessage(message);
+        }
     });
 
     stompClient.send("/app/joinRoom", {}, room);
@@ -117,6 +131,13 @@ function joinRoom(room) {
 messageForm.addEventListener('submit', function(event) {
     event.preventDefault();
     const message = messageInput.value.trim();
+
+    // Check if message exceeds the maximum allowed length
+    if (message.length > MAX_MESSAGE_LENGTH) {
+        showErrorPopup(`Message length cannot exceed ${MAX_MESSAGE_LENGTH} characters.`);
+        return;
+    }
+
     if (message && currentRoom) {
         stompClient.send("/app/sendMessage", {}, JSON.stringify({
             'sender': username,
@@ -195,24 +216,51 @@ function displayMessage(message) {
 
 function deleteRoom(roomName) {
     if (confirm(`Are you sure you want to delete the room "${roomName}"?`)) {
+        // Notify all users about the room deletion via WebSocket
+        stompClient.send(`/app/deleteRoom/${roomName}`, {}, JSON.stringify({
+            message: `The room "${roomName}" has been deleted.`,
+            room: roomName
+        }));
+
         fetch('/delete-room', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         })
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error deleting room');
+                }
+                return response.text();  // Parse the response as text (for success message)
+            })
             .then(result => {
-                showSuccessPopup(result);
-                displayUserCreatedRoom();
+                showSuccessPopup(result);  // Show success message
+
+                // Unsubscribe from the room's WebSocket topic
+                if (currentSubscription !== null) {
+                    currentSubscription.unsubscribe();
+                }
+
+                // Clear the current room display
+                currentRoom = null;
+                currentRoomDisplay.style.display = 'none';
+                chatBox.style.display = 'none';
+                messageForm.style.display = 'none';
+
+                // Hide the created room section after deletion
+                createdRoomContainer.style.display = 'none';
+
+                // Fetch updated rooms to reflect deletion
                 fetchRooms();
             })
             .catch(error => {
                 console.error('Error deleting room:', error);
-                showErrorPopup('Error deleting room. Please try again.');
+                showErrorPopup('Refresh the page to apply changes.');  // Keep this message as fallback
             });
     }
 }
+
 
 // Function to display user created room
 function displayUserCreatedRoom() {
@@ -277,21 +325,19 @@ function showErrorPopup(message) {
             errorPopup.style.display = 'none';
         }, 400);
     }, 3000);
+}
 
+function showSuccessPopup(message) {
+    const successPopup = document.getElementById('successPopup');
+    const successMessage = successPopup.querySelector('.popup-message');
+    successMessage.textContent = message;
+    successPopup.style.display = 'block';
+    successPopup.style.opacity = '1';
 
-    function showSuccessPopup(message) {
-        const successPopup = document.getElementById('successPopup');
-        const successMessage = successPopup.querySelector('.popup-message');
-        successMessage.textContent = message;
-        successPopup.style.display = 'block';
-        successPopup.style.opacity = '1';
-
+    setTimeout(() => {
+        successPopup.style.opacity = '0';
         setTimeout(() => {
-            successPopup.style.opacity = '0';
-            setTimeout(() => {
-                successPopup.style.display = 'none';
-            }, 400);
-        }, 3000);
-
-    }
+            successPopup.style.display = 'none';
+        }, 400);
+    }, 3000);
 }
