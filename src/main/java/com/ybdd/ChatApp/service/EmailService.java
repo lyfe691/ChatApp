@@ -74,4 +74,24 @@ public class EmailService {
 
         mailSender.send(mimeMessage);
     }
+
+    public void sendEmailVerificationToken(String toEmail, String verificationLink) throws MessagingException {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+
+        String htmlContent = "<!DOCTYPE html>"
+                + "<html lang='en'>"
+                + "<head><meta charset='UTF-8'><title>Email Verification</title></head>"
+                + "<body>"
+                + "<p>Thank you for registering. Please click the link below to verify your email:</p>"
+                + "<a href='" + verificationLink + "'>Verify Email</a>"
+                + "</body></html>";
+
+        helper.setTo(toEmail);
+        helper.setSubject("Email Verification");
+        helper.setText(htmlContent, true);
+
+        mailSender.send(mimeMessage);
+    }
+
 }

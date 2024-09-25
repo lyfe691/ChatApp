@@ -2,13 +2,13 @@ package com.ybdd.ChatApp.service;
 
 import com.ybdd.ChatApp.model.User;
 import com.ybdd.ChatApp.repository.UserRepository;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -32,6 +32,11 @@ public class UserService implements org.springframework.security.core.userdetail
             throw new UsernameNotFoundException("User not found with username or email: " + usernameOrEmail);
         }
 
+        // Check if the user has verified their email
+        if (!user.get().isEnabled()) {
+            throw new RuntimeException("Email not verified. Please check your email.");
+        }
+
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.get().getUsername())
                 .password(user.get().getPassword())
@@ -51,6 +56,7 @@ public class UserService implements org.springframework.security.core.userdetail
         userRepository.save(user);
     }
 
+
     public String encodePassword(String password) {
         return passwordEncoder.encode(password);
     }
@@ -63,7 +69,9 @@ public class UserService implements org.springframework.security.core.userdetail
         if (userRepository.findByUsername(username).isPresent() || userRepository.findByEmail(email).isPresent()) {
             throw new RuntimeException("Username or email already exists.");
         }
+        // Mark user as disabled until they verify their email
         User newUser = new User(username, email, encodePassword(password));
+        newUser.setEnabled(false); // User will be enabled after email verification
         return userRepository.save(newUser);
     }
 }

@@ -16,7 +16,8 @@ public class User {
     private String email;
     private String password;
     private String themePreference = "system";
-    private String createdRoom; // New field to track the room created by the user
+    private String createdRoom;
+    private boolean enabled = false;
 
     @DBRef
     private List<Message> messages = new ArrayList<>();
@@ -36,6 +37,14 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getUsername() {

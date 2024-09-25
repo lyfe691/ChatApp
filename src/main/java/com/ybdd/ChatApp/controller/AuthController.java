@@ -1,10 +1,13 @@
 package com.ybdd.ChatApp.controller;
 
 import com.ybdd.ChatApp.model.PasswordResetToken;
+import com.ybdd.ChatApp.model.EmailVerificationToken;
 import com.ybdd.ChatApp.model.User;
 import com.ybdd.ChatApp.service.UserService;
 import com.ybdd.ChatApp.repository.PasswordResetTokenRepository;
+import com.ybdd.ChatApp.repository.EmailVerificationTokenRepository;
 import com.ybdd.ChatApp.service.EmailService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,17 +25,19 @@ public class AuthController {
 
     private final UserService userService;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
+    private final EmailVerificationTokenRepository emailVerificationTokenRepository;
     private final EmailService emailService;
 
     @Autowired
     public AuthController(UserService userService,
                           PasswordResetTokenRepository passwordResetTokenRepository,
+                          EmailVerificationTokenRepository emailVerificationTokenRepository,
                           EmailService emailService) {
         this.userService = userService;
         this.passwordResetTokenRepository = passwordResetTokenRepository;
+        this.emailVerificationTokenRepository = emailVerificationTokenRepository;
         this.emailService = emailService;
     }
-
     // Registration endpoint
     @GetMapping("/register")
     public String showRegistrationPage(Model model) {
@@ -44,10 +49,52 @@ public class AuthController {
     public String registerUser(@ModelAttribute User user, Model model) {
         try {
             userService.registerNewUser(user.getUsername(), user.getEmail(), user.getPassword());
-            return "redirect:/login";
+
+            // Generate email verification token
+            String token = UUID.randomUUID().toString();
+            EmailVerificationToken verificationToken = new EmailVerificationToken(token, user.getEmail(), LocalDateTime.now().plusHours(24));
+            emailVerificationTokenRepository.save(verificationToken);
+
+            // Send verification email (MessagingException handled here)
+            String verificationLink = "http://localhost:8080/verify-email?token=" + token;
+            emailService.sendEmailVerificationToken(user.getEmail(), verificationLink);
+
+            model.addAttribute("message", "Email verification link sent to your email.");
+            return "register";
+        } catch (MessagingException e) {
+            model.addAttribute("error", "Failed to send verification email.");
+            return "register";
         } catch (RuntimeException e) {
             model.addAttribute("error", "Username or email already taken.");
             return "register";
+        }
+    }
+    Logger logger = LoggerFactory.getLogger(AuthController.class);
+
+    @GetMapping("/verify-email")
+    public String verifyEmail(@RequestParam("token") String token, Model model) {
+        Optional<EmailVerificationToken> verificationToken = emailVerificationTokenRepository.findByToken(token);
+
+        if (!verificationToken.isPresent() || verificationToken.get().getExpiryDate().isBefore(LocalDateTime.now())) {
+            logger.error("Verification token is invalid or expired.");
+            model.addAttribute("error", "Invalid or expired verification link.");
+            return "login";
+        }
+
+        Optional<User> user = userService.findByEmail(verificationToken.get().getUserEmail());
+        if (user.isPresent()) {
+            User userToUpdate = user.get();
+            userToUpdate.setEnabled(true);  // Enable the user account
+            logger.info("Enabling user: " + userToUpdate.getEmail());
+            userService.saveUser(userToUpdate);
+            logger.info("User enabled and saved.");
+            emailVerificationTokenRepository.deleteByUserEmail(userToUpdate.getEmail());
+            model.addAttribute("message", "Email verified successfully. You can now log in.");
+            return "login";
+        } else {
+            logger.error("User not found for email: " + verificationToken.get().getUserEmail());
+            model.addAttribute("error", "User not found.");
+            return "login";
         }
     }
 
