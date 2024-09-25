@@ -4,6 +4,7 @@ import com.ybdd.ChatApp.model.Message;
 import com.ybdd.ChatApp.model.User;
 import com.ybdd.ChatApp.repository.MessageRepository;
 import com.ybdd.ChatApp.repository.UserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -36,18 +37,18 @@ public class ChatController {
     public String createRoom(@RequestParam String roomName, Authentication authentication) {
         String username = authentication.getName();
         User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
-
-        // Check if the user has already created a room
         if (user.getCreatedRoom() != null) {
             return "You can only create one room.";
         }
 
-        // Create the room and set it in the user
+        if (chatRooms.contains(roomName)) {
+            return "Room exists. You are now joining it.";
+        }
+
         chatRooms.add(roomName);
         user.setCreatedRoom(roomName);
         userRepository.save(user);
 
-        // Return a success message
         return "Room created successfully!";
     }
 
@@ -94,4 +95,42 @@ public class ChatController {
     public Set<String> getRooms() {
         return chatRooms;
     }
+    @PostMapping("/delete-room")
+    @ResponseBody
+    public ResponseEntity<String> deleteRoom(Authentication authentication) {
+        String username = authentication.getName();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        String createdRoom = user.getCreatedRoom();
+        if (createdRoom == null) {
+            return ResponseEntity.badRequest().body("No room found to delete.");
+        }
+
+
+        chatRooms.remove(createdRoom);
+        user.setCreatedRoom(null);
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Room deleted successfully!");
+    }
+
+
+    @GetMapping("/user-room")
+    @ResponseBody
+    public ResponseEntity<String> getUserCreatedRoom(Authentication authentication) {
+        String username = authentication.getName();
+        User user = userRepository.findByUsername(username)
+                  .orElseThrow(() -> new RuntimeException("User not found"));
+
+            String createdRoom = user.getCreatedRoom();
+
+            if (createdRoom == null) {
+                return ResponseEntity.badRequest().body("No room created.");
+            }
+
+            return ResponseEntity.ok(createdRoom);
+        }
+
+
 }

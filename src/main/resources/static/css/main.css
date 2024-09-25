@@ -179,6 +179,45 @@ body {
     font-weight: 600;
 }
 
+.created-room {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--secondary-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    color: white;
+    position: relative;
+}
+
+.created-room:hover {
+    background-color: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.created-room button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #E53E3E;
+    position: absolute;
+    right: 10px;
+}
+
+.created-room button:hover {
+    color: #C53030;
+}
+
+.created-room button i {
+    font-size: 20px;
+}
+
+/* Global Room styling */
 .room {
     margin: 10px 0;
     padding: 15px;
@@ -188,6 +227,13 @@ body {
     transition: all 0.3s ease;
     font-size: 16px;
     color: var(--text-color);
+
+}
+.room button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #E53E3E; /* Error color for delete button */
 }
 
 .room:hover {

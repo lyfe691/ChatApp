@@ -9,7 +9,8 @@ const messageForm = document.getElementById('messageForm');
 const messageInput = document.getElementById('messageInput');
 const roomInput = document.getElementById('roomInput');
 const roomList = document.getElementById('rooms');
-const currentRoomDisplay = document.getElementById('currentRoomDisplay'); // To display the current room name
+const currentRoomDisplay = document.getElementById('currentRoomDisplay');
+const createdRoomContainer = document.getElementById('createdRoomContainer');
 const username = /*[[${username}]]*/ '';
 
 const socket = new SockJS('/chat');
@@ -31,6 +32,7 @@ stompClient.connect({}, function(frame) {
     });
 
     fetch('/rooms').then(response => response.json()).then(rooms => {
+        roomList.innerHTML = '';
         rooms.forEach(room => {
             const roomElement = document.createElement('div');
             roomElement.className = 'room';
@@ -48,12 +50,37 @@ function createOrJoinRoom() {
     const room = roomInput.value.trim();
 
     if (room.length > MAX_ROOM_NAME_LENGTH) {
-        alert(`Room name cannot exceed ${MAX_ROOM_NAME_LENGTH} characters.`);
+        showErrorPopup(`Room name cannot exceed ${MAX_ROOM_NAME_LENGTH} characters.`);
         return;
     }
 
     if (room) {
-        joinRoom(room);
+        fetch('/create-room', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                roomName: room
+            }),
+        })
+            .then(response => response.text())
+            .then(result => {
+                if (result === 'Room created successfully!') {
+                    joinRoom(room);
+                    showSuccessPopup(result);
+                    displayUserCreatedRoom();
+                } else if (result === 'Room exists. You are now joining it.') {
+                    joinRoom(room);
+                    showSuccessPopup(result);
+                } else {
+                    showErrorPopup(result);
+                }
+            })
+            .catch(error => {
+                console.error('Error creating room:', error);
+                showErrorPopup('Error creating room. Please try again.');
+            });
     }
 }
 
@@ -97,7 +124,7 @@ messageForm.addEventListener('submit', function(event) {
             'timestamp': new Date().toISOString(),
             'room': currentRoom
         }));
-        messageInput.value = '';
+        messageInput.value = ''; // Clear input after sending
     }
 });
 
@@ -166,67 +193,105 @@ function displayMessage(message) {
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function createOrJoinRoom() {
-    const room = roomInput.value.trim();
-
-    if (room.length > MAX_ROOM_NAME_LENGTH) {
-        showErrorPopup(`Room name cannot exceed ${MAX_ROOM_NAME_LENGTH} characters.`);
-        return;
-    }
-
-    if (room) {
-        fetch('/create-room', {
+function deleteRoom(roomName) {
+    if (confirm(`Are you sure you want to delete the room "${roomName}"?`)) {
+        fetch('/delete-room', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: new URLSearchParams({
-                roomName: room
-            }),
         })
             .then(response => response.text())
             .then(result => {
-                if (result === 'Room created successfully!') {
-                    joinRoom(room);  // Join the newly created room
-                    showSuccessPopup(result);
-                } else {
-                    showErrorPopup(result);  // Show error if room creation failed
-                }
+                showSuccessPopup(result);
+                displayUserCreatedRoom();
+                fetchRooms();
             })
             .catch(error => {
-                console.error('Error creating room:', error);
-                showErrorPopup('Error creating room. Please try again.');
+                console.error('Error deleting room:', error);
+                showErrorPopup('Error deleting room. Please try again.');
             });
     }
 }
-// Function to show error popup
+
+// Function to display user created room
+function displayUserCreatedRoom() {
+    fetch('/user-room')
+        .then(response => response.text())
+        .then(room=>{
+            const createdRoomElement = document.getElementById('createdRoom');
+
+            if (room !== "No room created.") {
+                createdRoomContainer.style.display = 'block';
+                createdRoomElement.innerHTML = `
+                    <div class="created-room">
+                        ${room}
+                        <button onclick="deleteRoom('${room}')">
+                            <i data-feather="trash-2"></i> <!-- Feather icon -->
+                        </button>
+                    </div>
+                `;
+                feather.replace();
+            } else {
+                createdRoomContainer.style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching user room:', error);
+        });
+}
+
+
+function fetchRooms() {
+    fetch('/rooms')
+        .then(response => response.json())
+        .then(rooms => {
+            roomList.innerHTML = '';
+            rooms.forEach(room => {
+                if (room !== currentRoom) {
+                    const roomElement = document.createElement('div');
+                    roomElement.className = 'room';
+                    roomElement.textContent = room;
+                    roomElement.onclick = () => joinRoom(room);
+                    roomList.appendChild(roomElement);
+                }
+            });
+        });
+}
+
+
+displayUserCreatedRoom();
+fetchRooms();
+
+
 function showErrorPopup(message) {
     const errorPopup = document.getElementById('errorPopup');
     const errorMessage = errorPopup.querySelector('.popup-message');
     errorMessage.textContent = message;
     errorPopup.style.display = 'block';
-    errorPopup.style.opacity = '1'; // Fade in
+    errorPopup.style.opacity = '1';
 
     setTimeout(() => {
-        errorPopup.style.opacity = '0'; // Fade out
+        errorPopup.style.opacity = '0';
         setTimeout(() => {
-            errorPopup.style.display = 'none'; // Hide after fade-out
-        }, 400); // Wait for fade-out animation to finish
-    }, 3000); // Show for 3 seconds
-}
+            errorPopup.style.display = 'none';
+        }, 400);
+    }, 3000);
 
-// Function to show success popup
-function showSuccessPopup(message) {
-    const successPopup = document.getElementById('successPopup');
-    const successMessage = successPopup.querySelector('.popup-message');
-    successMessage.textContent = message;
-    successPopup.style.display = 'block';
-    successPopup.style.opacity = '1'; // Fade in
 
-    setTimeout(() => {
-        successPopup.style.opacity = '0'; // Fade out
+    function showSuccessPopup(message) {
+        const successPopup = document.getElementById('successPopup');
+        const successMessage = successPopup.querySelector('.popup-message');
+        successMessage.textContent = message;
+        successPopup.style.display = 'block';
+        successPopup.style.opacity = '1';
+
         setTimeout(() => {
-            successPopup.style.display = 'none'; // Hide after fade-out
-        }, 400); // Wait for fade-out animation to finish
-    }, 3000); // Show for 3 seconds
+            successPopup.style.opacity = '0';
+            setTimeout(() => {
+                successPopup.style.display = 'none';
+            }, 400);
+        }, 3000);
+
+    }
 }
