@@ -88,7 +88,7 @@ This app uses **Spring Security** with the following features:
 
 ## 🤝 Contributing
 
-We welcome contributions! To contribute:
+I welcome contributions! To contribute:
 
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature-branch`).
