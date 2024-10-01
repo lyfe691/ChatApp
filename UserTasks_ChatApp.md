@@ -1,101 +1,95 @@
 
+# User Tasks
+
 # Sprint 1
-## ID: 1 - Access GitHub Versions
-- **User Task**: Ensure the GitHub repository is set up with proper version control for the ChatApp.
-  - Commit and push latest stable build to GitHub.
 
-## ID: 2 - Send and Receive Messages
-- **User Task**: Implement message sending and receiving in **ChatController** and update the **MessageRepository**.
-  - Add WebSocket logic in **WebSocketConfig** for real-time communication.
-  - Modify **Message** model to handle user messages and timestamps.
+## ID: 1 - Zugriff auf GitHub-Versionen
+- **User Task**: Sicherstellen, dass das GitHub-Repository ordnungsgemäss für die Versionierung der ChatApp eingerichtet ist.
+  - Commiten und Pushen der neuesten stabilen Version auf GitHub.
 
-## ID: 2.1 - Text Field for Messages
-- **User Task**: Implement the message input field in **index.html**.
-  - Create a form for message input and a button to submit messages in **main.js** to handle sending logic.
-  - Bind input from the form to send WebSocket messages via **ChatController**.
+## ID: 2 - Nachrichten senden und empfangen
+- **User Task**: Implementieren des Nachrichtenversands und Empfangs im **ChatController** und Aktualisierung des **MessageRepository**.
+  - WebSocket-Logik in **WebSocketConfig** hinzufügen, um Echtzeitkommunikation zu ermöglichen.
+  - **Message**-Modell modifizieren, um Benutzernachrichten und Zeitstempel zu verarbeiten.
 
-## ID: 2.3 - Display Usernames
-- **User Task**: Modify **index.html** to display the conversation partner's name.
-  - Ensure that the **ChatController** fetches the user names from **UserRepository** and passes them to the frontend.
+## ID: 2.1 - Textfeld für Nachrichten
+- **User Task**: Implementieren des Nachrichteneingabefeldes in **index.html**.
+  - Ein Formular für die Nachrichteneingabe und eine Schaltfläche zum Senden der Nachrichten erstellen.
+  - Eingaben vom Formular an **ChatController** senden, um WebSocket-Nachrichten zu verschicken.
 
-## ID: 3 - Clear UI for Chats
-- **User Task**: Create a simple and intuitive UI for the chat window in **main.css** and **style.css**.
-  - Implement responsive layout for chat windows in **index.html**.
+## ID: 2.2 - Chatverlauf anzeigen
+- **User Task**: Chatverlauf in **ChatController** implementieren, um Nachrichten in **MessageRepository** zu speichern.
+  - Vergangene Nachrichten in **index.html** anzeigen, wenn ein Benutzer die Seite aktualisiert.
 
-## ID: 3.2 - Mobile Compatibility
-- **User Task**: Ensure that the chat window and message bubbles in **index.html** are responsive.
-  - Add mobile-specific styling in **style.css** for improved mobile user experience.
+## ID: 2.3 - Benutzernamen anzeigen
+- **User Task**: **index.html** so modifizieren, dass der Name des Gesprächspartners angezeigt wird.
+  - Sicherstellen, dass **main.js** die Benutzernamen aus **Backend** abruft und an das Frontend weiterleitet.
 
-## ID: 4 - User Login
-- **User Task**: Implement login functionality in **LoginController** and **UserRepository**.
-  - Ensure users can log in using email, password, and username.
-  - Add login form and logic in **login.html** and **main.js**.
+## ID: 3 - Klare UI für Chats
+- **User Task**: Eine einfache und intuitive Benutzeroberfläche für das Chatfenster in **main.css** erstellen.
+  - Responsives Layout für Chatfenster in **index.html** implementieren.
 
-## ID: 5 - User Registration
-- **User Task**: Implement user registration in **AuthController** with validation logic in **register.html**.
-  - Validate input fields and ensure user creation in **UserService**.
+## ID: 3.2 - Kompatibilität mit Mobilgeräten
+- **User Task**: Sicherstellen, dass das UI in **index.html** responsiv ist.
+  - Mobilspezifisches Styling in **main.css** hinzufügen, um die Benutzererfahrung auf Mobilgeräten zu verbessern.
 
-## ID: 6 - Create and Switch Chats
-- **User Task**: Implement logic in **ChatController** to handle multiple chat rooms.
-  - Update the frontend in **index.html** and **main.js** to switch between rooms.
+## ID: 4 - Benutzeranmeldung
+- **User Task**: Login-Funktionalität in **AuthController** und **User** implementieren.
+  - Benutzer können sich mit E-Mail, Passwort und Benutzername anmelden.
+  - Anmeldeformular und Logik in **login.html** und **main.js** hinzufügen.
 
-## ID: 7 - Unique Usernames
-- **User Task**: Add logic in **UserRepository** to check for duplicate usernames and display an error if a user already exists.
+## ID: 5 - Benutzerregistrierung
+- **User Task**: Benutzerregistrierung in **register.html** mit Validierungslogik in **AuthController** implementieren.
+  - Eingabefelder validieren und sicherstellen, dass der Benutzer in **UserService** erstellt wird.
+  - E-Mail-Bestätigungslogik und Token-Generierung in **AuthController** implementieren.
 
-## ID: 8 - Password Hashing
-- **User Task**: Implement password hashing in **UserService** before saving to the database.
-  - Use **BCryptPasswordEncoder** for hashing passwords.
+## ID: 6 - Erstellen und Wechseln von Chats
+- **User Task**: Logik in **ChatController** implementieren, um mehrere Chaträume zu verwalten.
+  - Frontend in **index.html** und **main.js** aktualisieren, um zwischen Räumen zu wechseln.
+  - Eine Benutzeroberfläche für die Raumverwaltung in **main.css** erstellen.
+
+## ID: 7 - Einzigartige Benutzernamen
+- **User Task**: Logik in **UserRepository** hinzufügen, um doppelte Benutzernamen zu überprüfen und eine Fehlermeldung anzuzeigen, wenn der Benutzername bereits existiert.
+
+## ID: 8 - Passwort-Hashing
+- **User Task**: Passwort-Hashing in **WebSecurityConfig** implementieren, bevor das Passwort in der Datenbank gespeichert wird.
+  - **BCryptPasswordEncoder** zum Hashen der Passwörter verwenden.
 
 # Sprint 2
-## ID: 2.2 - Chat History
-- **User Task**: Implement chat history in **ChatController** to persist messages in **MessageRepository**.
-  - Display past messages in **index.html** when a user refreshes the page.
 
-## ID: 3.1 - Message Bubbles
-- **User Task**: Create message bubble designs in **main.css** and **style.css**.
-  - Implement frontend display in **index.html** for message bubbles.
+## ID: 9 - Passwort zurücksetzen
+- **User Task**: Passwort-zurücksetzen-Funktionalität in **AuthController** mithilfe des **PasswordResetTokenRepository** implementieren.
+  - Passwort-Zurücksetzungs-E-Mail mithilfe von **EmailService** erstellen.
+  - **reset-password.html** hinzufügen, um das Eingabeformular für die Passwortzurücksetzung zu verarbeiten.
 
-## ID: 9 - Password Reset
-- **User Task**: Implement password reset logic in **AuthController** using **PasswordResetTokenRepository**.
-  - Create password reset email using **EmailService**.
-  - Add **reset-password.html** to handle password reset form input.
+## ID: 10 - Nachrichtenlänge begrenzen
+- **User Task**: Zeichenlimit (700) für Nachrichten in **main.js** hinzufügen.
+  - "Mehr anzeigen"-Schaltfläche für längere Nachrichten in **index.html** umsetzen.
 
-## ID: 10 - Limit Message Length
-- **User Task**: Add a character limit (700) for messages in **main.js**.
-  - Display "show more" button for longer messages.
+## ID: 11 - Rauminfo anzeigen
+- **User Task**: Die Benutzeroberfläche in **index.html** aktualisieren, um anzuzeigen, in welchem Raum sich der Benutzer befindet.
 
-## ID: 11 - Display Room Info
-- **User Task**: Update the UI in **index.html** to clearly display the room the user is in.
-
-## ID: 12 - Limit Room Creation
-- **User Task**: Ensure that each user can only create one room in **ChatController**.
-  - Add error handling logic in **ChatService** and frontend messages for exceeding room limits.
+## ID: 12 - Raumbegrenzung
+- **User Task**: Sicherstellen, dass jeder Benutzer nur einen Raum in **ChatController** erstellen kann.
+  - Fehlerbehandlung in **main.js** und Frontend-Nachrichten für Überschreiten der Raumlimits hinzufügen.
 
 # Sprint 3
-## ID: 13 - Delete Chat
-- **User Task**: Implement delete chat functionality in **ChatController**.
-  - Ensure that the chat is removed from **MessageRepository** and the UI updates in **main.js**.
 
-## ID: 14 - Email Validation
-- **User Task**: Implement email validation in **AuthController** with regex validation.
-  - Ensure email confirmation is sent via **EmailService** and handled on the frontend.
+## ID: 13 - Chat löschen
+- **User Task**: Löschfunktion für Chats im **ChatController** implementieren.
+  - Sicherstellen, dass der Chat aus **MessageRepository** entfernt und das UI in **main.js** aktualisiert wird.
 
-## ID: 15 - Confirm Password on Registration
-- **User Task**: Add password confirmation field in **register.html**.
-  - Validate password confirmation in **AuthController** before creating the user.
+## ID: 14 - E-Mail-Validierung
+- **User Task**: E-Mail-Validierung in **AuthController** implementieren.
+  - Sicherstellen, dass die E-Mail-Bestätigung über **EmailService** gesendet und im Frontend verarbeitet wird.
 
-## ID: 16 - Help Modal
-- **User Task**: Implement a help modal in **helpModal.js** and add the necessary frontend elements in **index.html**.
+## ID: 15 - Passwort bei Registrierung bestätigen
+- **User Task**: Passwortbestätigungsfeld in **register.html** hinzufügen.
+  - Passwortbestätigung in **AuthController** validieren, bevor der Benutzer erstellt wird.
 
-# Sprint 4
-## ID: 17 - Change Settings
-- **User Task**: Implement logic in **AuthController** to allow users to change their email and password.
-  - Create a settings modal in **settingsModal.js** and **settings.html** for the UI.
+## ID: 16 - Hilfe-Modal
+- **User Task**: Hilfe-Modal in **helpModal.js** implementieren und die notwendigen Frontend-Elemente in **index.html** hinzufügen.
 
-## ID: 18 - Password Security
-- **User Task**: Implement password strength criteria using regex in **AuthController**.
-  - Ensure frontend validation in **register.html** for password strength (length, special characters).
-
-## ID: 19 - App Logo and Unique Name
-- **User Task**: Add the app's logo in **assets/icon.png**.
-  - Set the app's name in **application.properties**.
+## ID: 17 - Einstellungen ändern
+- **User Task**: Logik in **AuthController** implementieren, um Benutzern das Ändern ihrer E-Mail und ihres Passworts zu ermöglichen.
+  - Einstellungs-Modal in **settingsModal.js** und **index.html** für das UI erstellen.
