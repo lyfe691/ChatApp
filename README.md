@@ -1,7 +1,5 @@
 # ChatApp
 
-![ChatApp](https://media.giphy.com/media/l0HUpt2s9Pclgt9Vm/giphy.gif)
-
 ## 🚀 Overview
 
 **ChatApp** is a real-time messaging platform built using **Spring Boot** and **MongoDB**, designed to provide smooth, real-time communication with WebSocket support. The app features user authentication, email verification, password reset, and chat room creation, making it a robust solution for any chat-related application.
