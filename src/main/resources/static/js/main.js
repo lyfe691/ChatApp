@@ -1,4 +1,5 @@
-// WebSocket related code
+// -------------- WebSocket & STOMP Client Setup --------------
+
 let stompClient = null;
 let currentRoom = null;
 let currentSubscription = null;
@@ -12,7 +13,7 @@ const roomInput = document.getElementById('roomInput');
 const roomList = document.getElementById('rooms');
 const currentRoomDisplay = document.getElementById('currentRoomDisplay');
 const createdRoomContainer = document.getElementById('createdRoomContainer');
-const username = /*[[${username}]]*/ '';
+const username = /*[[${username}]]*/ ''; // call username
 
 const socket = new SockJS('/chat');
 stompClient = Stomp.over(socket);
@@ -20,6 +21,7 @@ stompClient = Stomp.over(socket);
 stompClient.connect({}, function(frame) {
     console.log('Connected: ' + frame);
 
+    // Subscribe to the room list
     stompClient.subscribe('/topic/rooms', function(roomsMessage) {
         const rooms = JSON.parse(roomsMessage.body);
         roomList.innerHTML = '';
@@ -32,6 +34,7 @@ stompClient.connect({}, function(frame) {
         });
     });
 
+    // Fetch rooms on initial connection
     fetch('/rooms').then(response => response.json()).then(rooms => {
         roomList.innerHTML = '';
         rooms.forEach(room => {
@@ -46,6 +49,8 @@ stompClient.connect({}, function(frame) {
     console.error('Connection failed: ' + error);
     alert('WebSocket connection failed. Please refresh the page.');
 });
+
+// -------------- Room Creation and Joining --------------
 
 function createOrJoinRoom() {
     const room = roomInput.value.trim();
@@ -96,10 +101,7 @@ function joinRoom(room) {
         const message = JSON.parse(messageOutput.body);
 
         if (message.message && message.message.includes("has been deleted")) {
-            // Handle room deletion notification
             showErrorPopup(message.message);
-
-            // Unsubscribe and clear room UI when the room is deleted
             currentSubscription.unsubscribe();
             currentRoomDisplay.style.display = 'none';
             chatBox.style.display = 'none';
@@ -117,7 +119,7 @@ function joinRoom(room) {
 
     chatBox.style.display = 'block';
     messageForm.style.display = 'flex';
-    chatBox.innerHTML = ''; // Clear chat box
+    chatBox.innerHTML = '';
 
     fetch(`/chat/history/${room}`)
         .then(response => response.json())
@@ -128,11 +130,12 @@ function joinRoom(room) {
         });
 }
 
+// -------------- Message Handling --------------
+
 messageForm.addEventListener('submit', function(event) {
     event.preventDefault();
     const message = messageInput.value.trim();
 
-    // Check if message exceeds the maximum allowed length
     if (message.length > MAX_MESSAGE_LENGTH) {
         showErrorPopup(`Message length cannot exceed ${MAX_MESSAGE_LENGTH} characters.`);
         return;
@@ -145,7 +148,7 @@ messageForm.addEventListener('submit', function(event) {
             'timestamp': new Date().toISOString(),
             'room': currentRoom
         }));
-        messageInput.value = ''; // Clear input after sending
+        messageInput.value = '';
     }
 });
 
@@ -214,9 +217,10 @@ function displayMessage(message) {
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
+// -------------- Room Deletion --------------
+
 function deleteRoom(roomName) {
     if (confirm(`Are you sure you want to delete the room "${roomName}"?`)) {
-        // Notify all users about the room deletion via WebSocket
         stompClient.send(`/app/deleteRoom/${roomName}`, {}, JSON.stringify({
             message: `The room "${roomName}" has been deleted.`,
             room: roomName
@@ -232,41 +236,36 @@ function deleteRoom(roomName) {
                 if (!response.ok) {
                     throw new Error('Error deleting room');
                 }
-                return response.text();  // Parse the response as text (for success message)
+                return response.text();
             })
             .then(result => {
-                showSuccessPopup(result);  // Show success message
+                showSuccessPopup(result);
 
-                // Unsubscribe from the room's WebSocket topic
                 if (currentSubscription !== null) {
                     currentSubscription.unsubscribe();
                 }
 
-                // Clear the current room display
                 currentRoom = null;
                 currentRoomDisplay.style.display = 'none';
                 chatBox.style.display = 'none';
                 messageForm.style.display = 'none';
-
-                // Hide the created room section after deletion
                 createdRoomContainer.style.display = 'none';
 
-                // Fetch updated rooms to reflect deletion
                 fetchRooms();
             })
             .catch(error => {
                 console.error('Error deleting room:', error);
-                showErrorPopup('Refresh the page to apply changes.');  // Keep this message as fallback
+                showErrorPopup('Refresh the page to apply changes.');
             });
     }
 }
 
+// -------------- User-Created Room Display --------------
 
-// Function to display user created room
 function displayUserCreatedRoom() {
     fetch('/user-room')
         .then(response => response.text())
-        .then(room=>{
+        .then(room => {
             const createdRoomElement = document.getElementById('createdRoom');
 
             if (room !== "No room created.") {
@@ -275,7 +274,7 @@ function displayUserCreatedRoom() {
                     <div class="created-room">
                         ${room}
                         <button onclick="deleteRoom('${room}')">
-                            <i data-feather="trash-2"></i> <!-- Feather icon -->
+                            <i data-feather="trash-2"></i>
                         </button>
                     </div>
                 `;
@@ -289,6 +288,7 @@ function displayUserCreatedRoom() {
         });
 }
 
+// -------------- Fetch Rooms --------------
 
 function fetchRooms() {
     fetch('/rooms')
@@ -307,10 +307,7 @@ function fetchRooms() {
         });
 }
 
-
-displayUserCreatedRoom();
-fetchRooms();
-
+// -------------- Popup Notifications --------------
 
 function showErrorPopup(message) {
     const errorPopup = document.getElementById('errorPopup');
@@ -341,3 +338,8 @@ function showSuccessPopup(message) {
         }, 400);
     }, 3000);
 }
+
+// -------------- Initial Setup --------------
+
+displayUserCreatedRoom();
+fetchRooms();

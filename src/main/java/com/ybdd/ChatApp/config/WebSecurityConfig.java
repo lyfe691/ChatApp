@@ -33,7 +33,7 @@ public class WebSecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/register","/forgot-password","/reset-password", "/login","/verify-email", "/css/**", "/js/**").permitAll()  // allow unauthenticated access to this pages.
+                        .requestMatchers("/", "/register","/forgot-password","/reset-password", "/login","/verify-email", "/css/**", "/js/**").permitAll()  // allow unauthenticated access to these pages.
                         .anyRequest().authenticated()  // All other pages require authentication
                 )
                 .formLogin(form -> form

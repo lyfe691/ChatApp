@@ -55,7 +55,7 @@ public class AuthController {
             EmailVerificationToken verificationToken = new EmailVerificationToken(token, user.getEmail(), LocalDateTime.now().plusHours(24));
             emailVerificationTokenRepository.save(verificationToken);
 
-            // Send verification email (MessagingException handled here)
+            // Send verification email
             String verificationLink = "http://localhost:8080/verify-email?token=" + token;
             emailService.sendEmailVerificationToken(user.getEmail(), verificationLink);
 
