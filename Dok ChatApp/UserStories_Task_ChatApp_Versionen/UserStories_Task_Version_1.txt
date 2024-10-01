@@ -1,0 +1,116 @@
+ID: 11
+Höchste Priorität
+
+Github repository erstellen
+Zugriff erteilen
+
+Einfache App: Die zwei Clients verbindet und eine gemeinsame chat-session eröffnet
+Specs: Benötigt 
+Frontend Eingabeld, chatfenster/fläche, Send-Option
+Backend: Muss zwei Clients verbinden, Nachrichten des Partners werden angezeigt
+
+ID: 13
+hohe Priorität
+
+User Interface erstellen
+Mit Vorhandener App verbinden
+	Chat-Fenster mit Verlauf
+	Absender
+	Login/Logout-Screen
+
+ID: 4
+Hohe Priorität
+
+Chat wird in einem chronoligischen feed dargestellt
+Nachrichten mit Absender-ID versehen
+
+ID: 8
+Hohe Priorität
+
+Nutzer können erstellt werden
+Datenbank muss dafür designed/erstellt werden
+UI Anmeldung: Anmeldeformular
+		beinhaltet Username, passwort
+		subtask: E-mail verbinden
+Passwort-check
+Backend: Zuweisung ID zu Username/E-mail
+
+Subtasks:
+Username-filter (mehrere gleiche Namen, Anemessenheit)
+E-Mail verifikation zusenden
+
+Feature:
+
+ID: 9
+hohe
+
+Login-Seite für registrierte Nutzer muss erstellt werden
+
+Login-formular
+Login-UI
+Login-Funktion
+Logout-Funktion wenn schon angemeldet
+
+
+ID 13
+mittel-hoch
+
+Nutzer UI
+Schaltflächen für aktive Konversationen 
+	Chat-verläufe müssen abgerufen werden können
+	Logout-option
+
+ID 4
+hoch
+
+Nachrichten werden im Feed angezeigt und mit Absender-Namen versehen
+(UI: mit verschiedenen Farben?)
+
+ID: 6
+hoch
+
+User muss zwischen Unterhaltungen wechseln können
+User soll mit mehr als nur einer Person Verbindung aufnehmen können
+(im backend:) Eingabefeld wechselt zum aktiven chat (damit nachritchten nicht zum falschen adressat gesendet wird)
+
+
+
+===========================
+ab hier: zusätzliche Features
+===========================
+
+ID: 7
+mittel
+(zusätzliche Funktionen)
+
+User kann Unterhaltungen löschen oder zumindest verstecken (verstecken = nicht von Datenbank gelöscht, nur von Client aus nicht mehr sichtbar)
+
+ID: 10
+mittel-niedrig
+
+Features:
+	Einstellungs-Seite mit Feldern für Nutzername, E-Mail, und Passwort
+
+
+ID: 1
+mittel-hoch
+
+	admin-account kann feeds rückwirkend bearbeiten oder ganz löschen
+	automatisierte chat-filter / logdatei
+
+ID: 2
+mittel
+
+	admin-account kann user entfernen/blockieren und email-adressen & IDs sperren
+	login-sperre für accounts
+
+ID: 3
+niedrig
+
+	ID-liste mit nutzernamen einlesbar
+
+ID: 12
+niedrig (nice to have)
+
+	Verschlüsselung der Nachrichten end-to-end
+
