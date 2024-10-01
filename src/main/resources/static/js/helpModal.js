@@ -1,8 +1,12 @@
-// Help Modal JS
+// -------------- DOM Content Loaded and Element Declarations --------------
+
 document.addEventListener('DOMContentLoaded', function() {
     const navButtons = document.querySelectorAll('.nav-btn');
     const sections = document.querySelectorAll('.help-section');
     const mobileNavSelect = document.querySelector('.mobile-nav-select');
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+    // -------------- Section Navigation Handling --------------
 
     function setActiveSection(target) {
         navButtons.forEach(btn => btn.classList.remove('active'));
@@ -22,13 +26,15 @@ document.addEventListener('DOMContentLoaded', function() {
         setActiveSection(this.value);
     });
 
-    const accordionHeaders = document.querySelectorAll('.accordion-header');
+    // -------------- Accordion Functionality --------------
 
     accordionHeaders.forEach(header => {
         header.addEventListener('click', function() {
             this.parentElement.classList.toggle('active');
         });
     });
+
+    // -------------- Feather Icons Replacement --------------
 
     feather.replace();
 });

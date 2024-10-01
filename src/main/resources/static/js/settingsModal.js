@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    // -------------- Element and Variable Declarations --------------
+
     const settingsNavButtons = document.querySelectorAll('.settings-nav-btn');
     const settingsSections = document.querySelectorAll('.settings-section');
     const themeOptions = document.querySelectorAll('.theme-option');
@@ -10,14 +13,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorMessage = errorPopup.querySelector('.popup-message');
     const successMessage = successPopup.querySelector('.popup-message');
 
-    let currentTheme = localStorage.getItem('theme') || 'system'; // Store the current theme
-    let tempTheme = currentTheme; // Temporary theme to track user changes
+    let currentTheme = localStorage.getItem('theme') || 'system';
+    let tempTheme = currentTheme;
 
-    // Apply the saved theme on load
+    // -------------- Theme Handling --------------
+
     applyTheme(currentTheme);
     setActiveTheme(currentTheme);
 
-    // Function to apply the selected theme
     function applyTheme(theme) {
         const root = document.documentElement;
         if (theme === 'light') {
@@ -31,10 +34,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 root.setAttribute('data-theme', 'light');
             }
         }
-        setActiveTheme(theme); // Highlight the active theme
+        setActiveTheme(theme);
     }
 
-    // Set the active theme option in the UI
     function setActiveTheme(theme) {
         themeOptions.forEach(option => {
             option.classList.remove('active');
@@ -44,15 +46,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Theme selection: Temporarily change the theme
     window.setTheme = function(mode) {
-        tempTheme = mode; // Store the temporary theme
+        tempTheme = mode;
         applyTheme(mode);
     };
 
-    // Save the theme changes permanently (send to server)
     async function saveThemeChanges() {
-        currentTheme = tempTheme; // Make the temporary theme permanent
+        currentTheme = tempTheme;
         localStorage.setItem('theme', currentTheme);
 
         try {
@@ -75,21 +75,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Revert to the original theme if changes are not saved
     function revertTheme() {
-        applyTheme(currentTheme); // Revert to the saved theme
+        applyTheme(currentTheme);
     }
 
-    // Event listener for Save Changes button
     saveThemeChangesButton.addEventListener('click', saveThemeChanges);
 
-    // When the settings modal is closed, revert unsaved theme changes
     window.closeSettingsModal = function() {
-        revertTheme(); // Revert to the previous theme if changes were not saved
+        revertTheme();
         document.getElementById('settingsModal').style.display = 'none';
     };
 
-    // Settings navigation
+    // -------------- Settings Navigation --------------
+
     function setActiveSettingsSection(target) {
         settingsNavButtons.forEach(btn => btn.classList.remove('active'));
         settingsSections.forEach(section => section.classList.remove('active'));
@@ -104,7 +102,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Change Email Form Submission
+    // -------------- Change Email Form Handling --------------
+
     changeEmailForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         const currentEmail = document.getElementById('currentEmail').value;
@@ -112,7 +111,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const confirmNewEmail = document.getElementById('confirmNewEmail').value;
         const password = document.getElementById('passwordForEmail').value;
 
-        // Check if new email and confirmation match
         if (newEmail !== confirmNewEmail) {
             showErrorPopup('New email and confirmation do not match.');
             return;
@@ -136,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (response.ok) {
                 showSuccessPopup(resultText);
-                changeEmailForm.reset(); // Reset the form on success
+                changeEmailForm.reset();
             } else {
                 showErrorPopup(resultText);
             }
@@ -146,15 +144,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // -------------- Change Password Form Handling --------------
 
-// Change Password Form Submission
     changePasswordForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         const currentPassword = document.getElementById('currentPassword').value;
         const newPassword = document.getElementById('newPassword').value;
         const confirmNewPassword = document.getElementById('confirmNewPassword').value;
 
-        // Check if new password and confirmation match
         if (newPassword !== confirmNewPassword) {
             showErrorPopup('New password and confirmation do not match.');
             return;
@@ -177,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (response.ok) {
                 showSuccessPopup(resultText);
-                changePasswordForm.reset(); // Reset the form on success
+                changePasswordForm.reset();
             } else {
                 showErrorPopup(resultText);
             }
@@ -187,26 +184,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // -------------- Popup Notifications --------------
 
-    // Function to show error popup
     function showErrorPopup(message) {
         errorMessage.textContent = message;
         errorPopup.style.display = 'block';
         errorPopup.style.opacity = '1';
         setTimeout(() => {
             errorPopup.style.opacity = '0';
-            setTimeout(() => errorPopup.style.display = 'none', 400); // Wait for hide animation to finish
-        }, 3000); // Show for 3 seconds
+            setTimeout(() => errorPopup.style.display = 'none', 400);
+        }, 3000);
     }
 
-    // Function to show success popup
     function showSuccessPopup(message) {
         successMessage.textContent = message;
         successPopup.style.display = 'block';
         successPopup.style.opacity = '1';
         setTimeout(() => {
             successPopup.style.opacity = '0';
-            setTimeout(() => successPopup.style.display = 'none', 400); // Wait for hide animation to finish
-        }, 3000); // Show for 3 seconds
+            setTimeout(() => successPopup.style.display = 'none', 400);
+        }, 3000);
     }
 });
