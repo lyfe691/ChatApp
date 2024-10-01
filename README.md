@@ -79,14 +79,6 @@ Once the application is running:
 
 ---
 
-## 📸 Screenshots
-
-Here’s a quick preview of the app in action:
-
-![ChatApp in action](https://media.giphy.com/media/3o7abB06u9bNzA8lu8/giphy.gif)
-
----
-
 ## 🛡️ Security
 
 This app uses **Spring Security** with the following features:
@@ -111,6 +103,16 @@ We welcome contributions! To contribute:
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+## 📈 Project Roadmap
+
+Planned features and improvements:
+- 🎨 **Custom user avatars**.
+- 🔔 **Push notifications** for incoming messages.
+- 🌐 **Multilingual support**.
+
+Stay tuned for more updates!
 
 ---
 
