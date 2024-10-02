@@ -63,7 +63,7 @@
   - **reset-password.html** hinzufügen, um das Eingabeformular für die Passwortzurücksetzung zu verarbeiten.
 
 ## ID: 10 - Nachrichtenlänge begrenzen
-- **User Task**: Zeichenlimit (700) für Nachrichten in **main.js** hinzufügen.
+- **User Task**: Zeichenlimit (1500) für Nachrichten in **main.js** hinzufügen.
   - "Mehr anzeigen"-Schaltfläche für längere Nachrichten in **index.html** umsetzen.
 
 ## ID: 11 - Rauminfo anzeigen
