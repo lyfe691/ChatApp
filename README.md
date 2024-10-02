@@ -109,6 +109,7 @@ Planned features and improvements:
 - 🎨 **Custom user avatars**.
 - 🔔 **Push notifications** for incoming messages.
 - 🌐 **Multilingual support**.
+- 🔞 **Censoring**
 
 Stay tuned for more updates!
 
