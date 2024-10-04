@@ -64,6 +64,9 @@ To set up and run the application locally, follow these steps:
 5. **Access the app**:
     Open your browser and go to `http://localhost:8080`.
 
+> **Note**  
+> To connect to the app from other devices within your network, you'll need to access it via `http://<your-ip>:8080`. Additionally, you must replace all instances of `localhost` in the backend code with your IP address.
+
 ---
 
 ## 🖥️ Usage
