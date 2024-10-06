@@ -1,4 +1,6 @@
-/*------------- Root Variables --------------*/
+/*
+
+/*------------- Root Variables --------------
 :root {
     --primary-color: #6366F1;
     --secondary-color: #4F46E5;
@@ -27,7 +29,7 @@
     --focus-shadow-color: rgba(99, 102, 241, 0.25);
 }
 
-/*------------- Global Styles --------------*/
+/*------------- Global Styles --------------
 * {
     box-sizing: border-box;
     margin: 0;
@@ -49,7 +51,7 @@ body {
     padding: 20px;
 }
 
-/*------------- Container --------------*/
+/*------------- Container --------------
 .container {
     width: 100%;
     height: 100%;
@@ -66,7 +68,7 @@ body {
     background-color: var(--background-color);
 }
 
-/*------------- Top Bar --------------*/
+/*------------- Top Bar --------------
 .top-bar {
     background-color: var(--primary-color);
     color: white;
@@ -128,7 +130,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/*------------- Logout Button --------------*/
+/*------------- Logout Button --------------
 .logout-button {
     margin-left: 10px;
 }
@@ -151,7 +153,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/*------------- Content Wrapper --------------*/
+/*------------- Content Wrapper --------------
 .content-wrapper {
     display: flex;
     flex: 1;
@@ -217,7 +219,7 @@ body {
     font-size: 20px;
 }
 
-/* Global Room styling */
+/* Global Room styling 
 .room {
     margin: 10px 0;
     padding: 15px;
@@ -233,7 +235,7 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    color: #E53E3E; /* Error color for delete button */
+    color: #E53E3E; /* Error color for delete button 
 }
 
 .room:hover {
@@ -243,7 +245,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/*------------- Chat Wrapper --------------*/
+/*------------- Chat Wrapper --------------
 .chat-wrapper {
     display: flex;
     flex-direction: column;
@@ -278,7 +280,7 @@ body {
     background-color: var(--background-color);
 }
 
-/*------------- Message Form --------------*/
+/*------------- Message Form --------------
 #messageForm {
     display: flex;
     padding: 15px;
@@ -330,7 +332,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/*------------- Modal Common Styles --------------*/
+/*------------- Modal Common Styles --------------
 .modal {
     display: none;
     position: fixed;
@@ -379,7 +381,7 @@ body {
     box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
 }
 
-/*------------- Message Styles --------------*/
+/*------------- Message Styles --------------
 .message {
     background-color: var(--primary-color);
     color: white;
@@ -411,7 +413,7 @@ body {
     box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
 }
 
-/*------------- Show More/Less --------------*/
+/*------------- Show More/Less --------------
 .show-more, .show-less {
     color: rgba(255, 255, 255, 0.9);
     cursor: pointer;
@@ -437,7 +439,7 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/*------------- Icon Buttons --------------*/
+/*------------- Icon Buttons --------------
 .icon-buttons {
     display: flex;
     align-items: center;
@@ -462,7 +464,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/*------------- Responsive Layout --------------*/
+/*------------- Responsive Layout --------------
 @media (max-width: 1200px) {
     #roomSelector {
         flex-basis: 100%;
@@ -504,7 +506,7 @@ body {
     }
 }
 
-/*------------- Help Modal --------------*/
+/*------------- Help Modal --------------
 .help-modal {
     max-width: 800px;
     width: 90%;
@@ -666,7 +668,7 @@ body {
     padding: 15px 20px;
     max-height: 1000px;
 }
-/* Dark mode for help modal */
+/* Dark mode for help modal 
 [data-theme='dark'] .help-modal {
     background-color: var(--background-color);
     box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
@@ -719,7 +721,7 @@ body {
     background-color: #374151;
 }
 
-/*------------- Troubleshooting Steps --------------*/
+/*------------- Troubleshooting Steps --------------
 .troubleshooting-steps {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -771,7 +773,7 @@ body {
     transform: translateY(-2px);
 }
 
-/*------------- Settings Modal --------------*/
+/*------------- Settings Modal --------------
 .settings-modal {
     max-width: 600px;
     width: 90%;
@@ -875,7 +877,7 @@ body {
     margin-bottom: 10px;
 }
 
-/* Dark mode for settings modal */
+/* Dark mode for settings modal 
 [data-theme='dark'] .settings-modal {
     background-color: #1F2937;
 }
@@ -913,7 +915,7 @@ body {
     color: white;
 }
 
-/*------------- Change Email & Password --------------*/
+/*------------- Change Email & Password --------------
 .change-email-section,
 .change-password-section {
     margin-bottom: 30px;
@@ -970,9 +972,9 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/*------------- Save Changes Button in Theme --------------*/
+/*------------- Save Changes Button in Theme --------------
 .theme-options + .form-group {
-    margin-top: 20px; /* Adds space between theme options and the button */
+    margin-top: 20px; /* Adds space between theme options and the button 
 }
 
 .primary-btn {
@@ -1016,7 +1018,7 @@ body {
     background-color: var(--secondary-color);
 }
 
-/*------------- Media Queries for Settings Modal --------------*/
+/*------------- Media Queries for Settings Modal --------------
 @media (max-width: 768px) {
     .settings-modal {
         width: 100%;
@@ -1047,7 +1049,7 @@ body {
     }
 }
 
-/* Popup */
+/* Popup 
 .success-popup {
     position: fixed;
     top: 20px;
@@ -1103,7 +1105,7 @@ body {
     color: #F3F4F6;
     box-shadow: 0 8px 16px rgba(56, 161, 105, 0.2);
 }
-/* error popup */
+/* error popup 
 .error-popup {
     position: fixed;
     top: 20px;
