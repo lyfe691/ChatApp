@@ -1,3 +1,5 @@
+[English](README.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [日本語](README.ja.md)
+
 # ChatApp
 
 ## 🚀 Overview
@@ -121,5 +123,4 @@ Stay tuned for more updates!
 
 ## 📬 Contact
 
-For any inquiries or feedback, feel free to reach out via my  [Website](https://yanissebastianzuercher.ch/#contact).
-
+For any inquiries or feedback, feel free to reach out via my [Website](https://yanissebastianzuercher.ch/#contact).
