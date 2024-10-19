@@ -3,37 +3,875 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to ChatApp</title>
-    <link rel="shortcut icon" href="/assets/icon.png" type="image/x-icon">
-    <link rel="icon" href="/assets/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="/css/style.css">
+    <title>ChatApp - Redefine Communication</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6366F1;
+            --secondary-color: #8B5CF6;
+            --accent-color: #EC4899;
+            --text-color: #F9FAFB;
+            --bg-color: #111827;
+            --card-bg: rgba(31, 41, 55, 0.7);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Enhanced Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(10px);
+            transition: background-color var(--transition-speed) ease, 
+                        backdrop-filter var(--transition-speed) ease;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .nav__logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color var(--transition-speed) ease;
+        }
+
+        .nav__logo:hover {
+            color: var(--accent-color);
+        }
+
+        .nav__menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav__link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-speed) ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav__link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width var(--transition-speed) ease;
+        }
+
+        .nav__link:hover::after {
+            width: 100%;
+        }
+
+        .nav__cta {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: background-color var(--transition-speed) ease,
+                        transform var(--transition-speed) ease;
+            text-decoration: none;
+        }
+
+        .nav__cta:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav__toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .nav__toggle-icon,
+        .nav__toggle-icon::before,
+        .nav__toggle-icon::after {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--text-color);
+            position: relative;
+            transition: all var(--transition-speed) ease-in-out;
+        }
+
+        .nav__toggle-icon::before,
+        .nav__toggle-icon::after {
+            content: '';
+            position: absolute;
+        }
+
+        .nav__toggle-icon::before {
+            top: -8px;
+        }
+
+        .nav__toggle-icon::after {
+            bottom: -8px;
+        }
+
+        .nav__toggle.active .nav__toggle-icon {
+            background-color: transparent;
+        }
+
+        .nav__toggle.active .nav__toggle-icon::before {
+            top: 0;
+            transform: rotate(45deg);
+        }
+
+        .nav__toggle.active .nav__toggle-icon::after {
+            bottom: 0;
+            transform: rotate(-45deg);
+        }
+
+        @media (max-width: 768px) {
+            .nav__menu {
+                display: none;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(17, 24, 39, 0.95);
+                padding: 6rem 2rem 2rem;
+                z-index: 1000;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity var(--transition-speed) ease,
+                            visibility var(--transition-speed) ease;
+            }
+
+            .nav__menu.active {
+                display: flex;
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav__toggle {
+                display: block;
+            }
+
+            .nav__link {
+                font-size: 1.5rem;
+                padding: 1rem 0;
+            }
+
+            body.menu-open {
+                overflow: hidden;
+            }
+
+            body.menu-open::after {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(5px);
+                z-index: 999;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero__content {
+            text-align: center;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .hero__content.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero__title {
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientFlow 5s ease infinite;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero__subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: var(--accent-color);
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all var(--transition-speed) ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: all 0.4s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
+        }
+
+        .hero__bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://source.unsplash.com/random/1920x1080?tech') no-repeat center center/cover;
+            filter: brightness(0.3);
+            z-index: -1;
+            transform: scale(1.1);
+            transition: transform 10s ease;
+        }
+
+        .hero.in-view .hero__bg {
+            transform: scale(1);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all var(--transition-speed) ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .feature-card.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: rotate(225deg);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-card__icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+
+        .feature-card__title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 100px 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-slider {
+            position: relative;
+            height: 400px;
+        }
+
+        .testimonial-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(50px);
+        }
+
+        .testimonial-slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .testimonial-content {
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .testimonial-text {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-color);
+            padding: 50px 0;
+            color: var(--text-color);
+        }
+
+        .footer__content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .footer__section {
+            flex: 1;
+            min-width: 200px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .footer__section.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .footer__title {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .footer__list {
+            list-style: none;
+        }
+
+        .footer__item {
+            margin-bottom: 10px;
+        }
+
+        .footer__link {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color var(--transition-speed) ease;
+        }
+
+        .footer__link:hover {
+            color: var(--accent-color);
+        }
+
+        .footer__social {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer__social-link {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
+        }
+
+        .footer__social-link:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .footer__bottom {
+            margin-top: 40px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer__copy {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity var(--transition-speed) ease, 
+                        visibility var(--transition-speed) ease,
+                        background-color var(--transition-speed) ease;
+        }
+
+        .scroll-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background-color: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .hero__title {
+                font-size: 3rem;
+            }
+
+            .hero__subtitle {
+                font-size: 1.2rem;
+            }
+
+            .features__grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer__content {
+                flex-direction: column;
+            }
+
+            .scroll-top {
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Cursor trail effect */
+        .cursor-trail {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <div class="form-container">
-        <h1>Welcome to ChatApp</h1>
-        <p class="subtitle">Join a chatroom or log in to continue.</p>
-        <div class="button-group">
-            <a href="/login" class="button">
-                <i class="fas fa-sign-in-alt"></i>
-                Login
-            </a>
-            <a href="/register" class="button">
-                <i class="fas fa-user-plus"></i>
-                Register
-            </a>
+    <header class="header">
+        <nav class="nav container">
+            <a href="#" class="nav__logo">ChatApp</a>
+            <div class="nav__menu">
+                <a href="#home" class="nav__link">Home</a>
+                <a href="#features" class="nav__link">Features</a>
+                <a href="#testimonials" class="nav__link">Testimonials</a>
+                <a href="/login" class="nav__link">Login</a>
+                <a href="/register" class="nav__cta">Get Started</a>
+            </div>
+            <button class="nav__toggle">
+                <span class="nav__toggle-icon"></span>
+            </button>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero__bg"></div>
+        <div class="hero__content">
+            <h1 class="hero__title">Welcome to ChatApp</h1>
+            <p class="hero__subtitle">Experience the future of communication</p>
+            <a href="/register" class="cta-button">Get Started</a>
         </div>
-        <div class="features">
-            <h2>Why Choose ChatApp?</h2>
-            <ul>
-                <li><i class="fas fa-lock"></i> Secure Messaging</li>
-                <li><i class="fas fa-users"></i> Group Chats</li>
-                <li><i class="fas fa-globe"></i> Connect Worldwide</li>
-                <li><i class="fas fa-mobile-alt"></i> Mobile Friendly</li>
-            </ul>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <div class="features__grid">
+                <div class="feature-card">
+                    <div class="feature-card__icon">💬</div>
+                    <h3 class="feature-card__title">Real-time Messaging</h3>
+                    <p>Instantly connect with friends and colleagues around the world.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">🔒</div>
+                    <h3 class="feature-card__title">End-to-End Encryption</h3>
+                    <p>Your conversations are secure and private, always.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">🌐</div>
+                    <h3 class="feature-card__title">Cross-Platform Sync</h3>
+                    <p>Seamlessly switch between devices without missing a beat.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">🎨</div>
+                    <h3 class="feature-card__title">Customizable Themes</h3>
+                    <p>Personalize your chat experience with stunning themes.</p>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="testimonial-slider">
+                <div class="testimonial-slide active">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">"ChatApp has transformed the way our team communicates. It's intuitive, fast, and incredibly secure!"</p>
+                        <p class="testimonial-author">- Sarah Johnson, CEO of TechInnovate</p>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">"The cross-platform sync is a game-changer. I can start a conversation on my phone and seamlessly continue on my laptop."</p>
+                        <p class="testimonial-author">- Mike Chen, Software Developer</p>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">"ChatApp's customizable themes allow me to express my personality. It's not just a messaging app, it's an extension of who I am."</p>
+                        <p class="testimonial-author">- Emily Rodriguez, Graphic Designer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3 class="footer__title">ChatApp</h3>
+                    <p>Redefining communication for the digital age. Connect, share, and collaborate with ease.</p>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title">Quick Links</h3>
+                    <ul class="footer__list">
+                        <li class="footer__item"><a href="#home" class="footer__link">Home</a></li>
+                        <li class="footer__item"><a href="#features" class="footer__link">Features</a></li>
+                        <li class="footer__item"><a href="#testimonials" class="footer__link">Testimonials</a></li>
+                        <li class="footer__item"><a href="/login" class="footer__link">Login</a></li>
+                        <li class="footer__item"><a href="/register" class="footer__link">Sign Up</a></li>
+                    </ul>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title">Legal</h3>
+                    <ul class="footer__list">
+                        <li class="footer__item"><a href="#" class="footer__link">Terms of Service</a></li>
+                        <li class="footer__item"><a href="#" class="footer__link">Privacy Policy</a></li>
+                        <li class="footer__item"><a href="#" class="footer__link">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title">Connect With Us</h3>
+                    <div class="footer__social">
+                        <a href="#" class="footer__social-link" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" class="footer__social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="footer__social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="footer__social-link" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p class="footer__copy">&copy; 2024 ChatApp. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="scroll-top">↑</div>
+
+    <script>
+        // Improved Navigation Toggle
+        const navToggle = document.querySelector('.nav__toggle');
+        const navMenu = document.querySelector('.nav__menu');
+        const body = document.body;
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+            body.classList.toggle('menu-open');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+                body.classList.remove('menu-open');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+                body.classList.remove('menu-open');
+
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        const header = document.querySelector('.header');
+        let lastScrollTop = 0;
+
+        window.addEventListener('scroll', () => {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Always keep the header visible, just change its background opacity
+            if (scrollTop > 50) {
+                header.style.backgroundColor = 'rgba(17, 24, 39, 0.95)';
+            } else {
+                header.style.backgroundColor = 'rgba(17, 24, 39, 0.8)';
+            }
+
+            lastScrollTop = scrollTop;
+        });
+
+        // Lazy loading with Intersection Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.hero__content, .feature-card, .testimonial-slide, .footer__section').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Testimonial Slider
+        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+        let currentSlide = 0;
+
+        function showSlide(n) {
+            testimonialSlides[currentSlide].classList.remove('active');
+            currentSlide = (n + testimonialSlides.length) % testimonialSlides.length;
+            testimonialSlides[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        setInterval(nextSlide, 5000);
+
+        // Scroll to Top Button
+        const scrollTopBtn = document.querySelector('.scroll-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Cursor trail effect
+        const cursorTrail = (() => {
+            const cursors = [];
+            const numCursors = 3;
+
+            for (let i = 0; i < numCursors; i++) {
+                const cursor = document.createElement('div');
+                cursor.classList.add('cursor-trail');
+                document.body.appendChild(cursor);
+                cursors.push(cursor);
+            }
+
+            document.addEventListener('mousemove', e => {
+                cursors.forEach((cursor, index) => {
+                    setTimeout(() => {
+                        cursor.style.left = e.pageX + 'px';
+                        cursor.style.top = e.pageY + 'px';
+                    }, index * 80);
+                });
+            });
+        })();
+
+        // Parallax effect for hero background
+        const heroSection = document.querySelector('.hero');
+        const heroBg = document.querySelector('.hero__bg');
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * 0.5;
+            heroBg.style.transform = `translate3d(0, ${rate}px, 0)`;
+        });
+
+        // Typed.js effect for hero subtitle
+        const typed = new Typed('.hero__subtitle', {
+            strings: ['Experience the future of communication', 'Connect with anyone, anywhere', 'Secure, fast, and user-friendly'],
+            typeSpeed: 50,
+            backSpeed: 30,
+            backDelay: 2000,
+            startDelay: 1000,
+            loop: true
+        });
+
+        // AOS (Animate On Scroll) initialization
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+    </script>
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 </body>
 </html>
