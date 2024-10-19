@@ -1,3 +1,5 @@
+[English](README.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [日本語](README.ja.md)
+
 # ChatApp
 
 ## 🚀 Overview
@@ -27,6 +29,7 @@
 
 Before you begin, ensure you have the following installed on your local machine:
 
+- **Git**: [Install Git](https://git-scm.com/downloads)
 - **Java 17 or higher**: [Download here](https://www.oracle.com/java/technologies/downloads/)
 - **Maven**: [Install Maven](https://maven.apache.org/install.html)
 - **MongoDB**: [Install MongoDB](https://www.mongodb.com/try/download/community) and make sure it's running.
@@ -120,5 +123,4 @@ Stay tuned for more updates!
 
 ## 📬 Contact
 
-For any inquiries or feedback, feel free to reach out via my  [Website](https://yanissebastianzuercher.ch/#contact).
-
+For any inquiries or feedback, feel free to reach out via my [Website](https://yanissebastianzuercher.ch/#contact).
