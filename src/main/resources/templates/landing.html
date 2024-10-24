@@ -3,29 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatApp - Redefining Communication</title>
+    <meta name="description" content="ChatApp - Next-generation secure messaging platform for modern teams. Experience real-time communication with enterprise-grade security.">
+    <title>ChatApp - Secure Team Communications Platform</title>
+
+    <!-- Preconnect to external resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        /* Base Variables for Dark Theme */
         :root {
-            --primary-color: #6366F1;
-            --secondary-color: #8B5CF6;
-            --accent-color: #EC4899;
-            --text-color: #111827; /* Light mode text */
-            --bg-color: #F9FAFB; /* Light mode background */
-            --card-bg: rgba(241, 245, 249, 0.7); /* Light mode card background */
-            --transition-speed: 0.3s;
+            --primary-color: #4F46E5; /* Indigo */
+            --primary-dark: #4338CA;
+            --primary-light: #5B21B6;
+            --primary-lighter: #6D28D9;
+            --success-color: #10B981;
+            --error-color: #EF4444;
+            --warning-color: #F59E0B;
+            --text-primary: #F9FAFB; /* Light text */
+            --text-secondary: #D1D5DB;
+            --text-light: #9CA3AF;
+            --bg-white: #1F2937; /* Darker background */
+            --bg-light: #111827;
+            --bg-dark: #0F172A;
+            --border-color: #374151;
+            --shadow-sm: 0 1px 2px 0 rgba(255, 255, 255, 0.05);
+            --shadow: 0 1px 3px 0 rgba(255, 255, 255, 0.1), 0 1px 2px -1px rgba(255, 255, 255, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -2px rgba(255, 255, 255, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(255, 255, 255, 0.1), 0 4px 6px -4px rgba(255, 255, 255, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(255, 255, 255, 0.1), 0 8px 10px -6px rgba(255, 255, 255, 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgba(255, 255, 255, 0.25);
+            --transition-base: all 0.3s ease;
         }
 
-        /* Dark Mode Variables */
-        .dark-mode {
-            --text-color: #F9FAFB; /* Dark mode text */
-            --bg-color: #111827; /* Dark mode background */
-            --card-bg: rgba(31, 41, 55, 0.7); /* Dark mode card background */
-        }
-
+        /* Reset */
         * {
             margin: 0;
             padding: 0;
@@ -33,282 +48,329 @@
         }
 
         html {
-            font-size: 62.5%;
             scroll-behavior: smooth;
+            scroll-padding-top: 5rem;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.6rem;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.5;
+            color: var(--text-primary);
+            background-color: var(--bg-dark);
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Mobile Menu */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 0.5rem;
+            font-size: 1.75rem;
+            z-index: 1100;
+            transition: var(--transition-base);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: block;
+            }
+
+            .nav__menu {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: var(--bg-dark);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 2rem;
+                transform: translateX(100%);
+                transition: all 0.3s ease-in-out;
+                z-index: 1050;
+                height: 100vh;
+            }
+
+            .nav__menu.active {
+                transform: translateX(0);
+            }
+
+            .nav__link {
+                font-size: 1.25rem;
+                padding: 1rem 0;
+                width: 100%;
+                text-align: center;
+                color: var(--text-primary);
+            }
+
+            .nav__link:hover {
+                color: var(--primary-color);
+            }
+
+            .nav__menu .btn {
+                margin-top: 1rem;
+                width: 100%;
+            }
+
+            body.menu-open {
+                overflow: hidden;
+            }
+
+            .nav__menu .nav__link {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.3s ease;
+                transition-delay: calc(var(--i) * 0.1s);
+            }
+
+            .nav__menu.active .nav__link {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Container */
         .container {
-            width: 100%;
-            max-width: 120rem;
+            width: min(90%, 1200px);
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1rem;
         }
 
-        /* Header Styles */
+        /* Header & Navigation */
         .header {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            z-index: 1000;
-            background-color: rgba(17, 24, 39, 0.8);
+            right: 0;
+            background-color: var(--bg-dark);
             backdrop-filter: blur(10px);
-            transition: all var(--transition-speed) ease;
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: var(--transition-base);
+        }
+
+        .header.scrolled {
+            box-shadow: var(--shadow-md);
         }
 
         .nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2rem 0;
+            height: 5rem;
+            transition: var(--transition-base);
         }
 
         .nav__logo {
-            font-size: 2.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary-color);
             text-decoration: none;
-            transition: color var(--transition-speed) ease;
-        }
-
-        .nav__logo:hover {
-            color: var(--accent-color);
+            z-index: 1100;
         }
 
         .nav__menu {
             display: flex;
-            gap: 2rem;
             align-items: center;
+            gap: 2.5rem;
+            transition: var(--transition-base);
         }
 
         .nav__link {
-            color: var(--text-color);
+            color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            transition: color var(--transition-speed) ease;
+            transition: var(--transition-base);
             position: relative;
-            padding: 0.5rem 0;
         }
 
         .nav__link::after {
             content: '';
             position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
+            bottom: -4px;
             left: 0;
-            background-color: var(--accent-color);
-            transition: width var(--transition-speed) ease;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav__link:hover {
+            color: var(--primary-color);
         }
 
         .nav__link:hover::after {
-            width: 100%;
+            transform: scaleX(1);
         }
 
-        .nav__cta {
-            background-color: var(--accent-color);
-            color: var(--bg-color);
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all var(--transition-speed) ease;
-        }
-
-        .nav__cta:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-2px);
-        }
-
-        .nav__toggle {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-            z-index: 1001;
-        }
-
-        .nav__toggle-icon,
-        .nav__toggle-icon::before,
-        .nav__toggle-icon::after {
-            display: block;
-            width: 25px;
-            height: 2px;
-            background-color: var(--text-color);
-            position: relative;
-            transition: all var(--transition-speed) ease-in-out;
-        }
-
-        .nav__toggle-icon::before,
-        .nav__toggle-icon::after {
-            content: '';
-            position: absolute;
-        }
-
-        .nav__toggle-icon::before {
-            top: -8px;
-        }
-
-        .nav__toggle-icon::after {
-            bottom: -8px;
-        }
-
-        /* Dark Mode Toggle Styles */
-        .dark-mode-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--text-color);
-            font-size: 2rem;
-            transition: color var(--transition-speed) ease;
-        }
-
-        .dark-mode-toggle:hover {
-            color: var(--accent-color);
-        }
-
-        /* Hero Section Styles */
-        .hero {
-            height: 100vh;
-            display: flex;
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            overflow: hidden;
-            padding-top: 8rem;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition-base);
+            cursor: pointer;
+            white-space: nowrap;
+            letter-spacing: 0.025em;
         }
 
-        .hero__bg {
+        .btn--primary {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 2px 4px rgba(79, 70, 229, 0.1);
+        }
+
+        .btn--primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn--secondary {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+        }
+
+        .btn--secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 6rem;
+            background: linear-gradient(
+                180deg,
+                var(--primary-lighter) 0%,
+                var(--bg-dark) 100%
+            );
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
-            filter: brightness(0.3) blur(5px);
-            z-index: -1;
-            transform: scale(1.1);
-            transition: transform 10s ease;
+            top: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(
+                circle,
+                var(--primary-light) 0%,
+                transparent 70%
+            );
+            opacity: 0.3;
+            z-index: 0;
         }
 
         .hero__content {
-            text-align: center;
+            position: relative;
             z-index: 1;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease, transform 1s ease;
-        }
-
-        .hero__content.fade-in-up {
-            opacity: 1;
-            transform: translateY(0);
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
         }
 
         .hero__title {
-            font-size: 6rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), #6366F1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: gradientFlow 5s ease infinite;
-        }
-
-        @keyframes gradientFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .hero__subtitle {
-            font-size: 2.4rem;
+            font-size: clamp(1.125rem, 2vw, 1.25rem);
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero__buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
             margin-bottom: 4rem;
         }
 
-        .hero__cta {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
+        .hero__image {
+            border-radius: 1rem;
+            box-shadow: var(--shadow-xl);
+            transform: perspective(1000px) rotateX(5deg);
+            transition: var(--transition-base);
         }
 
-        .cta-button {
-            display: inline-block;
-            padding: 1.5rem 3rem;
-            background: var(--accent-color);
-            color: var(--text-color);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all var(--transition-speed) ease;
-            position: relative;
-            overflow: hidden;
+        .hero__image:hover {
+            transform: perspective(1000px) rotateX(0deg);
         }
 
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                120deg,
-                transparent,
-                rgba(255, 255, 255, 0.3),
-                transparent
-            );
-            transition: all 0.4s ease;
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
-        }
-
-        .cta-button--secondary {
-            background: transparent;
-            border: 2px solid var(--accent-color);
-        }
-
-        .cta-button--secondary:hover {
-            background: var(--accent-color);
-            color: var(--bg-color);
-        }
-
-        /* Features Section Styles */
+        /* Features Section */
         .features {
-            padding: 10rem 0;
-            background-color: var(--bg-color);
+            padding: 6rem 0;
+            background-color: var(--bg-dark);
             position: relative;
-            overflow: hidden;
         }
 
-        .features__grid {
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: clamp(2rem, 3vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .section-title p {
+            color: var(--text-secondary);
+            font-size: clamp(1rem, 1.5vw, 1.125rem);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-            gap: 4rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
         }
 
         .feature-card {
-            background: var(--card-bg);
-            border-radius: 2rem;
-            padding: 4rem;
-            text-align: center;
-            transition: all var(--transition-speed) ease;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            background-color: #1F2937; /* Darker card background */
+            box-shadow: var(--shadow);
+            transition: var(--transition-base);
+            border: 1px solid var(--border-color);
             position: relative;
             overflow: hidden;
         }
@@ -316,271 +378,300 @@
         .feature-card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
-            transform: rotate(45deg);
-            transition: all 0.5s ease;
-        }
-
-        .feature-card:hover::before {
-            transform: rotate(225deg);
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: left;
         }
 
         .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
         }
 
         .feature-card__icon {
-            font-size: 4rem;
-            margin-bottom: 2rem;
-            color: var(--accent-color);
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            transition: var(--transition-base);
+        }
+
+        .feature-card:hover .feature-card__icon {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
         }
 
         .feature-card__title {
-            font-size: 2.4rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .feature-card__text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 6rem 0;
+            background-color: var(--bg-dark);
+            position: relative;
+        }
+
+        .faq .section-title {
+            margin-bottom: 4rem;
+        }
+
+        .faq .faq-item {
+            max-width: 800px;
+            margin: 0 auto 1.5rem auto;
+            background-color: #1F2937; /* Darker background */
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: var(--transition-base);
+        }
+
+        .faq .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            position: relative;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .faq .faq-question:hover {
+            background-color: var(--primary-light);
+        }
+
+        .faq .faq-question::after {
+            content: '\f0d7'; /* Font Awesome Down Arrow */
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+        }
+
+        .faq .faq-question.active::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .faq .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 1.5rem;
+            background-color: var(--bg-dark);
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq .faq-answer p {
+            padding: 1rem 0;
+            color: var(--text-secondary);
+        }
+
+        .faq .faq-answer.show {
+            max-height: 500px; /* Enough to show the content */
+            padding: 1rem 1.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 0;
+            background: linear-gradient(
+                180deg,
+                var(--bg-dark) 0%,
+                var(--primary-lighter) 100%
+            );
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #1F2937; /* Darker form background */
+            padding: 3rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .form-group {
             margin-bottom: 1.5rem;
         }
 
-        /* Testimonials Section Styles */
-        .testimonials {
-            padding: 10rem 0;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            position: relative;
-            overflow: hidden;
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
         }
 
-        .testimonial-slider {
-            position: relative;
-            height: 40rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .testimonial-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .form-input {
             width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform: translateX(50px);
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            background-color: #1F2937; /* Darker input background */
+            color: var(--text-primary);
+            transition: var(--transition-base);
         }
 
-        .testimonial-slide.active {
-            opacity: 1;
-            transform: translateX(0);
+        .form-input::placeholder {
+            color: var(--text-secondary);
         }
 
-        .testimonial-content {
-            max-width: 60rem;
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        textarea.form-input {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-error {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .form-group.error .form-input {
+            border-color: var(--error-color);
+        }
+
+        .form-group.error .form-error {
+            display: block;
+        }
+
+        /* Enhanced Footer */
+        .footer {
+            background-color: var(--bg-dark);
+            color: white;
+            padding: 6rem 0 2rem;
+        }
+
+        .footer__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer__brand {
+            grid-column: span 2;
             text-align: center;
         }
 
-        .testimonial-text {
-            font-size: 2rem;
-            font-style: italic;
-            margin-bottom: 2rem;
-            color: var(--text-color);
+        @media (min-width: 768px) {
+            .footer__brand {
+                grid-column: span 2;
+                text-align: left;
+            }
         }
 
-        .testimonial-author {
-            font-weight: 600;
-            font-size: 1.8rem;
-            color: var(--text-color);
-        }
-
-        /* Footer Styles */
-        .footer {
-            background: var(--bg-color);
-            padding: 5rem 0;
-            color: var(--text-color);
-        }
-
-        .footer__content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 4rem;
-        }
-
-        .footer__section {
-            flex: 1;
-            min-width: 20rem;
-        }
-
-        .footer__title {
-            font-size: 2rem;
-            margin-bottom: 2rem;
+        .footer__logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.75rem;
+            font-weight: 700;
             color: var(--primary-color);
-        }
-
-        .footer__list {
-            list-style: none;
-        }
-
-        .footer__item {
+            text-decoration: none;
             margin-bottom: 1rem;
         }
 
-        .footer__link {
-            color: var(--text-color);
-            text-decoration: none;
-            transition: color var(--transition-speed) ease;
-        }
-
-        .footer__link:hover {
-            color: var(--accent-color);
+        .footer__description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 400px;
+            line-height: 1.6;
         }
 
         .footer__social {
             display: flex;
-            gap: 2rem;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer__social {
+                justify-content: flex-start;
+            }
         }
 
         .footer__social-link {
-            color: var(--text-color);
-            font-size: 2.4rem;
-            transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
-        }
-
-        .footer__social-link:hover {
-            color: var(--accent-color);
-            transform: translateY(-3px);
-        }
-
-        .footer__bottom {
-            margin-top: 4rem;
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .footer__copy {
-            font-size: 1.4rem;
-            color: var(--text-color);
-            opacity: 0.7;
-        }
-
-        /* Scroll to Top Button */
-        .scroll-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background-color: var(--accent-color);
-            color: var(--bg-color);
-            width: 5rem;
-            height: 5rem;
-            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.4rem;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity var(--transition-speed) ease, 
-                        visibility var(--transition-speed) ease,
-                        background-color var(--transition-speed) ease;
-            z-index: 1000;
-        }
-
-        .scroll-top.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .scroll-top:hover {
-            background-color: var(--secondary-color);
-        }
-
-        /* Custom Cursor */
-        .custom-cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
             border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.2s ease, background-color 0.2s ease;
-            transform: translate(-50%, -50%);
+            transition: var(--transition-base);
+            text-decoration: none;
         }
 
-        .custom-cursor.hover {
-            transform: translate(-50%, -50%) scale(1.5);
-            background-color: rgba(236, 72, 153, 0.3);
+        .footer__social-link:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
         }
 
-        .custom-cursor.click {
-            transform: translate(-50%, -50%) scale(0.8);
-            background-color: var(--accent-color);
+        .footer-nav__title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: white;
         }
 
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            html {
-                font-size: 55%;
-            }
+        .footer-nav__list {
+            list-style: none;
+        }
 
-            .nav__menu {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 80%;
-                height: 100vh;
-                background-color: var(--bg-color);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                transition: right var(--transition-speed) ease;
-            }
+        .footer-nav__item {
+            margin-bottom: 0.75rem;
+        }
 
-            .nav__menu.active {
-                right: 0;
-            }
+        .footer-nav__link {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition-base);
+        }
 
-            .nav__toggle {
-                display: block;
-            }
+        .footer-nav__link:hover {
+            color: white;
+        }
 
-            .nav__link {
-                font-size: 2rem;
-            }
-
-            .hero__title {
-                font-size: 4rem;
-            }
-
-            .hero__subtitle {
-                font-size: 2rem;
-            }
-
-            .hero__cta {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .cta-button {
-                width: 100%;
-                max-width: 25rem;
-            }
-
-            .features__grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer__content {
-                flex-direction: column;
-            }
+        .footer__bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.875rem;
         }
 
         /* Animations */
@@ -595,585 +686,619 @@
             }
         }
 
-        .fade-in-up {
+        .animate-fade-in {
             animation: fadeInUp 0.6s ease forwards;
-        }
-
-        /* Preloader */
-        .preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-
-        .preloader__spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid var(--accent-color);
-            border-top: 5px solid transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .preloader.fade-out {
             opacity: 0;
-            visibility: hidden;
         }
 
-        /* Form Styles */
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            max-width: 50rem;
-            margin: 0 auto;
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero__buttons {
+                flex-direction: column;
+            }
+
+            .contact-form {
+                padding: 2rem;
+            }
+
+            .footer__brand {
+                grid-column: 1 / -1;
+                text-align: center;
+            }
+
+            .footer__grid {
+                gap: 2rem;
+            }
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            position: relative;
-        }
+        @media (max-width: 640px) {
+            .container {
+                width: 95%;
+            }
 
-        .form-group input,
-        .form-group textarea {
-            padding: 1rem;
-            border: 2px solid var(--card-bg);
-            border-radius: 5px;
-            background-color: transparent;
-            color: var(--text-color);
-            font-size: 1.6rem;
-            transition: border-color var(--transition-speed) ease;
+            .section-title {
+                margin-bottom: 2rem;
+            }
         }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            border-color: var(--accent-color);
-            outline: none;
-        }
-
-        .form-group.success input,
-        .form-group.success textarea {
-            border-color: green;
-        }
-
-        .form-group.error input,
-        .form-group.error textarea {
-            border-color: red;
-        }
-
-        .form-group small {
-            display: none; /* Hide error messages by default */
-            color: red;
-            position: absolute;
-            bottom: -1.5rem;
-            left: 0;
-            font-size: 1.2rem;
-        }
-
-        .form-group.error small {
-            display: block; /* Show error messages when there's an error */
-        }
-
-        .submit-btn {
-            padding: 1.5rem 2rem;
-            background-color: var(--primary-color);
-            color: var(--bg-color);
-            border: none;
-            border-radius: 5px;
-            font-size: 1.6rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
-        }
-
-        .submit-btn:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-2px);
-        }
-
     </style>
 </head>
 <body>
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="preloader__spinner"></div>
-    </div>
-
-    <!-- Header -->
+    <!-- Header and Nav -->
     <header class="header">
-        <nav class="nav container">
-            <a href="#" class="nav__logo">ChatApp</a>
-            <div class="nav__menu">
-                <a href="#home" class="nav__link">Home</a>
-                <a href="#features" class="nav__link">Features</a>
-                <a href="#testimonials" class="nav__link">Testimonials</a>
-                <a href="#contact" class="nav__link">Contact</a>
-                <a href="/login" class="nav__link">Login</a>
-                <a href="/register" class="nav__cta">Get Started</a>
-                <!-- Dark Mode Toggle Button -->
-                <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
-                    <i class="fas fa-moon"></i>
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="nav__logo">
+                    <i class="fas fa-comments"></i>
+                    ChatApp
+                </a>
+
+                <button class="mobile-toggle" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
                 </button>
-            </div>
-            <button class="nav__toggle" aria-label="Toggle menu">
-                <span class="nav__toggle-icon"></span>
-            </button>
-        </nav>
+
+                <div class="nav__menu">
+                    <a href="#features" class="nav__link" style="--i: 1">Features</a>
+                    <a href="#faq" class="nav__link" style="--i: 2">FAQ</a>
+                    <a href="#contact" class="nav__link" style="--i: 3">Contact</a>
+                    <a href="/login" class="btn btn--secondary" style="--i: 4; color:  var(--text-primary);">Log in</a>
+                    <a href="/register" class="btn btn--primary" style="--i: 5">Get Started</a>
+                </div>
+            </nav>
+        </div>
     </header>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section id="home" class="hero">
-            <div class="hero__bg"></div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
             <div class="hero__content">
-                <h1 class="hero__title">Welcome to ChatApp</h1>
-                <p class="hero__subtitle"><span class="typed-text"></span></p>
-                <div class="hero__cta">
-                    <a href="/register" class="cta-button">Get Started</a>
-                    <a href="#features" class="cta-button cta-button--secondary">Learn More</a>
+                <h1 class="hero__title animate-fade-in">
+                    Transform Your Team Communication
+                </h1>
+                <p class="hero__subtitle animate-fade-in">
+                    Experience secure, real-time messaging with enterprise-grade features.
+                    Connect your team anywhere, anytime with ChatApp.
+                </p>
+                <div class="hero__buttons animate-fade-in">
+                    <a href="/register" class="btn btn--primary">
+                        <i class="fas fa-rocket"></i>
+                        Start (it's free)
+                    </a>
+                    <a href="#features" class="btn btn--secondary" style="color:  var(--text-primary);" >
+                        <i class="fas fa-info-circle"></i>
+                        Learn More
+                    </a>
+                </div>
+                <img src="https://placehold.co/800x500" alt="ChatApp Interface Preview" class="hero__image animate-fade-in">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Powerful Features</h2>
+                <p>Everything you need for seamless team communication</p>
+            </div>
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-card__title">End-to-End Encryption</h3>
+                    <p class="feature-card__text">
+                        Military-grade encryption ensures your messages and files stay private and secure.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-card__title">Real-time Messaging</h3>
+                    <p class="feature-card__text">
+                        Instant message delivery with live typing indicators and read receipts.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <h3 class="feature-card__title">Cross-Platform Sync</h3>
+                    <p class="feature-card__text">
+                        Seamlessly switch between devices while keeping all your conversations in sync.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-card__title">Team Collaboration</h3>
+                    <p class="feature-card__text">
+                        Create channels, share files, and collaborate with your team in real-time.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="feature-card__title">Smart Search</h3>
+                    <p class="feature-card__text">
+                        Find any message or file instantly with our powerful search capabilities.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3 class="feature-card__title">Easy Integration</h3>
+                    <p class="feature-card__text">
+                        Connect with your favorite tools and customize your workflow effortlessly.
+                    </p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features">
-            <div class="container">
-                <div class="features__grid">
-                    <div class="feature-card">
-                        <div class="feature-card__icon"><i class="fas fa-comments"></i></div>
-                        <h3 class="feature-card__title">Real-time Messaging</h3>
-                        <p>Connect instantly with friends and colleagues around the world.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-card__icon"><i class="fas fa-lock"></i></div>
-                        <h3 class="feature-card__title">End-to-End Encryption</h3>
-                        <p>Your conversations are always secure and private.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-card__icon"><i class="fas fa-sync"></i></div>
-                        <h3 class="feature-card__title">Cross-Platform Sync</h3>
-                        <p>Seamlessly switch between devices without missing a beat.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-card__icon"><i class="fas fa-palette"></i></div>
-                        <h3 class="feature-card__title">Customizable Themes</h3>
-                        <p>Personalize your chat experience with stunning themes.</p>
-                    </div>
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about ChatApp.</p>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    What makes ChatApp secure?
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        ChatApp uses end-to-end encryption to ensure that your messages and files are protected and accessible only to you and your intended recipients.
+                    </p>
                 </div>
             </div>
-        </section>
-
-        <!-- Testimonials Section -->
-        <section id="testimonials" class="testimonials">
-            <div class="container">
-                <div class="testimonial-slider">
-                    <div class="testimonial-slide active">
-                        <div class="testimonial-content">
-                            <p class="testimonial-text">"ChatApp has transformed the way our team communicates. It's intuitive, fast, and incredibly secure!"</p>
-                            <p class="testimonial-author">- Sarah Johnson, CEO of TechInnovate</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-slide">
-                        <div class="testimonial-content">
-                            <p class="testimonial-text">"The cross-platform sync is a game-changer. I can start a conversation on my phone and seamlessly continue on my laptop."</p>
-                            <p class="testimonial-author">- Mike Chen, Software Developer</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-slide">
-                        <div class="testimonial-content">
-                            <p class="testimonial-text">"ChatApp's customizable themes allow me to express my personality. It's not just a messaging app, it's an extension of who I am."</p>
-                            <p class="testimonial-author">- Emily Rodriguez, Graphic Designer</p>
-                        </div>
-                    </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I use ChatApp on multiple devices?
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        Yes, ChatApp supports cross-platform synchronization, allowing you to seamlessly switch between your desktop, tablet, and mobile devices while keeping all your conversations in sync.
+                    </p>
                 </div>
             </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="contact">
-            <div class="container">
-                <h2 class="section-title">Get in Touch</h2>
-                <form id="contact-form" class="contact-form">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                        <small>Error message</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                        <small>Error message</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" required></textarea>
-                        <small>Error message</small>
-                    </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Is there a free plan available?
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        Absolutely! ChatApp offers a free tier that includes essential features for small teams. You can upgrade to our Pro or Enterprise plans for additional functionalities and support.
+                    </p>
+                </div>
             </div>
-        </section>
-    </main>
+            <div class="faq-item">
+                <div class="faq-question">
+                    How do I integrate ChatApp with other tools?
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        ChatApp provides easy integration options with various third-party tools through our API. You can customize your workflow by connecting ChatApp with your favorite applications like Slack, Google Drive, and more.
+                    </p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    What support options are available?
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        We offer comprehensive support through our Help Center, documentation, and community forums. For Pro and Enterprise users, we provide priority support to ensure your team runs smoothly.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- Footer -->
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get in Touch</h2>
+                <p>Have questions? We're here to help you get started.</p>
+            </div>
+            <form class="contact-form" id="contact-form">
+                <div class="form-group">
+                    <label for="name" class="form-label">Name</label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        class="form-input" 
+                        required 
+                        placeholder="Your full name"
+                    >
+                    <span class="form-error">Please enter your name</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="form-input" 
+                        required 
+                        placeholder="you@example.com"
+                    >
+                    <span class="form-error">Please enter a valid email</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input 
+                        type="text" 
+                        id="subject" 
+                        class="form-input" 
+                        required 
+                        placeholder="What's this about?"
+                    >
+                    <span class="form-error">Please enter a subject</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea 
+                        id="message" 
+                        class="form-input" 
+                        required 
+                        placeholder="Your message..."
+                    ></textarea>
+                    <span class="form-error">Please enter your message</span>
+                </div>
+
+                <button type="submit" class="btn btn--primary" style="width: 100%">
+                    <i class="fas fa-paper-plane"></i>
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Enhanced Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer__content">
-                <div class="footer__section">
-                    <h3 class="footer__title">ChatApp</h3>
-                    <p>Redefining communication for the digital age. Connect, share, and collaborate with ease.</p>
-                </div>
-                <div class="footer__section">
-                    <h3 class="footer__title">Quick Links</h3>
-                    <ul class="footer__list">
-                        <li class="footer__item"><a href="#home" class="footer__link">Home</a></li>
-                        <li class="footer__item"><a href="#features" class="footer__link">Features</a></li>
-                        <li class="footer__item"><a href="#testimonials" class="footer__link">Testimonials</a></li>
-                        <li class="footer__item"><a href="#contact" class="footer__link">Contact</a></li>
-                        <li class="footer__item"><a href="/login" class="footer__link">Login</a></li>
-                        <li class="footer__item"><a href="/register" class="footer__link">Sign Up</a></li>
-                    </ul>
-                </div>
-                <div class="footer__section">
-                    <h3 class="footer__title">Legal</h3>
-                    <ul class="footer__list">
-                        <li class="footer__item"><a href="#" class="footer__link">Terms of Service</a></li>
-                        <li class="footer__item"><a href="#" class="footer__link">Privacy Policy</a></li>
-                        <li class="footer__item"><a href="#" class="footer__link">Cookie Policy</a></li>
-                    </ul>
-                </div>
-                <div class="footer__section">
-                    <h3 class="footer__title">Connect With Us</h3>
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <a href="#" class="footer__logo">
+                        <i class="fas fa-comments"></i>
+                        <span style="color: var(--primary-color);">ChatApp</span>
+                    </a>
+                    <p class="footer__description">
+                        Secure messaging and team collaboration platform for modern teams.
+                        Connect, share, and collaborate with confidence.
+                    </p>
                     <div class="footer__social">
-                        <a href="#" class="footer__social-link" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="footer__social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="footer__social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="footer__social-link" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="footer__social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="footer__social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="footer__social-link" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="footer__social-link" aria-label="Discord">
+                            <i class="fab fa-discord"></i>
+                        </a>
                     </div>
                 </div>
+
+                <!-- Removed Company Section -->
+                <!--
+                <div class="footer-nav">
+                    <h3 class="footer-nav__title">Company</h3>
+                    <ul class="footer-nav__list">
+                        <li class="footer-nav__item">
+                            <a href="#" class="footer-nav__link">About Us</a>
+                        </li>
+                        <li class="footer-nav__item">
+                            <a href="#" class="footer-nav__link">Careers</a>
+                        </li>
+                        <li class="footer-nav__item">
+                            <a href="#" class="footer-nav__link">Blog</a>
+                        </li>
+                        <li class="footer-nav__item">
+                            <a href="#" class="footer-nav__link">Press</a>
+                        </li>
+                    </ul>
+                </div>
+                -->
+
+                <div class="footer-nav">
+                    <h3 class="footer-nav__title">Resources</h3>
+                    <ul class="footer-nav__list">
+                        <li class="footer-nav__item">
+                            <a href="#" class="footer-nav__link">Documentation</a>
+                        </li>
+                        <li class="footer-nav__item">
+                            <a href="#" class="footer-nav__link">Help Center</a>
+                        </li>
+                        <li class="footer-nav__item">
+                            <a href="#" class="footer-nav__link">API Reference</a>
+                        </li>
+                        <li class="footer-nav__item">
+                            <a href="#" class="footer-nav__link">Community</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-nav">
+                    <h3 class="footer-nav__title">Legal</h3>
+                    <ul class="footer-nav__list">
+                        <li class="footer-nav__item">
+                            <a href="#" class="footer-nav__link">Privacy Policy</a>
+                        </li>
+                        <li class="footer-nav__item">
+                            <a href="#" class="footer-nav__link">Terms of Service</a>
+                        </li>
+                        <li class="footer-nav__item">
+                            <a href="#" class="footer-nav__link">Security</a>
+                        </li>
+                        <li class="footer-nav__item">
+                            <a href="#" class="footer-nav__link">Compliance</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
+
             <div class="footer__bottom">
-                <p class="footer__copy">&copy; 2024 ChatApp. All rights reserved.</p>
+                <p>&copy; 2024 ChatApp. All rights reserved.</p>
             </div>
         </div>
     </footer>
-
-    <!-- Scroll to Top Button -->
-    <div class="scroll-top">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-
-    <!-- Custom Cursor -->
-    <div class="custom-cursor"></div>
-
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
     <script>
-        // Preloader
-        window.addEventListener('load', () => {
-            const preloader = document.querySelector('.preloader');
-            preloader.classList.add('fade-out');
-            setTimeout(() => {
-                preloader.style.display = 'none';
-                // Show hero content
-                const heroContent = document.querySelector('.hero__content');
-                heroContent.classList.add('fade-in-up');
-            }, 500);
-        });
-
-        // Mobile Navigation Toggle
-        const navToggle = document.querySelector('.nav__toggle');
+        // Mobile menu functionality
+        const mobileToggle = document.querySelector('.mobile-toggle');
         const navMenu = document.querySelector('.nav__menu');
         const body = document.body;
 
-        navToggle.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent click from bubbling to document
+        function toggleMenu() {
+            const isOpen = navMenu.classList.contains('active');
             navMenu.classList.toggle('active');
-            navToggle.classList.toggle('active');
-            body.classList.toggle('menu-open');
-        });
+            mobileToggle.setAttribute('aria-expanded', !isOpen);
+            body.classList.toggle('menu-open', !isOpen);
+            
+            // Toggle icon
+            const icon = mobileToggle.querySelector('i');
+            icon.classList.toggle('fa-bars', isOpen);
+            icon.classList.toggle('fa-times', !isOpen);
+
+            // Animate menu items
+            const menuItems = navMenu.querySelectorAll('.nav__link, .btn');
+            menuItems.forEach((item, index) => {
+                if (!isOpen) {
+                    item.style.transitionDelay = `${index * 0.1}s`;
+                } else {
+                    item.style.transitionDelay = '0s';
+                }
+            });
+        }
+
+        mobileToggle.addEventListener('click', toggleMenu);
 
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
-            if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-                navMenu.classList.remove('active');
-                navToggle.classList.remove('active');
-                body.classList.remove('menu-open');
+            if (navMenu.classList.contains('active') && 
+                !navMenu.contains(e.target) && 
+                !mobileToggle.contains(e.target)) {
+                toggleMenu();
             }
         });
 
-        // Prevent closing menu when clicking inside the menu
-        navMenu.addEventListener('click', (e) => {
-            e.stopPropagation();
+        // Close menu when pressing Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                toggleMenu();
+            }
         });
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                navMenu.classList.remove('active');
-                navToggle.classList.remove('active');
-                body.classList.remove('menu-open');
+        // Scroll handling
+        const header = document.querySelector('.header');
+        let lastScroll = 0;
+        const scrollThreshold = 50;
 
-                const targetId = this.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
+        function handleScroll() {
+            const currentScroll = window.pageYOffset;
+            
+            // Add/remove scrolled class
+            header.classList.toggle('scrolled', currentScroll > scrollThreshold);
+
+            // Hide/show header on scroll
+            if (!navMenu.classList.contains('active')) {
+                if (currentScroll > lastScroll && currentScroll > 500) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+            }
+            
+            lastScroll = currentScroll;
+        }
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        // Form validation and handling
+        const contactForm = document.getElementById('contact-form');
+        const formGroups = contactForm.querySelectorAll('.form-group');
+
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function showError(input, message) {
+            const formGroup = input.closest('.form-group');
+            formGroup.classList.add('error');
+            const error = formGroup.querySelector('.form-error');
+            error.textContent = message;
+        }
+
+        function removeError(input) {
+            const formGroup = input.closest('.form-group');
+            formGroup.classList.remove('error');
+        }
+
+        function validateInput(input) {
+            removeError(input);
+
+            if (input.required && !input.value.trim()) {
+                showError(input, `${input.previousElementSibling.textContent} is required`);
+                return false;
+            }
+
+            if (input.type === 'email' && !validateEmail(input.value)) {
+                showError(input, 'Please enter a valid email address');
+                return false;
+            }
+
+            if (input.id === 'message' && input.value.trim().length < 10) {
+                showError(input, 'Message must be at least 10 characters long');
+                return false;
+            }
+
+            return true;
+        }
+
+        formGroups.forEach(group => {
+            const input = group.querySelector('.form-input');
+            input.addEventListener('input', () => validateInput(input));
+            input.addEventListener('blur', () => validateInput(input));
+        });
+
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            let isValid = true;
+
+            // Validate all inputs
+            formGroups.forEach(group => {
+                const input = group.querySelector('.form-input');
+                if (!validateInput(input)) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) return;
+
+            // Submit button loading state
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 1500));
                 
-                if (targetElement) {
-                    targetElement.scrollIntoView({
+                // Success state
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Sent Successfully!';
+                submitBtn.style.backgroundColor = 'var(--success-color)';
+                
+                // Reset form
+                contactForm.reset();
+                
+                // Reset button after delay
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.style.backgroundColor = '';
+                }, 3000);
+                
+            } catch (error) {
+                submitBtn.innerHTML = '<i class="fas fa-exclamation-circle"></i> Failed to send';
+                submitBtn.style.backgroundColor = 'var(--error-color)';
+                
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.style.backgroundColor = '';
+                }, 3000);
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                
+                if (target) {
+                    // Close mobile menu if open
+                    if (navMenu.classList.contains('active')) {
+                        toggleMenu();
+                    }
+
+                    const headerOffset = header.offsetHeight;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
                         behavior: 'smooth'
                     });
                 }
             });
         });
 
-        // Header scroll effect
-        const header = document.querySelector('.header');
-        let lastScrollTop = 0;
-
-        window.addEventListener('scroll', () => {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (scrollTop > lastScrollTop) {
-                header.style.transform = 'translateY(-100%)';
-            } else {
-                header.style.transform = 'translateY(0)';
-            }
-            lastScrollTop = scrollTop;
-        });
-
-        // Typed.js effect for hero subtitle
-        const typed = new Typed('.typed-text', {
-            strings: ['Secure, fast, and user-friendly', 'Connect with anyone, anywhere', 'Experience the future of communication'],
-            typeSpeed: 50,
-            backSpeed: 30,
-            backDelay: 2000,
-            startDelay: 1000,
-            loop: true
-        });
-
-        // Testimonial Slider
-        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
-        let currentSlide = 0;
-
-        function showSlide(n) {
-            testimonialSlides[currentSlide].classList.remove('active');
-            currentSlide = (n + testimonialSlides.length) % testimonialSlides.length;
-            testimonialSlides[currentSlide].classList.add('active');
-        }
-
-        function nextSlide() {
-            showSlide(currentSlide + 1);
-        }
-
-        setInterval(nextSlide, 5000); // Change slide every 5 seconds
-
-        // Scroll to Top Button
-        const scrollTopBtn = document.querySelector('.scroll-top');
-
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollTopBtn.classList.add('show');
-            } else {
-                scrollTopBtn.classList.remove('show');
-            }
-        });
-
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Custom cursor
-        const cursor = document.querySelector('.custom-cursor');
-
-        document.addEventListener('mousemove', e => {
-            cursor.style.left = `${e.clientX}px`;
-            cursor.style.top = `${e.clientY}px`;
-        });
-
-        document.addEventListener('mousedown', () => cursor.classList.add('click'));
-        document.addEventListener('mouseup', () => cursor.classList.remove('click'));
-
-        // Hover effect for buttons and links
-        const hoverElements = document.querySelectorAll('a, button');
-        hoverElements.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-        });
-
-        // Intersection Observer for animations (excluding testimonials)
+        // Intersection Observer for animations
         const observerOptions = {
             root: null,
             rootMargin: '0px',
             threshold: 0.1
         };
 
-        const observer = new IntersectionObserver((entries, observer) => {
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in-up');
+                    entry.target.classList.add('animate-fade-in');
                     observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
-        // Exclude testimonials to prevent conflicting animations
-        document.querySelectorAll('.feature-card, .footer__section').forEach(el => {
+        // Observe elements with animation
+        document.querySelectorAll('.feature-card, .contact-form, .section-title, .faq-item').forEach(el => {
             observer.observe(el);
         });
 
-        // Form validation
-        const form = document.getElementById('contact-form');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const nameInput = document.getElementById('name');
-            const emailInput = document.getElementById('email');
-            const messageInput = document.getElementById('message');
+        // FAQ Accordion Functionality
+        const faqItems = document.querySelectorAll('.faq-item');
 
-            let hasError = false;
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
 
-            // Validate Name
-            if (nameInput.value.trim() === '') {
-                showError(nameInput, 'Name is required');
-                hasError = true;
-            } else {
-                showSuccess(nameInput);
-            }
+            question.addEventListener('click', () => {
+                // Toggle active class
+                question.classList.toggle('active');
+                answer.classList.toggle('show');
 
-            // Validate Email
-            if (emailInput.value.trim() === '') {
-                showError(emailInput, 'Email is required');
-                hasError = true;
-            } else if (!isValidEmail(emailInput.value)) {
-                showError(emailInput, 'Please enter a valid email');
-                hasError = true;
-            } else {
-                showSuccess(emailInput);
-            }
-
-            // Validate Message
-            if (messageInput.value.trim() === '') {
-                showError(messageInput, 'Message is required');
-                hasError = true;
-            } else {
-                showSuccess(messageInput);
-            }
-
-            if (!hasError) {
-                // Submit the form
-                alert('Form submitted successfully!');
-                form.reset();
-                document.querySelectorAll('.form-group').forEach(group => {
-                    group.classList.remove('success');
+                // Close other FAQ items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.querySelector('.faq-question').classList.remove('active');
+                        otherItem.querySelector('.faq-answer').classList.remove('show');
+                    }
                 });
-            }
-        });
-
-        function showError(input, message) {
-            const formControl = input.parentElement;
-            formControl.classList.add('error');
-            formControl.classList.remove('success');
-            const small = formControl.querySelector('small');
-            small.innerText = message;
-        }
-
-        function showSuccess(input) {
-            const formControl = input.parentElement;
-            formControl.classList.add('success');
-            formControl.classList.remove('error');
-            const small = formControl.querySelector('small');
-            if (small) {
-                small.innerText = '';
-            }
-        }
-
-        function isValidEmail(email) {
-            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(String(email).toLowerCase());
-        }
-
-        // Parallax effect for hero background
-        const heroSection = document.querySelector('.hero');
-        const heroBg = document.querySelector('.hero__bg');
-
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * 0.5;
-            heroBg.style.transform = `translate3d(0, ${rate}px, 0) scale(1.1)`;
-        });
-
-        // Lazy loading images (if any)
-        const lazyImages = document.querySelectorAll('img[data-src]');
-        const lazyLoadOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px 200px 0px"
-        };
-
-        const lazyLoadObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.removeAttribute('data-src');
-                    lazyLoadObserver.unobserve(img);
-                }
             });
-        }, lazyLoadOptions);
-
-        lazyImages.forEach(img => lazyLoadObserver.observe(img));
-
-        // Dark mode toggle
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-
-        function toggleDarkMode(state) {
-            document.documentElement.classList.toggle('dark-mode', state);
-            localStorage.setItem('darkMode', state);
-            // Change icon based on mode
-            if (state) {
-                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            }
-        }
-
-        // Check for saved user preference, if any, on load of the website
-        const darkModeState = localStorage.getItem('darkMode');
-        if (darkModeState !== null) {
-            toggleDarkMode(JSON.parse(darkModeState));
-        } else {
-            toggleDarkMode(prefersDarkScheme.matches);
-        }
-
-        // Listen for changes in the OS settings
-        prefersDarkScheme.addEventListener('change', (evt) => {
-            toggleDarkMode(evt.matches);
         });
-
-        // Listen for clicks on the toggle
-        darkModeToggle.addEventListener('click', () => {
-            const isDarkMode = !document.documentElement.classList.contains('dark-mode');
-            toggleDarkMode(isDarkMode);
-        });
-
     </script>
 </body>
 </html>

@@ -1,0 +1,1354 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #6C63FF;
+    --primary-dark: #5A54D3;
+    --primary-light: #8F88FF;
+    --secondary-color: #4A4A4A;
+    --secondary-dark: #333333;
+    --secondary-light: #666666;
+    --accent-color: #4DB6AC;
+    --accent-dark: #26A69A;
+    --accent-light: #80CBC4;
+    --background-color: rgba(245, 245, 245, 0.9);
+    --text-color: #333333;
+    --text-color-light: #666666;
+    --text-color-lighter: #999999;
+    --border-color: #E0E0E0;
+    --border-color-focus: #B3B3FF;
+    --success-color: #4CAF50;
+    --error-color: #757575;
+    --warning-color: #FFA000;
+    --info-color: #2196F3;
+    --gradient-start: #6366f1;
+    --gradient-end: #8b5cf6;
+    --white: #FFFFFF;
+    --black: #000000;
+    --gray-100: #F5F5F5;
+    --gray-200: #EEEEEE;
+    --gray-300: #E0E0E0;
+    --gray-400: #BDBDBD;
+    --gray-500: #9E9E9E;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 62.5%; /* 1rem = 10px */
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: linear-gradient(135deg, var(--gray-900), var(--gray-800));
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.container {
+    width: 100%;    
+    max-width: 40rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 2rem;
+    box-shadow: 0 2.5rem 5rem -1.2rem rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    backdrop-filter: blur(1rem);
+    -webkit-backdrop-filter: blur(1rem);
+    transform: translateY(2rem);
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.form-container {
+    padding: 4rem;
+}
+
+h1 {
+    color: var(--primary-color);
+    font-size: 3.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+    letter-spacing: -0.05rem;
+    text-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+    color: var(--text-color-light);
+    font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    font-weight: 300;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 2rem;
+    z-index: 1;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 1.5rem 4.5rem 1.5rem 5rem;
+    border: 0.2rem solid var(--border-color);
+    border-radius: 1.2rem;
+    font-size: 1.6rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.input-group i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.input-group i:first-of-type {
+    left: 1.5rem;
+}
+
+.input-group input:focus + i {
+    color: var(--primary-dark);
+    transform: translateY(-50%) scale(1.1);
+}
+
+input::placeholder {
+    color: var(--text-color-lighter);
+    font-weight: 300;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--border-color-focus);
+    box-shadow: 0 0 0 0.4rem rgba(99, 102, 241, 0.1);
+}
+
+input:focus + i {
+    color: var(--primary-color);
+}
+
+.password-toggle {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.8rem;
+    color: var(--text-color-lighter);
+    background: none;
+    border: none;
+    padding: 0;
+    z-index: 2;
+}
+
+.password-toggle:hover {
+    color: var(--primary-color);
+}
+
+.options-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    color: var(--text-color-light);
+    font-size: 1.4rem;
+}
+
+.remember-me input {
+    margin-right: 0.8rem;
+    width: auto;
+    accent-color: var(--primary-color);
+}
+
+.forgot-password {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.forgot-password:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+button {
+    width: 100%;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: var(--white);
+    border: none;
+    border-radius: 1.2rem;
+    cursor: pointer;
+    font-size: 1.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-align: center;
+    letter-spacing: 0.05rem;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+            120deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+    );
+    transition: all 0.6s ease;
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+button:hover {
+    transform: translateY(-0.3rem);
+    box-shadow: 0 1rem 2rem rgba(99, 102, 241, 0.3);
+}
+
+button:active {
+    transform: translateY(-0.1rem);
+    box-shadow: 0 0.5rem 1rem rgba(99, 102, 241, 0.2);
+}
+
+.register-link {
+    text-align: center;
+    margin-top: 2.5rem;
+    color: var(--text-color-light);
+    font-size: 1.4rem;
+}
+
+.register-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.register-link a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.error-container {
+    display: flex;
+    align-items: center;
+    background-color: #e0e0e09c;
+    border-left: 4px solid #885656;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 20px;
+}
+
+.error-icon {
+    color: #885656;
+    font-size: 20px;
+    margin-right: 12px;
+}
+
+.error-message {
+    color: #885656;
+    font-size: 14px;
+    margin: 0;
+}
+
+.success-container {
+    display: flex;
+    align-items: center;
+    background-color: #e0e0e09c;
+    border-left: 4px solid var(--success-color);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 20px;
+}
+
+.success-icon {
+    color: var(--success-color);
+    font-size: 20px;
+    margin-right: 12px;
+}
+
+.success-message{
+    color: var(--success-color);
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Animations */
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeInUp {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Custom checkbox styles */
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-wrapper label {
+    position: relative;
+    padding-left: 3rem;
+    cursor: pointer;
+    font-size: 1.4rem;
+    color: var(--text-color-light);
+    user-select: none;
+}
+
+.checkbox-wrapper label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2rem;
+    height: 2rem;
+    border: 0.2rem solid var(--border-color);
+    border-radius: 0.4rem;
+    background-color: var(--white);
+    transition: all 0.3s ease;
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked + label::before {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.checkbox-wrapper label::after {
+    content: '\2713';
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--white);
+    font-size: 1.4rem;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked + label::after {
+    opacity: 1;
+}
+
+/* Password strength indicator */
+.password-strength-wrapper {
+    margin-bottom: 2rem;
+}
+
+.password-strength {
+    height: 0.4rem;
+    background-color: var(--border-color);
+    border-radius: 0.2rem;
+    overflow: hidden;
+}
+
+.password-strength-bar {
+    height: 100%;
+    width: 0;
+    transition: all 0.3s ease;
+}
+
+.password-strength-text {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    text-align: right;
+    font-weight: 500;
+}
+
+/* Social login buttons */
+.social-login {
+    margin-top: 3rem;
+}
+
+.social-login-text {
+    position: relative;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.social-login-text::before,
+.social-login-text::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 30%;
+    height: 1px;
+    background-color: var(--border-color);
+}
+
+.social-login-text::before {
+    left: 0;
+}
+
+.social-login-text::after {
+    right: 0;
+}
+
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.social-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background-color: var(--white);
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.social-button:hover {
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+}
+
+.social-button i {
+    font-size: 2rem;
+    color: var(--text-color);
+}
+
+/* Responsive styles */
+@media (max-width: 480px) {
+    html {
+        font-size: 57.5%; /* Adjust base font size for smaller screens */
+    }
+
+    .container {
+        max-width: 90%;
+        border-radius: 1.6rem;
+    }
+
+    .form-container {
+        padding: 3rem;
+    }
+
+    h1 {
+        font-size: 2.8rem;
+    }
+
+    .subtitle {
+        font-size: 1.4rem;
+    }
+
+    input {
+        font-size: 1.4rem;
+    }
+
+    button {
+        font-size: 1.6rem;
+    }
+
+    .social-buttons {
+        flex-wrap: wrap;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: rgba(17, 24, 39, 0.8);
+        --text-color: #e5e7eb;
+        --text-color-light: #9ca3af;
+        --text-color-lighter: #6b7280;
+        --border-color: #4b5563;
+        --border-color-focus: #818cf8;
+    }
+
+    .container {
+        background-color: rgba(31, 41, 55, 0.2);
+    }
+
+    input {
+        background-color: rgba(55, 65, 81, 0.9);
+        color: var(--text-color);
+    }
+
+    input::placeholder {
+        color: var(--text-color-lighter);
+    }
+
+    .forgot-password:hover {
+        color: var(--primary-light);
+    }
+
+    button {
+        background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+    }
+
+    .social-button {
+        background-color: var(--gray-800);
+    }
+
+    .social-button i {
+        color: var(--text-color-light);
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 1rem;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--gray-200);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Tooltip styles */
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip]::before,
+[data-tooltip]::after {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+[data-tooltip]::before {
+    content: attr(data-tooltip);
+    top: -3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 1rem;
+    background-color: var(--gray-800);
+    color: var(--white);
+    font-size: 1.2rem;
+    border-radius: 0.4rem;
+    white-space: nowrap;
+}
+
+[data-tooltip]::after {
+    content: '';
+    top: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 0.5rem solid transparent;
+    border-top-color: var(--gray-800);
+}
+
+[data-tooltip]:hover::before,
+[data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Loading spinner */
+.loading-spinner {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    border: 0.3rem solid var(--gray-300);
+    border-top: 0.3rem solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Form validation styles */
+.input-group.error input {
+    border-color: var(--error-color);
+}
+
+.input-group.error i {
+    color: var(--error-color);
+}
+
+.error-text {
+    color: var(--error-color);
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+/* Password visibility toggle animation */
+.password-toggle i {
+    transition: transform 0.3s ease;
+}
+
+.password-toggle.visible i {
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Button loading state */
+button.loading {
+    position: relative;
+    color: transparent;
+}
+
+button.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2rem;
+    height: 2rem;
+    border: 0.3rem solid var(--white);
+    border-top: 0.3rem solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Input focus effect */
+.input-group::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0.2rem;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.input-group.focused::after {
+    width: 100%;
+}
+
+/* Social login button hover effects */
+.social-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.3s ease;
+}
+
+.social-button:hover::before {
+    transform: scale(1);
+}
+
+/* Custom radio button styles */
+.radio-group {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.radio-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.radio-wrapper input[type="radio"] {
+    display: none;
+}
+
+.radio-wrapper label {
+    position: relative;
+    padding-left: 3rem;
+    cursor: pointer;
+    font-size: 1.4rem;
+    color: var(--text-color-light);
+    user-select: none;
+}
+
+.radio-wrapper label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2rem;
+    height: 2rem;
+    border: 0.2rem solid var(--border-color);
+    border-radius: 50%;
+    background-color: var(--white);
+    transition: all 0.3s ease;
+}
+
+.radio-wrapper input[type="radio"]:checked + label::before {
+    border-color: var(--primary-color);
+}
+
+.radio-wrapper label::after {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.radio-wrapper input[type="radio"]:checked + label::after {
+    opacity: 1;
+}
+
+/* Animated background */
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+    background-size: 400% 400%;
+    animation: gradientMove 15s ease infinite;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* Accessibility improvements */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Focus styles for keyboard navigation */
+:focus-visible {
+    outline: 0.2rem solid var(--primary-color);
+    outline-offset: 0.2rem;
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: none;
+    }
+
+    .container {
+        box-shadow: none;
+        background-color: var(--white);
+    }
+
+    button,
+    .social-login,
+    .forgot-password {
+        display: none;
+    }
+}
+
+/* High contrast mode */
+@media (forced-colors: active) {
+    :root {
+        --primary-color: CanvasText;
+        --secondary-color: CanvasText;
+        --accent-color: Highlight;
+        --text-color: CanvasText;
+        --border-color: CanvasText;
+    }
+
+    .container {
+        border: 0.2rem solid CanvasText;
+    }
+
+    input,
+    button {
+        border: 0.2rem solid CanvasText;
+    }
+
+    button {
+        background: ButtonFace;
+        color: ButtonText;
+    }
+
+    button:hover,
+    button:focus {
+        background: Highlight;
+        color: HighlightText;
+    }
+}
+
+/* RTL support */
+[dir="rtl"] {
+    .input-group i {
+        left: auto;
+        right: 1.5rem;
+    }
+
+    input {
+        padding: 1.5rem 5rem 1.5rem 1.5rem;
+    }
+
+    .password-toggle {
+        right: auto;
+        left: 1.5rem;
+    }
+
+    .checkbox-wrapper label {
+        padding-left: 0;
+        padding-right: 3rem;
+    }
+
+    .checkbox-wrapper label::before,
+    .checkbox-wrapper label::after {
+        left: auto;
+        right: 0;
+    }
+
+    .social-login-text::before {
+        left: auto;
+        right: 0;
+    }
+
+    .social-login-text::after {
+        right: auto;
+        left: 0;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    body::before {
+        animation: none;
+    }
+
+    .container {
+        animation: none;
+        transform: none;
+    }
+
+    button::before {
+        display: none;
+    }
+}
+
+/* Custom select styles */
+.select-wrapper {
+    position: relative;
+    margin-bottom: 2.5rem;
+}
+
+.select-wrapper::after {
+    content: '\25BC';
+    position: absolute;
+    top: 50%;
+    right: 1.5rem;
+    transform: translateY(-50%);
+    color: var(--text-color-lighter);
+    pointer-events: none;
+}
+
+select {
+    appearance: none;
+    width: 100%;
+    padding: 1.5rem 4.5rem 1.5rem 1.5rem;
+    border: 0.2rem solid var(--border-color);
+    border-radius: 1.2rem;
+    font-size: 1.6rem;
+    background-color: var(--white);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--border-color-focus);
+    box-shadow: 0 0 0 0.4rem rgba(99, 102, 241, 0.1);
+}
+
+/* Custom file input styles */
+.file-input-wrapper {
+    position: relative;
+    margin-bottom: 2.5rem;
+}
+
+.file-input-wrapper input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-input-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 0.8rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-input-button:hover {
+    background-color: var(--primary-dark);
+}
+
+.file-input-name {
+    margin-left: 1rem;
+    font-size: 1.4rem;
+    color: var(--text-color-light);
+}
+
+/* Responsive typography */
+@media (min-width: 768px) {
+    html {
+        font-size: 68.75%; /* 1rem = 11px */
+    }
+}
+
+@media (min-width: 1024px) {
+    html {
+        font-size: 75%; /* 1rem = 12px */
+    }
+}
+
+@media (min-width: 1280px) {
+    html {
+        font-size: 81.25%; /* 1rem = 13px */
+    }
+}
+
+/* Prevent text size adjustment on orientation change (iOS) */
+html {
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+/* Additional form element styles */
+textarea {
+    width: 100%;
+    padding: 1.5rem;
+    border: 0.2rem solid var(--border-color);
+    border-radius: 1.2rem;
+    font-size: 1.6rem;
+    background-color: var(--white);
+    color: var(--text-color);
+    resize: vertical;
+    min-height: 10rem;
+    transition: all 0.3s ease;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--border-color-focus);
+    box-shadow: 0 0 0 0.4rem rgba(99, 102, 241, 0.1);
+}
+
+/* Improve form layout on larger screens */
+@media (min-width: 768px) {
+    .form-row {
+        display: flex;
+        gap: 2rem;
+    }
+
+    .form-col {
+        flex: 1;
+    }
+}
+
+/* Additional animations */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-0.5rem); }
+    20%, 40%, 60%, 80% { transform: translateX(0.5rem); }
+}
+
+.shake {
+    animation: shake 0.6s ease-in-out;
+}
+
+/* Improve button styles */
+button:focus-visible {
+    outline: 0.2rem solid var(--white);
+    outline-offset: 0.2rem;
+}
+
+/* Add styles for disabled state */
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Improve contrast for placeholder text */
+::placeholder {
+    opacity: 0.7;
+}
+
+/* Add styles for autocomplete suggestions */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text-color);
+    -webkit-box-shadow: 0 0 0 100rem var(--white) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Improve focus styles for checkboxes and radio buttons */
+input[type="checkbox"]:focus-visible + label::before,
+input[type="radio"]:focus-visible + label::before {
+    outline: 0.2rem solid var(--primary-color);
+    outline-offset: 0.2rem;
+}
+
+/* Improve keyboard navigation for social buttons */
+.social-button:focus-visible {
+    outline: 0.2rem solid var(--primary-color);
+    outline-offset: 0.2rem;
+}
+
+/* Add smooth transition for hover and focus states */
+a,
+button,
+input,
+select,
+textarea,
+.social-button {
+    transition: all 0.3s ease;
+}
+
+/* Improve contrast for error messages */
+.error-text {
+    font-weight: 500;
+}
+
+
+
+
+/* Improve accessibility for screen readers */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Add styles for form fieldsets and legends */
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+}
+
+legend {
+    font-weight: 600;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+/* Improve spacing and alignment for form elements */
+.input-group,
+.select-wrapper,
+.file-input-wrapper,
+.checkbox-wrapper,
+.radio-wrapper {
+    margin-bottom: 2rem;
+}
+
+/* Add styles for form validation feedback */
+.input-group.valid input {
+    border-color: var(--success-color);
+}
+
+.input-group.valid i {
+    color: var(--success-color);
+}
+
+/* Improve contrast for disabled text */
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+    color: var(--text-color-lighter);
+}
+
+/* Add styles for tooltip arrow positioning */
+[data-tooltip]::after {
+    z-index: 1;
+}
+
+/* Ensure proper stacking of form elements */
+.input-group,
+.select-wrapper,
+.file-input-wrapper {
+    z-index: 1;
+}
+
+/* Improve contrast for social login text */
+.social-login-text {
+    font-weight: 500;
+    color: var(--text-color-light);
+}
+
+/* Add styles for form section headings */
+.form-section-heading {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 3rem 0 2rem;
+    color: var(--text-color);
+}
+
+/* Improve spacing for nested form elements */
+.nested-input-group {
+    margin-left: 2rem;
+}
+
+/* Add styles for form progress indicators */
+.form-progress {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+}
+
+.progress-step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.progress-step::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 0.2rem;
+    background-color: var(--border-color);
+    z-index: -1;
+}
+
+.progress-step:first-child::before {
+    left: 50%;
+}
+
+.progress-step:last-child::before {
+    right: 50%;
+}
+
+.progress-step-indicator {
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: var(--white);
+    border: 0.2rem solid var(--border-color);
+    line-height: 2.6rem;
+    font-weight: 600;
+    color: var(--text-color-light);
+}
+
+.progress-step.active .progress-step-indicator {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white);
+}
+
+.progress-step-label {
+    font-size: 1.2rem;
+    color: var(--text-color-light);
+    margin-top: 0.5rem;
+}
+
+/* Ensure proper margin for the last form element */
+form > *:last-child {
+    margin-bottom: 0;
+}
+
+/* Landing page styles */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem 2.4rem;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: var(--white);
+    border: none;
+    border-radius: 1.2rem;
+    cursor: pointer;
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
+.button:hover {
+    transform: translateY(-0.3rem);
+    box-shadow: 0 1rem 2rem rgba(99, 102, 241, 0.3);
+}
+
+.button i {
+    margin-right: 1rem;
+}
+
+.features {
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.features h2 {
+    font-size: 2.4rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+}
+
+.features ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.features li {
+    font-size: 1.6rem;
+    color: var(--text-color-light);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.features li i {
+    color: var(--primary-color);
+    margin-right: 1rem;
+    font-size: 2rem;
+}
+
+/* Responsive styles for landing page */
+@media (max-width: 480px) {
+    .button-group {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .button {
+        width: 100%;
+    }
+
+    .features li {
+        font-size: 1.4rem;
+    }
+}
+
+/* Adjust padding for password input to accommodate the eye icon */
+.input-group input[type="password"] {
+    padding-right: 4.5rem;
+}

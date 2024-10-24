@@ -1,0 +1,21 @@
+Als Benutzer,
+möchte ich Nachrichten in einem Chat sofort senden und empfangen,
+damit ich in Echtzeit mit anderen Benutzern kommunizieren kann.
+Akzeptanzkriterien: ￬
+Nachrichtenzustellung:
+Die Nachricht sollte sofort im Chatfenster erscheinen, sobald sie gesendet wurde.
+Andere Teilnehmer im Chat sollten die Nachricht innerhalb von weniger als 1 Sekunde nach dem Senden erhalten.
+Schreibanzeige:
+Eine Anzeige sollte sichtbar sein, wenn ein anderer Benutzer eine Nachricht schreibt.
+Nachrichtenstatus:
+Nachrichten sollten Statusanzeigen haben (z.B. Gesendet, Zugestellt, Gelesen).
+Der Absender sollte sehen können, wann die Nachricht zugestellt und gelesen wurde.
+Offline-Verarbeitung:
+Wenn ein Benutzer offline ist, sollten die Nachrichten zugestellt werden, sobald er wieder online ist.
+Im Chat sollte eine Benachrichtigung angezeigt werden, die angibt, wann der Benutzer zuletzt aktiv war oder ob er derzeit offline ist.
+Sicherheit:
+Nachrichten sollten Ende-zu-Ende verschlüsselt sein, um die Privatsphäre zu gewährleisten.
+Benutzer sollten benachrichtigt werden, wenn es ein Problem mit der Nachrichtenverschlüsselung gibt.
+UI/UX:
+Die Chat-Oberfläche sollte Zeitstempel für jede Nachricht anzeigen.
+Das Chatfenster sollte automatisch scrollen, um die neuesten Nachrichten anzuzeigen. Es sollte im ganzen einfach benutzerfreundlich sein

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chat App</title>
+        <link rel="shortcut icon" href="/assets/icon.png" type="image/x-icon">
+        <link rel="icon" href="/assets/icon.png" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/css/main.css">
+        <script src="https://unpkg.com/feather-icons"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="top-bar">
+                <div id="roomSelector">
+                    <input type="text" id="roomInput" placeholder="Enter or create a room">
+                    <button onclick="createOrJoinRoom()">Join/Create Room</button>
+                </div>
+                <div class="icon-buttons">
+                    <button onclick="openHelpModal()"><i data-feather="help-circle"></i></button>
+                    <button onclick="openSettingsModal()"><i data-feather="settings"></i></button>
+                    <button onclick="openLogoutModal()"><i data-feather="log-out"></i></button>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <div id="roomList">
+                    <!-- User created Room -->
+                    <div id="createdRoomContainer" >
+                        <h3>Your Room</h3>
+                        <div id="createdRoom"></div>
+                    </div>
+
+                    <!-- Available Rooms -->
+                    <h3>Available Rooms</h3>
+                    <div id="rooms"></div>
+                </div>
+
+                <div class="chat-wrapper">
+                    <div id="currentRoomDisplay"></div>
+                    <div id="chatBox" style="display:none;"></div>
+                    <form id="messageForm" style="display:none;">
+                        <input type="text" id="messageInput" placeholder="Type a message...">
+                        <button type="submit"><i data-feather="send"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Structures -->
+
+        <!-- Logout Modal -->
+        <div id="logoutModal" class="modal">
+            <div class="modal-content">
+                <p>Are you sure you want to log out?</p>
+                <div class="modal-buttons">
+                    <button onclick="confirmLogout()">Yes</button>
+                    <button onclick="closeLogoutModal()">No</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Modal structure -->
+        <div id="helpModal" class="modal">
+            <div class="modal-content help-modal">
+                <div class="help-header">
+                    <h2>Help & Support</h2>
+                    <button class="close-btn" onclick="closeHelpModal()"><i data-feather="x"></i></button>
+                </div>
+                <div class="help-body">
+                    <nav class="help-nav">
+                        <select class="mobile-nav-select">
+                            <option value="getting-started">Getting Started</option>
+                            <option value="faq">FAQ</option>
+                            <option value="troubleshooting">Troubleshooting</option>
+                        </select>
+                        <button class="nav-btn active" data-target="getting-started">Getting Started</button>
+                        <button class="nav-btn" data-target="faq">FAQ</button>
+                        <button class="nav-btn" data-target="troubleshooting">Troubleshooting</button>
+                    </nav>
+                    <div class="help-content">
+                        <div id="getting-started" class="help-section active">
+                            <h3><i data-feather="play-circle"></i> Getting Started</h3>
+                            <div class="step-by-step">
+                                <div class="step">
+                                    <div class="step-number">1</div>
+                                    <p>Enter a room name and click "Join/Create Room" to start chatting.</p>
+                                </div>
+                                <div class="step">
+                                    <div class="step-number">2</div>
+                                    <p>Type your message in the box at the bottom and press "Send" or hit Enter.</p>
+                                </div>
+                                <div class="step">
+                                    <div class="step-number">3</div>
+                                    <p>Use the icons in the top-right corner for settings, help, and logout.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="faq" class="help-section">
+                            <h3><i data-feather="help-circle"></i> FAQ</h3>
+                            <div class="accordion">
+                                <div class="accordion-item">
+                                    <button class="accordion-header">
+                                        How do I create a room?
+                                        <i data-feather="chevron-down"></i>
+                                    </button>
+                                    <div class="accordion-content">
+                                        <p>Enter the room name in the top bar and click "Join/Create Room".</p>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-header">
+                                        How do I change my settings?
+                                        <i data-feather="chevron-down"></i>
+                                    </button>
+                                    <div class="accordion-content">
+                                        <p>Click on the settings icon (⚙️).</p>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-header">
+                                        How do I log out?
+                                        <i data-feather="chevron-down"></i>
+                                    </button>
+                                    <div class="accordion-content">
+                                        <p>Click on the logout icon (🚪) and confirm in the modal.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="troubleshooting" class="help-section">
+                            <h3><i data-feather="alert-triangle"></i> Troubleshooting</h3>
+                            <strong> If you're experiencing issues, try these steps:</strong>
+                            <br>
+                            <div class="troubleshooting-steps">
+                                <div class="troubleshooting-step">
+                                    <i data-feather="refresh-cw"></i>
+                                    <p>Refresh the page</p>
+                                </div>
+                                <div class="troubleshooting-step">
+                                    <i data-feather="wifi"></i>
+                                    <p>Check your internet connection</p>
+                                </div>
+                                <div class="troubleshooting-step">
+                                    <i data-feather="trash-2"></i>
+                                    <p>Clear your browser cache</p>
+                                </div>
+                                <div class="troubleshooting-step">
+                                    <i data-feather="mail"></i>
+                                    <p>If problems persist, <a href="https://yanissebastianzuercher.ch/#contact">contact support</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="help-footer">
+                    <button class="primary-btn" onclick="closeHelpModal()">Got it, thanks!</button>
+                </div>
+            </div>
+        </div>
+        <!-- Settings Modal -->
+        <div id="settingsModal" class="modal">
+            <div class="modal-content settings-modal">
+                <div class="settings-header">
+                    <h2>Settings</h2>
+                    <button class="close-btn" onclick="closeSettingsModal()"><i data-feather="x"></i></button>
+                </div>
+                <div class="settings-body">
+                    <nav class="settings-nav">
+                        <button class="settings-nav-btn active" data-target="theme">Theme</button>
+                        <button class="settings-nav-btn" data-target="email">Change Email</button>
+                        <button class="settings-nav-btn" data-target="password">Change Password</button>
+                    </nav>
+                    <div class="settings-content">
+                        <div id="theme" class="settings-section active">
+                            <h3>Theme</h3>
+                            <div class="theme-options">
+                                <div class="theme-option" onclick="setTheme('light')">
+                                    <i data-feather="sun"></i>
+                                    <p>Light Mode</p>
+                                </div>
+                                <div class="theme-option" onclick="setTheme('dark')">
+                                    <i data-feather="moon"></i>
+                                    <p>Dark Mode</p>
+                                </div>
+                                <div class="theme-option" onclick="setTheme('system')">
+                                    <i data-feather="monitor"></i>
+                                    <p>System Default</p>
+                                </div>
+                            </div>
+                            <!-- Save Changes Button -->
+                            <div class="form-group">
+                                <button type="button" class="primary-btn" onclick="saveThemeChanges()">Save Changes</button>
+                            </div>
+                        </div>
+                        <div id="email" class="settings-section">
+                            <h3>Change Email</h3>
+                            <form id="changeEmailForm">
+                                <div class="form-group">
+                                    <label for="currentEmail">Current Email</label>
+                                    <input type="email" id="currentEmail" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newEmail">New Email</label>
+                                    <input type="email" id="newEmail" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmNewEmail">Confirm New Email</label>
+                                    <input type="email" id="confirmNewEmail" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="passwordForEmail">Current Password</label>
+                                    <input type="password" id="passwordForEmail" required>
+                                </div>
+                                <button type="submit" class="primary-btn">Change Email</button>
+                            </form>
+                        </div>
+                        <div id="password" class="settings-section">
+                            <h3>Change Password</h3>
+                            <form id="changePasswordForm">
+                                <div class="form-group">
+                                    <label for="currentPassword">Current Password</label>
+                                    <input type="password" id="currentPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <input type="password" id="newPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmNewPassword">Confirm New Password</label>
+                                    <input type="password" id="confirmNewPassword" required>
+                                </div>
+                                <button type="submit" class="primary-btn">Change Password</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="error-popup" id="errorPopup" style="display: none">
+            <i data-feather="alert-circle" class="popup-icon"></i>
+            <span class="popup-message"></span>
+        </div>
+
+        <div class="success-popup" id="successPopup" style="display: none">
+            <i data-feather="check-circle" class="popup-icon"></i>
+            <span class="popup-message"></span>
+        </div>
+
+        <script>
+
+            function openLogoutModal() {
+                document.getElementById('logoutModal').style.display = 'flex';
+            }
+
+            function closeLogoutModal() {
+                document.getElementById('logoutModal').style.display = 'none';
+            }
+
+            function openHelpModal() {
+                document.getElementById('helpModal').style.display = 'flex';
+            }
+
+            function closeHelpModal() {
+                document.getElementById('helpModal').style.display = 'none';
+            }
+
+            function openSettingsModal() {
+                document.getElementById('settingsModal').style.display = 'flex';
+            }
+
+            function closeSettingsModal() {
+                document.getElementById('settingsModal').style.display = 'none';
+            }
+
+            function confirmLogout() {
+                if (stompClient !== null) {
+                    stompClient.disconnect();
+                    console.log('Disconnected from WebSocket');
+                }
+                window.location.href = '/logout';
+            }
+
+            feather.replace();
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        <script src="/js/helpModal.js"></script>
+        <script src="/js/settingsModal.js"></script>
+        <script src="/js/main.js"></script>
+    </body>
+</html>
