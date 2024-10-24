@@ -178,45 +178,39 @@ body {
     font-size: 20px;
     font-weight: 600;
 }
-
 .created-room {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background-color: var(--secondary-color);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 16px;
-    color: white;
-    position: relative;
-}
-
-.created-room:hover {
-    background-color: var(--accent-color);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.1); /* Light dark inside */
+  border-radius: 12px;
+  cursor: auto;
+  font-size: 16px;
+  color: white;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.2); 
+  margin-bottom: 16px;  /* Added space below */ 
 }
 
 .created-room button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #E53E3E;
-    position: absolute;
-    right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #E53E3E;
+  position: absolute;
+  right: 10px;
+  transition: all 0.2s ease;
 }
 
 .created-room button:hover {
-    color: #C53030;
+  color: #C53030;
+  transform: scale(1.1);
 }
 
 .created-room button i {
-    font-size: 20px;
+  font-size: 20px;
 }
-
 /* Global Room styling */
 .room {
     margin: 10px 0;
@@ -233,7 +227,7 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    color: #E53E3E; /* Error color for delete button */
+    color: #E53E3E;
 }
 
 .room:hover {
@@ -1158,4 +1152,49 @@ body {
     background-color: #C53030;
     color: #F3F4F6;
     box-shadow: 0 8px 16px rgba(197, 48, 48, 0.2);
+}
+
+
+/*------------- custom scroll bar --------------*/
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode scrollbar */
+[data-theme='dark'] ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+[data-theme='dark'] * {
+    scrollbar-color: var(--accent-color) rgba(255, 255, 255, 0.1);
 }
