@@ -24,10 +24,10 @@
             --success-color: #10B981;
             --error-color: #EF4444;
             --warning-color: #F59E0B;
-            --text-primary: #F9FAFB; /* Light text */
+            --text-primary: #F9FAFB;
             --text-secondary: #D1D5DB;
             --text-light: #9CA3AF;
-            --bg-white: #1F2937; /* Darker background */
+            --bg-white: #1F2937;
             --bg-light: #111827;
             --bg-dark: #0F172A;
             --border-color: #374151;
@@ -64,6 +64,41 @@
         img {
             max-width: 100%;
             height: auto;
+        }
+
+        /* Success Message Styles */
+        .success-message {
+            display: none;
+            background-color: var(--success-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Error Message Styles */
+        .error-message {
+            display: none;
+            background-color: var(--error-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            animation: slideDown 0.3s ease-out;
         }
 
         /* Mobile Menu */
@@ -231,6 +266,7 @@
             cursor: pointer;
             white-space: nowrap;
             letter-spacing: 0.025em;
+            border: none;
         }
 
         .btn--primary {
@@ -239,10 +275,15 @@
             box-shadow: 0 2px 4px rgba(79, 70, 229, 0.1);
         }
 
-        .btn--primary:hover {
+        .btn--primary:hover:not(:disabled) {
             background-color: var(--primary-dark);
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn--primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
 
         .btn--secondary {
@@ -331,8 +372,8 @@
             transform: perspective(1000px) rotateX(0deg);
         }
 
-        /* Features Section */
-        .features {
+/* Features Section */
+.features {
             padding: 6rem 0;
             background-color: var(--bg-dark);
             position: relative;
@@ -367,7 +408,7 @@
         .feature-card {
             padding: 2.5rem;
             border-radius: 1.5rem;
-            background-color: #1F2937; /* Darker card background */
+            background-color: var(--bg-white);
             box-shadow: var(--shadow);
             transition: var(--transition-base);
             border: 1px solid var(--border-color);
@@ -443,7 +484,7 @@
         .faq .faq-item {
             max-width: 800px;
             margin: 0 auto 1.5rem auto;
-            background-color: #1F2937; /* Darker background */
+            background-color: var(--bg-white);
             border-radius: 0.75rem;
             box-shadow: var(--shadow);
             overflow: hidden;
@@ -464,7 +505,7 @@
         }
 
         .faq .faq-question::after {
-            content: '\f0d7'; /* Font Awesome Down Arrow */
+            content: '\f0d7';
             font-family: 'Font Awesome 5 Free';
             font-weight: 900;
             position: absolute;
@@ -492,7 +533,7 @@
         }
 
         .faq .faq-answer.show {
-            max-height: 500px; /* Enough to show the content */
+            max-height: 500px;
             padding: 1rem 1.5rem;
         }
 
@@ -509,7 +550,7 @@
         .contact-form {
             max-width: 600px;
             margin: 0 auto;
-            background: #1F2937; /* Darker form background */
+            background: var(--bg-white);
             padding: 3rem;
             border-radius: 1rem;
             box-shadow: var(--shadow-xl);
@@ -531,7 +572,7 @@
             padding: 0.75rem 1rem;
             border: 2px solid var(--border-color);
             border-radius: 0.5rem;
-            background-color: #1F2937; /* Darker input background */
+            background-color: var(--bg-white);
             color: var(--text-primary);
             transition: var(--transition-base);
         }
@@ -566,8 +607,8 @@
             display: block;
         }
 
-        /* Enhanced Footer */
-        .footer {
+/* Footer Styles */
+.footer {
             background-color: var(--bg-dark);
             color: white;
             padding: 6rem 0 2rem;
@@ -587,7 +628,6 @@
 
         @media (min-width: 768px) {
             .footer__brand {
-                grid-column: span 2;
                 text-align: left;
             }
         }
@@ -614,7 +654,6 @@
             display: flex;
             gap: 1rem;
             justify-content: center;
-            margin-top: 2rem;
         }
 
         @media (min-width: 768px) {
@@ -674,23 +713,6 @@
             font-size: 0.875rem;
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-fade-in {
-            animation: fadeInUp 0.6s ease forwards;
-            opacity: 0;
-        }
-
         /* Responsive Design */
         @media (max-width: 768px) {
             .hero__buttons {
@@ -703,7 +725,6 @@
 
             .footer__brand {
                 grid-column: 1 / -1;
-                text-align: center;
             }
 
             .footer__grid {
@@ -719,6 +740,23 @@
             .section-title {
                 margin-bottom: 2rem;
             }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
         }
     </style>
 </head>
@@ -740,565 +778,503 @@
                     <a href="#features" class="nav__link" style="--i: 1">Features</a>
                     <a href="#faq" class="nav__link" style="--i: 2">FAQ</a>
                     <a href="#contact" class="nav__link" style="--i: 3">Contact</a>
-                    <a href="/login" class="btn btn--secondary" style="--i: 4; color:  var(--text-primary);">Log in</a>
+                    <a href="/login" class="btn btn--secondary" style="--i: 4; color: var(--text-primary);">Log in</a>
                     <a href="/register" class="btn btn--primary" style="--i: 5">Get Started</a>
                 </div>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero__content">
-                <h1 class="hero__title animate-fade-in">
-                    Transform Your Team Communication
-                </h1>
-                <p class="hero__subtitle animate-fade-in">
-                    Experience secure, real-time messaging with enterprise-grade features.
-                    Connect your team anywhere, anytime with ChatApp.
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero__content">
+            <h1 class="hero__title animate-fade-in">
+                Transform Your Team Communication
+            </h1>
+            <p class="hero__subtitle animate-fade-in">
+                Experience secure, real-time messaging with enterprise-grade features.
+                Connect your team anywhere, anytime with ChatApp.
+            </p>
+            <div class="hero__buttons animate-fade-in">
+                <a href="/register" class="btn btn--primary">
+                    <i class="fas fa-rocket"></i>
+                    Start (it's free)
+                </a>
+                <a href="#features" class="btn btn--secondary" style="color: var(--text-primary);">
+                    <i class="fas fa-info-circle"></i>
+                    Learn More
+                </a>
+            </div>
+            <img src="https://raw.githubusercontent.com/lyfe691/My-Personal-Website/refs/heads/main/images/lead/leadimage_shanghai.jpg" alt="ChatApp Interface Preview" class="hero__image animate-fade-in">
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="features">
+    <div class="container">
+        <div class="section-title">
+            <h2>Powerful Features</h2>
+            <p>Everything you need for seamless team communication</p>
+        </div>
+        <div class="features-grid">
+            <!-- Feature 1 -->
+            <div class="feature-card">
+                <div class="feature-card__icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-card__title">End-to-End Encryption</h3>
+                <p class="feature-card__text">
+                    Military-grade encryption ensures your messages and files stay private and secure.
                 </p>
-                <div class="hero__buttons animate-fade-in">
-                    <a href="/register" class="btn btn--primary">
-                        <i class="fas fa-rocket"></i>
-                        Start (it's free)
-                    </a>
-                    <a href="#features" class="btn btn--secondary" style="color:  var(--text-primary);" >
-                        <i class="fas fa-info-circle"></i>
-                        Learn More
-                    </a>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-card">
+                <div class="feature-card__icon">
+                    <i class="fas fa-bolt"></i>
                 </div>
-                <img src="https://placehold.co/800x500" alt="ChatApp Interface Preview" class="hero__image animate-fade-in">
+                <h3 class="feature-card__title">Real-time Messaging</h3>
+                <p class="feature-card__text">
+                    Instant message delivery with live typing indicators and read receipts.
+                </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-card">
+                <div class="feature-card__icon">
+                    <i class="fas fa-sync"></i>
+                </div>
+                <h3 class="feature-card__title">Cross-Platform Sync</h3>
+                <p class="feature-card__text">
+                    Seamlessly switch between devices while keeping all your conversations in sync.
+                </p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="feature-card">
+                <div class="feature-card__icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="feature-card__title">Team Collaboration</h3>
+                <p class="feature-card__text">
+                    Create channels, share files, and collaborate with your team in real-time.
+                </p>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="feature-card">
+                <div class="feature-card__icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="feature-card__title">Smart Search</h3>
+                <p class="feature-card__text">
+                    Find any message or file instantly with our powerful search capabilities.
+                </p>
+            </div>
+
+            <!-- Feature 6 -->
+            <div class="feature-card">
+                <div class="feature-card__icon">
+                    <i class="fas fa-plug"></i>
+                </div>
+                <h3 class="feature-card__title">Easy Integration</h3>
+                <p class="feature-card__text">
+                    Connect with your favorite tools and customize your workflow effortlessly.
+                </p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Powerful Features</h2>
-                <p>Everything you need for seamless team communication</p>
+<!-- FAQ Section -->
+<section id="faq" class="faq">
+    <div class="container">
+        <div class="section-title">
+            <h2>Frequently Asked Questions</h2>
+            <p>Find answers to common questions about ChatApp.</p>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                What makes ChatApp secure?
             </div>
-            <div class="features-grid">
-                <!-- Feature 1 -->
-                <div class="feature-card">
-                    <div class="feature-card__icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="feature-card__title">End-to-End Encryption</h3>
-                    <p class="feature-card__text">
-                        Military-grade encryption ensures your messages and files stay private and secure.
-                    </p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="feature-card">
-                    <div class="feature-card__icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3 class="feature-card__title">Real-time Messaging</h3>
-                    <p class="feature-card__text">
-                        Instant message delivery with live typing indicators and read receipts.
-                    </p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="feature-card">
-                    <div class="feature-card__icon">
-                        <i class="fas fa-sync"></i>
-                    </div>
-                    <h3 class="feature-card__title">Cross-Platform Sync</h3>
-                    <p class="feature-card__text">
-                        Seamlessly switch between devices while keeping all your conversations in sync.
-                    </p>
-                </div>
-
-                <!-- Feature 4 -->
-                <div class="feature-card">
-                    <div class="feature-card__icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3 class="feature-card__title">Team Collaboration</h3>
-                    <p class="feature-card__text">
-                        Create channels, share files, and collaborate with your team in real-time.
-                    </p>
-                </div>
-
-                <!-- Feature 5 -->
-                <div class="feature-card">
-                    <div class="feature-card__icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h3 class="feature-card__title">Smart Search</h3>
-                    <p class="feature-card__text">
-                        Find any message or file instantly with our powerful search capabilities.
-                    </p>
-                </div>
-
-                <!-- Feature 6 -->
-                <div class="feature-card">
-                    <div class="feature-card__icon">
-                        <i class="fas fa-plug"></i>
-                    </div>
-                    <h3 class="feature-card__title">Easy Integration</h3>
-                    <p class="feature-card__text">
-                        Connect with your favorite tools and customize your workflow effortlessly.
-                    </p>
-                </div>
+            <div class="faq-answer">
+                <p>
+                    ChatApp uses end-to-end encryption to ensure that your messages and files are protected and accessible only to you and your intended recipients.
+                </p>
             </div>
         </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section id="faq" class="faq">
-        <div class="container">
-            <div class="section-title">
-                <h2>Frequently Asked Questions</h2>
-                <p>Find answers to common questions about ChatApp.</p>
+        <div class="faq-item">
+            <div class="faq-question">
+                Can I use ChatApp on multiple devices?
             </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    What makes ChatApp secure?
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        ChatApp uses end-to-end encryption to ensure that your messages and files are protected and accessible only to you and your intended recipients.
-                    </p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    Can I use ChatApp on multiple devices?
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        Yes, ChatApp supports cross-platform synchronization, allowing you to seamlessly switch between your desktop, tablet, and mobile devices while keeping all your conversations in sync.
-                    </p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    Is there a free plan available?
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        Absolutely! ChatApp offers a free tier that includes essential features for small teams. You can upgrade to our Pro or Enterprise plans for additional functionalities and support.
-                    </p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    How do I integrate ChatApp with other tools?
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        ChatApp provides easy integration options with various third-party tools through our API. You can customize your workflow by connecting ChatApp with your favorite applications like Slack, Google Drive, and more.
-                    </p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    What support options are available?
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        We offer comprehensive support through our Help Center, documentation, and community forums. For Pro and Enterprise users, we provide priority support to ensure your team runs smoothly.
-                    </p>
-                </div>
+            <div class="faq-answer">
+                <p>
+                    Yes, ChatApp supports cross-platform synchronization, allowing you to seamlessly switch between your desktop, tablet, and mobile devices while keeping all your conversations in sync.
+                </p>
             </div>
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2>Get in Touch</h2>
-                <p>Have questions? We're here to help you get started.</p>
+        <div class="faq-item">
+            <div class="faq-question">
+                Is there a free plan available?
             </div>
-            <form class="contact-form" id="contact-form">
-                <div class="form-group">
-                    <label for="name" class="form-label">Name</label>
-                    <input 
-                        type="text" 
-                        id="name" 
-                        class="form-input" 
-                        required 
-                        placeholder="Your full name"
-                    >
-                    <span class="form-error">Please enter your name</span>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email" class="form-label">Email</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        class="form-input" 
-                        required 
-                        placeholder="you@example.com"
-                    >
-                    <span class="form-error">Please enter a valid email</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="subject" class="form-label">Subject</label>
-                    <input 
-                        type="text" 
-                        id="subject" 
-                        class="form-input" 
-                        required 
-                        placeholder="What's this about?"
-                    >
-                    <span class="form-error">Please enter a subject</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="message" class="form-label">Message</label>
-                    <textarea 
-                        id="message" 
-                        class="form-input" 
-                        required 
-                        placeholder="Your message..."
-                    ></textarea>
-                    <span class="form-error">Please enter your message</span>
-                </div>
-
-                <button type="submit" class="btn btn--primary" style="width: 100%">
-                    <i class="fas fa-paper-plane"></i>
-                    Send Message
-                </button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Enhanced Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer__grid">
-                <div class="footer__brand">
-                    <a href="#" class="footer__logo">
-                        <i class="fas fa-comments"></i>
-                        <span style="color: var(--primary-color);">ChatApp</span>
-                    </a>
-                    <p class="footer__description">
-                        Secure messaging and team collaboration platform for modern teams.
-                        Connect, share, and collaborate with confidence.
-                    </p>
-                    <div class="footer__social">
-                        <a href="#" class="footer__social-link" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="footer__social-link" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="#" class="footer__social-link" aria-label="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="#" class="footer__social-link" aria-label="Discord">
-                            <i class="fab fa-discord"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Removed Company Section -->
-                <!--
-                <div class="footer-nav">
-                    <h3 class="footer-nav__title">Company</h3>
-                    <ul class="footer-nav__list">
-                        <li class="footer-nav__item">
-                            <a href="#" class="footer-nav__link">About Us</a>
-                        </li>
-                        <li class="footer-nav__item">
-                            <a href="#" class="footer-nav__link">Careers</a>
-                        </li>
-                        <li class="footer-nav__item">
-                            <a href="#" class="footer-nav__link">Blog</a>
-                        </li>
-                        <li class="footer-nav__item">
-                            <a href="#" class="footer-nav__link">Press</a>
-                        </li>
-                    </ul>
-                </div>
-                -->
-
-                <div class="footer-nav">
-                    <h3 class="footer-nav__title">Resources</h3>
-                    <ul class="footer-nav__list">
-                        <li class="footer-nav__item">
-                            <a href="#" class="footer-nav__link">Documentation</a>
-                        </li>
-                        <li class="footer-nav__item">
-                            <a href="#" class="footer-nav__link">Help Center</a>
-                        </li>
-                        <li class="footer-nav__item">
-                            <a href="#" class="footer-nav__link">API Reference</a>
-                        </li>
-                        <li class="footer-nav__item">
-                            <a href="#" class="footer-nav__link">Community</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="footer-nav">
-                    <h3 class="footer-nav__title">Legal</h3>
-                    <ul class="footer-nav__list">
-                        <li class="footer-nav__item">
-                            <a href="#" class="footer-nav__link">Privacy Policy</a>
-                        </li>
-                        <li class="footer-nav__item">
-                            <a href="#" class="footer-nav__link">Terms of Service</a>
-                        </li>
-                        <li class="footer-nav__item">
-                            <a href="#" class="footer-nav__link">Security</a>
-                        </li>
-                        <li class="footer-nav__item">
-                            <a href="#" class="footer-nav__link">Compliance</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer__bottom">
-                <p>&copy; 2024 ChatApp. All rights reserved.</p>
+            <div class="faq-answer">
+                <p>
+                    Absolutely! ChatApp offers a free tier that includes essential features for small teams. You can upgrade to our Pro or Enterprise plans for additional functionalities and support.
+                </p>
             </div>
         </div>
-    </footer>
-    <script>
-        // Mobile menu functionality
-        const mobileToggle = document.querySelector('.mobile-toggle');
-        const navMenu = document.querySelector('.nav__menu');
-        const body = document.body;
+        <div class="faq-item">
+            <div class="faq-question">
+                How do I integrate ChatApp with other tools?
+            </div>
+            <div class="faq-answer">
+                <p>
+                    ChatApp provides easy integration options with various third-party tools through our API. You can customize your workflow by connecting ChatApp with your favorite applications like Slack, Google Drive, and more.
+                </p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                What support options are available?
+            </div>
+            <div class="faq-answer">
+                <p>
+                    We offer comprehensive support through our Help Center, documentation, and community forums. For Pro and Enterprise users, we provide priority support to ensure your team runs smoothly.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
 
-        function toggleMenu() {
-            const isOpen = navMenu.classList.contains('active');
-            navMenu.classList.toggle('active');
-            mobileToggle.setAttribute('aria-expanded', !isOpen);
-            body.classList.toggle('menu-open', !isOpen);
+<!-- Contact Section -->
+<section id="contact" class="contact">
+    <div class="container">
+        <div class="section-title">
+            <h2>Get in Touch</h2>
+            <p>Have questions? We're here to help you get started.</p>
+        </div>
+        <form class="contact-form" id="contact-form" action="https://formspree.io/f/mjkvkdlj" method="POST">
+            <div class="success-message">
+                <i class="fas fa-check-circle"></i> Message sent successfully! We'll get back to you soon.
+            </div>
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i> Oops! Something went wrong. Please try again.
+            </div>
+            <div class="form-group">
+                <label for="name" class="form-label">Name</label>
+                <input 
+                    type="text" 
+                    id="name" 
+                    name="name"
+                    class="form-input" 
+                    required 
+                    placeholder="Your full name"
+                >
+                <span class="form-error">Please enter your name</span>
+            </div>
             
-            // Toggle icon
-            const icon = mobileToggle.querySelector('i');
-            icon.classList.toggle('fa-bars', isOpen);
-            icon.classList.toggle('fa-times', !isOpen);
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email"
+                    class="form-input" 
+                    required 
+                    placeholder="you@example.com"
+                >
+                <span class="form-error">Please enter a valid email</span>
+            </div>
 
-            // Animate menu items
-            const menuItems = navMenu.querySelectorAll('.nav__link, .btn');
-            menuItems.forEach((item, index) => {
-                if (!isOpen) {
-                    item.style.transitionDelay = `${index * 0.1}s`;
-                } else {
-                    item.style.transitionDelay = '0s';
-                }
-            });
-        }
+            <div class="form-group">
+                <label for="subject" class="form-label">Subject</label>
+                <input 
+                    type="text" 
+                    id="subject" 
+                    name="subject"
+                    class="form-input" 
+                    required 
+                    placeholder="What's this about?"
+                >
+                <span class="form-error">Please enter a subject</span>
+            </div>
 
-        mobileToggle.addEventListener('click', toggleMenu);
+            <div class="form-group">
+                <label for="message" class="form-label">Message</label>
+                <textarea 
+                    id="message" 
+                    name="message"
+                    class="form-input" 
+                    required 
+                    placeholder="Your message..."
+                ></textarea>
+                <span class="form-error">Please enter your message</span>
+            </div>
 
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (navMenu.classList.contains('active') && 
-                !navMenu.contains(e.target) && 
-                !mobileToggle.contains(e.target)) {
-                toggleMenu();
+            <button type="submit" class="btn btn--primary" style="width: 100%">
+                <i class="fas fa-paper-plane"></i>
+                Send Message
+            </button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer__grid">
+            <div class="footer__brand">
+                <a href="#" class="footer__logo">
+                    <i class="fas fa-comments"></i>
+                    <span style="color: var(--primary-color);">ChatApp</span>
+                </a>
+                <p class="footer__description">
+                    Secure messaging and team collaboration platform for modern teams.
+                    Connect, share, and collaborate with confidence.
+                </p>
+                <div class="footer__social">
+                    <a href="#" class="footer__social-link" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="footer__social-link" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="footer__social-link" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="footer__social-link" aria-label="Discord">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-nav">
+                <h3 class="footer-nav__title">Resources</h3>
+                <ul class="footer-nav__list">
+                    <li class="footer-nav__item">
+                        <a href="#" class="footer-nav__link">Documentation</a>
+                    </li>
+                    <li class="footer-nav__item">
+                        <a href="#" class="footer-nav__link">Help Center</a>
+                    </li>
+                    <li class="footer-nav__item">
+                        <a href="#" class="footer-nav__link">API Reference</a>
+                    </li>
+                    <li class="footer-nav__item">
+                        <a href="#" class="footer-nav__link">Community</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer-nav">
+                <h3 class="footer-nav__title">Legal</h3>
+                <ul class="footer-nav__list">
+                    <li class="footer-nav__item">
+                        <a href="#" class="footer-nav__link">Privacy Policy</a>
+                    </li>
+                    <li class="footer-nav__item">
+                        <a href="#" class="footer-nav__link">Terms of Service</a>
+                    </li>
+                    <li class="footer-nav__item">
+                        <a href="#" class="footer-nav__link">Security</a>
+                    </li>
+                    <li class="footer-nav__item">
+                        <a href="#" class="footer-nav__link">Compliance</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer__bottom">
+            <p>&copy; 2024 ChatApp. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile menu functionality
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const navMenu = document.querySelector('.nav__menu');
+    const body = document.body;
+
+    function toggleMenu() {
+        const isOpen = navMenu.classList.contains('active');
+        navMenu.classList.toggle('active');
+        mobileToggle.setAttribute('aria-expanded', !isOpen);
+        body.classList.toggle('menu-open', !isOpen);
+        
+        // Toggle icon
+        const icon = mobileToggle.querySelector('i');
+        icon.classList.toggle('fa-bars', isOpen);
+        icon.classList.toggle('fa-times', !isOpen);
+
+        // Animate menu items
+        const menuItems = navMenu.querySelectorAll('.nav__link, .btn');
+        menuItems.forEach((item, index) => {
+            if (!isOpen) {
+                item.style.transitionDelay = `${index * 0.1}s`;
+            } else {
+                item.style.transitionDelay = '0s';
             }
         });
+    }
 
-        // Close menu when pressing Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && navMenu.classList.contains('active')) {
-                toggleMenu();
-            }
-        });
+    mobileToggle.addEventListener('click', toggleMenu);
 
-        // Scroll handling
-        const header = document.querySelector('.header');
-        let lastScroll = 0;
-        const scrollThreshold = 50;
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (navMenu.classList.contains('active') && 
+            !navMenu.contains(e.target) && 
+            !mobileToggle.contains(e.target)) {
+            toggleMenu();
+        }
+    });
 
-        function handleScroll() {
-            const currentScroll = window.pageYOffset;
-            
-            // Add/remove scrolled class
-            header.classList.toggle('scrolled', currentScroll > scrollThreshold);
+    // Form validation and handling
+    const contactForm = document.getElementById('contact-form');
+    const formGroups = contactForm.querySelectorAll('.form-group');
+    const successMessage = document.querySelector('.success-message');
+    const errorMessage = document.querySelector('.error-message');
 
-            // Hide/show header on scroll
-            if (!navMenu.classList.contains('active')) {
-                if (currentScroll > lastScroll && currentScroll > 500) {
-                    header.style.transform = 'translateY(-100%)';
-                } else {
-                    header.style.transform = 'translateY(0)';
-                }
-            }
-            
-            lastScroll = currentScroll;
+    function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function showError(input, message) {
+        const formGroup = input.closest('.form-group');
+        formGroup.classList.add('error');
+        const error = formGroup.querySelector('.form-error');
+        error.textContent = message;
+    }
+
+    function removeError(input) {
+        const formGroup = input.closest('.form-group');
+        formGroup.classList.remove('error');
+    }
+
+    function validateInput(input) {
+        removeError(input);
+
+        if (input.required && !input.value.trim()) {
+            showError(input, `${input.previousElementSibling.textContent} is required`);
+            return false;
         }
 
-        window.addEventListener('scroll', handleScroll, { passive: true });
-
-        // Form validation and handling
-        const contactForm = document.getElementById('contact-form');
-        const formGroups = contactForm.querySelectorAll('.form-group');
-
-        function validateEmail(email) {
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        if (input.type === 'email' && !validateEmail(input.value)) {
+            showError(input, 'Please enter a valid email address');
+            return false;
         }
 
-        function showError(input, message) {
-            const formGroup = input.closest('.form-group');
-            formGroup.classList.add('error');
-            const error = formGroup.querySelector('.form-error');
-            error.textContent = message;
+        if (input.id === 'message' && input.value.trim().length < 10) {
+            showError(input, 'Message must be at least 10 characters long');
+            return false;
         }
 
-        function removeError(input) {
-            const formGroup = input.closest('.form-group');
-            formGroup.classList.remove('error');
-        }
+        return true;
+    }
 
-        function validateInput(input) {
-            removeError(input);
+    formGroups.forEach(group => {
+        const input = group.querySelector('.form-input');
+        input.addEventListener('input', () => validateInput(input));
+        input.addEventListener('blur', () => validateInput(input));
+    });
 
-            if (input.required && !input.value.trim()) {
-                showError(input, `${input.previousElementSibling.textContent} is required`);
-                return false;
-            }
+    // Form submission handling
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        let isValid = true;
 
-            if (input.type === 'email' && !validateEmail(input.value)) {
-                showError(input, 'Please enter a valid email address');
-                return false;
-            }
+        // Hide any existing messages
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'none';
 
-            if (input.id === 'message' && input.value.trim().length < 10) {
-                showError(input, 'Message must be at least 10 characters long');
-                return false;
-            }
-
-            return true;
-        }
-
+        // Validate all inputs
         formGroups.forEach(group => {
             const input = group.querySelector('.form-input');
-            input.addEventListener('input', () => validateInput(input));
-            input.addEventListener('blur', () => validateInput(input));
-        });
-
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            let isValid = true;
-
-            // Validate all inputs
-            formGroups.forEach(group => {
-                const input = group.querySelector('.form-input');
-                if (!validateInput(input)) {
-                    isValid = false;
-                }
-            });
-
-            if (!isValid) return;
-
-            // Submit button loading state
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-
-            try {
-                // Simulate API call
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                
-                // Success state
-                submitBtn.innerHTML = '<i class="fas fa-check"></i> Sent Successfully!';
-                submitBtn.style.backgroundColor = 'var(--success-color)';
-                
-                // Reset form
-                contactForm.reset();
-                
-                // Reset button after delay
-                setTimeout(() => {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.style.backgroundColor = '';
-                }, 3000);
-                
-            } catch (error) {
-                submitBtn.innerHTML = '<i class="fas fa-exclamation-circle"></i> Failed to send';
-                submitBtn.style.backgroundColor = 'var(--error-color)';
-                
-                setTimeout(() => {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.style.backgroundColor = '';
-                }, 3000);
+            if (!validateInput(input)) {
+                isValid = false;
             }
         });
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                
-                if (target) {
-                    // Close mobile menu if open
-                    if (navMenu.classList.contains('active')) {
-                        toggleMenu();
-                    }
+        if (!isValid) return;
 
-                    const headerOffset = header.offsetHeight;
-                    const elementPosition = target.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        // Submit button loading state
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
 
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
+        try {
+            // Send to Formspree
+            const formData = new FormData(contactForm);
+            const response = await fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                // Show success message
+                successMessage.style.display = 'block';
+                contactForm.reset();
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                throw new Error('Failed to send message');
+            }
+        } catch (error) {
+            // Show error message
+            errorMessage.style.display = 'block';
+            errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } finally {
+            // Reset button after delay
+            setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }, 2000);
+        }
+    });
+
+    // FAQ Accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+
+        question.addEventListener('click', () => {
+            question.classList.toggle('active');
+            answer.classList.toggle('show');
+
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.querySelector('.faq-question').classList.remove('active');
+                    otherItem.querySelector('.faq-answer').classList.remove('show');
                 }
             });
         });
+    });
 
-        // Intersection Observer for animations
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fade-in');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements with animation
-        document.querySelectorAll('.feature-card, .contact-form, .section-title, .faq-item').forEach(el => {
-            observer.observe(el);
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-in');
+                observer.unobserve(entry.target);
+            }
         });
+    }, {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    });
 
-        // FAQ Accordion Functionality
-        const faqItems = document.querySelectorAll('.faq-item');
-
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            const answer = item.querySelector('.faq-answer');
-
-            question.addEventListener('click', () => {
-                // Toggle active class
-                question.classList.toggle('active');
-                answer.classList.toggle('show');
-
-                // Close other FAQ items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.querySelector('.faq-question').classList.remove('active');
-                        otherItem.querySelector('.faq-answer').classList.remove('show');
-                    }
-                });
-            });
-        });
-    </script>
+    document.querySelectorAll('.feature-card, .contact-form, .section-title, .faq-item').forEach(el => {
+        observer.observe(el);
+    });
+</script>
 </body>
 </html>
