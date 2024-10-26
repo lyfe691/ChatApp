@@ -32,7 +32,8 @@ Before you begin, ensure you have the following installed on your local machine:
 - **Git**: [Install Git](https://git-scm.com/downloads)
 - **Java 17 or higher**: [Download here](https://www.oracle.com/java/technologies/downloads/)
 - **Maven**: [Install Maven](https://maven.apache.org/install.html)
-- **MongoDB**: [Install MongoDB](https://www.mongodb.com/try/download/community) and make sure it's running.
+- **MongoDB for version 1.0.7 and less**: [Install MongoDB](https://www.mongodb.com/try/download/community) and make sure it's running.
+- **MongoDB Atlas for version 1.0.8 and up** [Setup MongoDB Atlas](https://cloud.mongodb.com/)
 
 ---
 
@@ -51,6 +52,9 @@ To set up and run the application locally, follow these steps:
       ```bash
       MAIL_USERNAME=<your_email>
       MAIL_PASSWORD=<your_password>
+
+      # Only if running v1.0.8 and up
+      SPRING_DATA_MONGODB_URI=mongodb+srv://<your-username>:<your-password>@chatappcluster.ebtag.mongodb.net/<appname(chatapp)>?retryWrites=true&w=majority
       ```
 
 3. **Install the necessary dependencies**:
