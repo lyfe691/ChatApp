@@ -54,7 +54,7 @@ To set up and run the application locally, follow these steps:
       MAIL_PASSWORD=<your_password>
 
       # Only if running v1.0.8 and up
-      SPRING_DATA_MONGODB_URI=mongodb+srv://<your-username>:<your-password>@chatappcluster.ebtag.mongodb.net/<appname(chatapp)>?retryWrites=true&w=majority
+      SPRING_DATA_MONGODB_URI=mongodb+srv://<your-username>:<your-password>@<your-cluster-name>.ebtag.mongodb.net/<appname(chatapp)>?retryWrites=true&w=majority
       ```
 
 3. **Install the necessary dependencies**:
